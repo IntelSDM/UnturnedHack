@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnityEngine;
+
 namespace Hag.Configs
 {
-    class Colours
+    class Config
     {
-        public Dictionary<string, Color32> GlobalColors = new Dictionary<string, Color32>();
+        
+        public Colours Colours = new Colours();
+        public Hag.Configs.Menu Menu = new Hag.Configs.Menu();
     }
 }

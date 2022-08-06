@@ -76,7 +76,6 @@ namespace Hag.Esp
 
             Renderer = new Direct2DRenderer(rendererOptions);
             whiteSolid = Renderer.CreateBrush(255, 255, 255, 255);
-            //   var RedSolid = Renderer.CreateBrush(255, 0, 0, 200);
             infoFont = Renderer.CreateFont("Consolas", 11);
             Tahoma = Renderer.CreateFont("Tahoma", 10);
             Tahoma2 = Renderer.CreateFont("Tahoma", 9);

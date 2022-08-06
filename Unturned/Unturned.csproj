@@ -80,6 +80,10 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
@@ -100,15 +104,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configs\Menu.cs" />
     <Compile Include="Esp\Drawing.cs" />
     <Compile Include="Loader.cs" />
-    <Compile Include="Config\Colours.cs" />
-    <Compile Include="Config\Config.cs" />
+    <Compile Include="Configs\Colours.cs" />
+    <Compile Include="Configs\Config.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Helpers\Access.cs" />
     <Compile Include="Helpers\ColourHelper.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\DumbHook.cs" />
+    <Compile Include="Menu\Button.cs" />
+    <Compile Include="Menu\Entity.cs" />
+    <Compile Include="Menu\FloatSlider.cs" />
+    <Compile Include="Menu\IntSlider.cs" />
+    <Compile Include="Menu\Keybind.cs" />
+    <Compile Include="Menu\RenderMenu.cs" />
+    <Compile Include="Menu\SubMenu.cs" />
+    <Compile Include="Menu\Toggle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer\Direct2DRenderer.cs" />
     <Compile Include="Renderer\DwmApi.cs" />
@@ -120,6 +133,8 @@
     <Compile Include="Renderer\StickyOverlayWindow.cs" />
     <Compile Include="Renderer\User32.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Esp Objects\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace Hag.Configs
+using UnityEngine;
+namespace Hag.Menu
 {
-    class Config
+    class Entity
     {
-        public Colours Colours = new Colours();
-     
+        public string Name;
+        public string Description;
+
     }
 }
