@@ -108,7 +108,10 @@ namespace Hag.Esp
 
                     #endregion
                     Renderer.DrawCrosshair(CrosshairStyle.Gap, Screen.width / 2, Screen.height / 2, 6, 1, new Direct2DColor(255, 0, 0, 255));
+
+
                     #region End
+                    Menu.RenderMenu.Render(Renderer);
                     try
                     {
                         Renderer.EndScene();

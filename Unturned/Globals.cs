@@ -19,6 +19,7 @@ namespace Hag
             Helpers.ColourHelper.AddColours();
             Esp.Drawing drawing = new Esp.Drawing();
             drawing.Start();
+            MainCamera = Camera.main;
         }
     }
 }
