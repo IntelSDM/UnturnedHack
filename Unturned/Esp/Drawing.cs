@@ -102,7 +102,7 @@ namespace Hag.Esp
                     return;
                 foreach (BaseZombie basezombie in Globals.ZombieList)
                 {
-                    if (!Globals.IsScreenPointVisible(basezombie.W2S) && !basezombie.Alive)
+                    if (!Globals.IsScreenPointVisible(basezombie.W2S) || !basezombie.Alive)
                         continue;
                     Renderer.DrawTextCentered($"Zombie({basezombie.Distance}m)", basezombie.W2S.x, basezombie.W2S.y, ZombieFont, new Direct2DColor(basezombie.Colour.r, basezombie.Colour.g, basezombie.Colour.b, basezombie.Colour.a));
                 }
