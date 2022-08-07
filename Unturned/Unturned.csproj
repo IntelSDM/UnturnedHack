@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configs\Menu.cs" />
+    <Compile Include="Configs\Zombie.cs" />
     <Compile Include="Esp Objects\BaseZombie.cs" />
     <Compile Include="Esp\Caching.cs" />
     <Compile Include="Esp\Drawing.cs" />

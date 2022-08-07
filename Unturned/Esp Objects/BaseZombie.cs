@@ -19,6 +19,8 @@ namespace Hag.Esp_Objects
 
         public int Distance;
 
+        public string Tag;
+
         public Vector3 W2S;
         public Vector3 HeadW2S;
 

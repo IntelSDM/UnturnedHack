@@ -37,6 +37,16 @@ namespace Hag.Esp
                         bz.Colour = ColourHelper.GetColour("Zombie Colour");
                         bz.W2S = WorldPointToScreenPoint(zombie.transform.position);
                         bz.Alive = !zombie.isDead;
+                        bz.Tag = "Zombie";
+                        if (zombie.isHyper)
+                            bz.Tag = "Hyper Zombie";
+                        if (zombie.isRadioactive)
+                            bz.Tag = "Radioactive Zombie";
+                        if (zombie.isMega)
+                            bz.Tag = "Mega Zombie";
+                        if (zombie.isBoss)
+                            bz.Tag = "Zombie Boss";
+
                     }
                        
                 }

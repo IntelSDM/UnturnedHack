@@ -98,12 +98,16 @@ namespace Hag.Esp
         {
             try
             {
-                if (Globals.LocalPlayer == null || !Provider.isConnected)
+                if (Globals.LocalPlayer == null || !Provider.isConnected || !Globals.Config.Zombie.Enable)
                     return;
                 foreach (BaseZombie basezombie in Globals.ZombieList)
                 {
                     if (!Globals.IsScreenPointVisible(basezombie.W2S) || !basezombie.Alive)
                         continue;
+                    if (basezombie.Distance > Globals.Config.Zombie.MaxDistance)
+                        continue;
+                    string tag = Globals.Config.Zombie.Tag ? basezombie.Tag : "";
+                    string distance = Globals.Config.Zombie.Distance ? $"({basezombie.Distance})m" : "";
                     Renderer.DrawTextCentered($"Zombie({basezombie.Distance}m)", basezombie.W2S.x, basezombie.W2S.y, ZombieFont, new Direct2DColor(basezombie.Colour.r, basezombie.Colour.g, basezombie.Colour.b, basezombie.Colour.a));
                 }
             }
