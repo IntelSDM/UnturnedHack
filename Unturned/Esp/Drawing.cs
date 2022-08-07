@@ -108,9 +108,18 @@ namespace Hag.Esp
                         continue;
                     string tag = Globals.Config.Zombie.Tag ? basezombie.Tag : "";
                     string distance = Globals.Config.Zombie.Distance ? $"({basezombie.Distance})m" : "";
-                    Renderer.DrawTextCentered($"Zombie({basezombie.Distance}m)", basezombie.W2S.x, basezombie.W2S.y, ZombieFont, new Direct2DColor(basezombie.Colour.r, basezombie.Colour.g, basezombie.Colour.b, basezombie.Colour.a));
+                    Renderer.DrawTextCentered($"{tag}{distance}{basezombie.HeadW2S}", basezombie.W2S.x, basezombie.W2S.y, ZombieFont, new Direct2DColor(basezombie.Colour.r, basezombie.Colour.g, basezombie.Colour.b, basezombie.Colour.a));
+                    if (basezombie.Visible)
+                    {
+                        float Height = (basezombie.W2S.y - basezombie.HeadW2S.y);
+                        float Width = Height / 2;
+                        float HalfWidth = Width / 2;
+                        Renderer.FillRectangle((basezombie.W2S.x - HalfWidth + 1), basezombie.HeadW2S.y + 1, Width + 1, Height - 1, new Direct2DColor(basezombie.FilledBoxColour.r, basezombie.FilledBoxColour.g, basezombie.FilledBoxColour.b, basezombie.FilledBoxColour.a));
+                        Renderer.DrawRectangle(basezombie.W2S.x - HalfWidth, basezombie.HeadW2S.y, Width, Height, 3f, new Direct2DColor(0, 0, 0, 255)); // background
+                        Renderer.DrawRectangle(basezombie.W2S.x - HalfWidth, basezombie.HeadW2S.y, Width, Height, 1f, new Direct2DColor(basezombie.BoxColour.r, basezombie.BoxColour.g, basezombie.BoxColour.b, basezombie.BoxColour.a));
+                    }
+                    }
                 }
-            }
             catch { }
         }
         private void Render()

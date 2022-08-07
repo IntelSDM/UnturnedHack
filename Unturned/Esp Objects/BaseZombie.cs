@@ -16,6 +16,7 @@ namespace Hag.Esp_Objects
         public Zombie Entity;
 
         public bool Alive;
+        public bool Visible;
 
         public int Distance;
 

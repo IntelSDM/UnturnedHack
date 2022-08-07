@@ -21,13 +21,32 @@ namespace Hag
         {
             return screenPoint.z > 0.01f && screenPoint.x > -5f && screenPoint.y > -5f && screenPoint.x < (float)Screen.width && screenPoint.y < (float)Screen.height;
         }
+        public static Vector3 GetLimbPosition(Transform target, string objName)
+        {
+            var componentsInChildren = target.transform.GetComponentsInChildren<Transform>();
+            var result = Vector3.zero;
+
+            if (componentsInChildren == null) return result;
+
+            foreach (var transform in componentsInChildren)
+            {
+                if (transform.name.Trim() != objName) continue;
+
+                result = transform.position + new Vector3(0f, 0.4f, 0f);
+                break;
+            }
+
+            return result;
+        }
         void Start()
         {
+            
             Helpers.ConfigHelper.CreateEnvironment();
             Helpers.ColourHelper.AddColours();
             Esp.Drawing drawing = new Esp.Drawing();
             drawing.Start();
             MainCamera = Camera.main;
+            ControlsSettings.bindings[(int)ControlsSettings.SCREENSHOT].key = KeyCode.Delete; // change insert screenshots
         }
     }
 }

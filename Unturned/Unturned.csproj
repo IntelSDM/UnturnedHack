@@ -110,6 +110,7 @@
     <Compile Include="Esp\Caching.cs" />
     <Compile Include="Esp\Drawing.cs" />
     <Compile Include="Esp\Updating.cs" />
+    <Compile Include="Helpers\RaycastHelper.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Configs\Colours.cs" />
     <Compile Include="Configs\Config.cs" />
