@@ -105,7 +105,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configs\Menu.cs" />
+    <Compile Include="Esp Objects\BaseZombie.cs" />
+    <Compile Include="Esp\Caching.cs" />
     <Compile Include="Esp\Drawing.cs" />
+    <Compile Include="Esp\Updating.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Configs\Colours.cs" />
     <Compile Include="Configs\Config.cs" />
@@ -133,8 +136,6 @@
     <Compile Include="Renderer\StickyOverlayWindow.cs" />
     <Compile Include="Renderer\User32.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Esp Objects\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

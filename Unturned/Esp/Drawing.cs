@@ -11,7 +11,8 @@ using SharpDX;
 using SharpDX.Direct2D1;
 using UnityEngine;
 using System.IO;
-
+using Hag.Esp_Objects;
+using SDG.Unturned;
 namespace Hag.Esp
 {
 
@@ -47,6 +48,9 @@ namespace Hag.Esp
         Direct2DFont Tahoma2;
         Direct2DFont Tahoma3;
         Direct2DFont Tahoma4;
+
+        Direct2DFont ZombieFont;
+
         public void Start()
         {
 
@@ -81,6 +85,7 @@ namespace Hag.Esp
             Tahoma2 = Renderer.CreateFont("Tahoma", 9);
             Tahoma3 = Renderer.CreateFont("Tahoma", 12);
             Tahoma4 = Renderer.CreateFont("Tahoma", 10);
+            ZombieFont = Renderer.CreateFont("Tahoma", 9);
             new Thread(delegate ()
             {
 
@@ -88,6 +93,21 @@ namespace Hag.Esp
             }).Start();
 
 
+        }
+        void DrawZombie()
+        {
+            try
+            {
+                if (Globals.LocalPlayer == null || !Provider.isConnected)
+                    return;
+                foreach (BaseZombie basezombie in Globals.ZombieList)
+                {
+                    if (!Globals.IsScreenPointVisible(basezombie.W2S) && !basezombie.Alive)
+                        continue;
+                    Renderer.DrawTextCentered($"Zombie({basezombie.Distance}m)", basezombie.W2S.x, basezombie.W2S.y, ZombieFont, new Direct2DColor(basezombie.Colour.r, basezombie.Colour.g, basezombie.Colour.b, basezombie.Colour.a));
+                }
+            }
+            catch { }
         }
         private void Render()
         {
@@ -108,7 +128,7 @@ namespace Hag.Esp
 
                     #endregion
                     Renderer.DrawCrosshair(CrosshairStyle.Gap, Screen.width / 2, Screen.height / 2, 6, 1, new Direct2DColor(255, 0, 0, 255));
-
+                    DrawZombie();
 
                     #region End
                     Menu.RenderMenu.Render(Renderer);

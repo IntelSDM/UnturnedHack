@@ -20,7 +20,7 @@ namespace Hag.Helpers
             AddColour("Menu Secondary Colour", Color.white);
             AddColour("Radar Colour", new Color32(10, 10, 10, 180));
 
-
+            AddColour("Zombie Colour", Color.magenta);
 
         }
         public static Color32 GetColour(string identifier)

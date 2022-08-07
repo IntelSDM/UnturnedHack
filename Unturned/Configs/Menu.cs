@@ -9,6 +9,6 @@ namespace Hag.Configs
     class Menu
     {
         public int Menux = 15;
-        public int Menuy = 200;
+        public int Menuy = 50;
     }
 }

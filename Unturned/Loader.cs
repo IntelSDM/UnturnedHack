@@ -13,7 +13,10 @@ namespace Hag
         public static void Load()
         {
             Hackobject.AddComponent<Globals>();
-            Hackobject.AddComponent<>(RenderMenu)();
+            Hackobject.AddComponent<RenderMenu>();
+            Hackobject.AddComponent<Hag.Esp.Caching>();
+            Hackobject.AddComponent<Hag.Esp.Updating>();
+            GameObject.DontDestroyOnLoad(Hackobject);
         }
         private static GameObject Hackobject = new GameObject();
         // usablen.project = create shoot function
