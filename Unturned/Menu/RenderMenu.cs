@@ -33,8 +33,31 @@ namespace Hag.Menu
         {
 
             MainMenu();
+            Zombies();
             ColourPicker();
             StartCoroutine(KeyControls());
+        }
+        void Zombies()
+        {
+            SubMenu ZombieEsp = new SubMenu("Zombie ESP", "Draw Zombie Visuals");
+            Toggle enable = new Toggle("Enable", "Enable Zombie Esp", ref Globals.Config.Zombie.Enable);
+            Toggle name = new Toggle("Name", "Draw Name Of Zombie", ref Globals.Config.Zombie.Tag);
+            Toggle distance = new Toggle("Distance", "Draw Distance From Zombie", ref Globals.Config.Zombie.Distance);
+            IntSlider maxdistance = new IntSlider("Max Distance", "Maximum Draw Distance Of Zombies", ref Globals.Config.Zombie.MaxDistance, 0, 2000, 25);
+            Toggle box3d = new Toggle("3D Box", "Draws Box Around Dimensions Of Zombie", ref Globals.Config.Zombie.Box3D);
+            Toggle box2d = new Toggle("2D Box", "Draws Box From Head To Toe Of Zombie", ref Globals.Config.Zombie.Box);
+            Toggle fillbox = new Toggle("Fill Box", "Fills The Box", ref Globals.Config.Zombie.FillBox);
+            Toggle visibleonly = new Toggle("Only Draw On Visible Zombies", "Draws Esp On Visible Zombies", ref Globals.Config.Zombie.OnlyDrawVisible);
+            ZombieEsp.Items.Add(enable);
+            ZombieEsp.Items.Add(name);
+            ZombieEsp.Items.Add(distance);
+            ZombieEsp.Items.Add(maxdistance);
+            ZombieEsp.Items.Add(box3d);
+            ZombieEsp.Items.Add(box2d);
+            ZombieEsp.Items.Add(fillbox);
+            ZombieEsp.Items.Add(visibleonly);
+            Esp.Items.Add(ZombieEsp);
+
         }
         void ColourPicker()
         {

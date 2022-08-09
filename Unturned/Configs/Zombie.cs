@@ -15,7 +15,7 @@ namespace Hag.Configs
         public bool Box = true;
         public bool Box3D = false;
         public bool FillBox = true;
-        public bool OnlyDrawVisible = true;
+        public bool OnlyDrawVisible = false;
         public bool Chams;
         public bool Glow;
     }

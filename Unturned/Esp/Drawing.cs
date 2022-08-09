@@ -106,7 +106,7 @@ namespace Hag.Esp
                         continue;
                     if (basezombie.Distance > Globals.Config.Zombie.MaxDistance)
                         continue;
-                    if (!Globals.Config.Zombie.OnlyDrawVisible || (Globals.Config.Zombie.OnlyDrawVisible && !basezombie.Visible))
+                    if ((Globals.Config.Zombie.OnlyDrawVisible && !basezombie.Visible))
                         continue;
                     string tag = Globals.Config.Zombie.Tag ? basezombie.Tag : "";
                     string distance = Globals.Config.Zombie.Distance ? $"({basezombie.Distance}m)" : "";
@@ -127,19 +127,16 @@ namespace Hag.Esp
 
                     if (Globals.Config.Zombie.Box && Globals.Config.Zombie.FillBox)
                     {
-                        Renderer.FillRectangle((basezombie.W2S.x - halfwidth + 1), basezombie.W2S.y + 1, width + 1, height - 1, new Direct2DColor(basezombie.FilledBoxColour.r, basezombie.FilledBoxColour.g, basezombie.FilledBoxColour.b, basezombie.FilledBoxColour.a));
-                        Renderer.DrawRectangle(basezombie.W2S.x - halfwidth, basezombie.W2S.y, width, height, 3f, new Direct2DColor(0, 0, 0, 255)); // background
-                        Renderer.DrawRectangle(basezombie.W2S.x - halfwidth, basezombie.W2S.y, width, height, 1f, new Direct2DColor(basezombie.BoxColour.r, basezombie.BoxColour.g, basezombie.BoxColour.b, basezombie.BoxColour.a));
+                        Renderer.FillRectangle((basezombie.HeadW2S.x - halfwidth + 1), basezombie.W2S.y + 1, width + 1, height - 1, new Direct2DColor(basezombie.FilledBoxColour.r, basezombie.FilledBoxColour.g, basezombie.FilledBoxColour.b, basezombie.FilledBoxColour.a));
+                        Renderer.DrawRectangle(basezombie.HeadW2S.x - halfwidth, basezombie.W2S.y, width, height, 3f, new Direct2DColor(0, 0, 0, 255)); // background
+                        Renderer.DrawRectangle(basezombie.HeadW2S.x - halfwidth, basezombie.W2S.y, width, height, 1f, new Direct2DColor(basezombie.BoxColour.r, basezombie.BoxColour.g, basezombie.BoxColour.b, basezombie.BoxColour.a));
                     }
                     if (Globals.Config.Zombie.Box && !Globals.Config.Zombie.FillBox)
                     {
-                        Renderer.DrawRectangle(basezombie.W2S.x - halfwidth, basezombie.W2S.y, width, height, 3f, new Direct2DColor(0, 0, 0, 255)); // background
-                        Renderer.DrawRectangle(basezombie.W2S.x - halfwidth, basezombie.W2S.y, width, height, 1f, new Direct2DColor(basezombie.BoxColour.r, basezombie.BoxColour.g, basezombie.BoxColour.b, basezombie.BoxColour.a));
+                        Renderer.DrawRectangle(basezombie.HeadW2S.x - halfwidth, basezombie.W2S.y, width, height, 3f, new Direct2DColor(0, 0, 0, 255)); // background
+                        Renderer.DrawRectangle(basezombie.HeadW2S.x - halfwidth, basezombie.W2S.y, width, height, 1f, new Direct2DColor(basezombie.BoxColour.r, basezombie.BoxColour.g, basezombie.BoxColour.b, basezombie.BoxColour.a));
                     }
-                    if (basezombie.Visible)
-                    {
-                      
-                    }
+
                 }
             }
             catch { }

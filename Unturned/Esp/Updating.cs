@@ -34,15 +34,23 @@ namespace Hag.Esp
                         if (zombie == null)
                             continue;
                         bz.Distance = (int)Vector3.Distance(zombie.transform.position, Globals.LocalPlayer.transform.position);
-                        bz.Colour = ColourHelper.GetColour("Zombie Colour");
+                        bz.Colour = ColourHelper.GetColour("Zombie Text Colour");
                         bz.W2S = WorldPointToScreenPoint(zombie.transform.position);
                         bz.HeadW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(zombie.transform, "Skull"));
                         bz.FootW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(zombie.transform, "Left_Foot"));
                         bz.Alive = !zombie.isDead;
                         bz.Visible = RaycastHelper.IsPointVisible(zombie, Globals.GetLimbPosition(zombie.transform, "Skull"));
-                        bz.BoxColour = ColourHelper.GetColour("Zombie Box Colour");
-                        bz.FilledBoxColour = ColourHelper.GetColour("Zombie Filled Box Colour");
-                        bz.Bounds = zombie.gameObject.GetComponent<Collider>().bounds;
+                        if (bz.Visible)
+                        {
+                            bz.BoxColour = ColourHelper.GetColour("Zombie Visible Box Colour");
+                            bz.FilledBoxColour = ColourHelper.GetColour("Zombie Visible Filled Box Colour");
+                        }
+                        else 
+                        {
+                            bz.BoxColour = ColourHelper.GetColour("Zombie Invisible Box Colour");
+                            bz.FilledBoxColour = ColourHelper.GetColour("Zombie Invisible Filled Box Colour");
+                        }
+                            bz.Bounds = new Bounds(bz.Entity.transform.position + new Vector3(0, 1.1f, 0), bz.Entity.transform.localScale + new Vector3(0, .95f, 0));
                         switch (zombie.speciality)
                         {
                             case EZombieSpeciality.ACID:
@@ -106,12 +114,12 @@ namespace Hag.Esp
                                 bz.Tag = "Zombie";
                                 break;
                         }
-                        bz.BoundPoints[0] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x + bz.Bounds.extents.x, bz.Bounds.center.y + bz.Bounds.extents.y, bz.Bounds.center.z + bz.Bounds.extents.z));
-                        bz.BoundPoints[1] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x + bz.Bounds.extents.x, bz.Bounds.center.y + bz.Bounds.extents.y, bz.Bounds.center.z - bz.Bounds.extents.z));
+                        bz.BoundPoints[0] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x + bz.Bounds.extents.x, Globals.GetLimbPosition(zombie.transform, "Skull").y + (bz.Bounds.extents.y / 2), bz.Bounds.center.z + bz.Bounds.extents.z));
+                        bz.BoundPoints[1] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x + bz.Bounds.extents.x,  Globals.GetLimbPosition(zombie.transform, "Skull").y + (bz.Bounds.extents.y / 2), bz.Bounds.center.z - bz.Bounds.extents.z));
                         bz.BoundPoints[2] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x + bz.Bounds.extents.x, bz.Bounds.center.y - bz.Bounds.extents.y, bz.Bounds.center.z + bz.Bounds.extents.z));
                         bz.BoundPoints[3] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x + bz.Bounds.extents.x, bz.Bounds.center.y - bz.Bounds.extents.y, bz.Bounds.center.z - bz.Bounds.extents.z));
-                        bz.BoundPoints[4] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x - bz.Bounds.extents.x, bz.Bounds.center.y + bz.Bounds.extents.y, bz.Bounds.center.z + bz.Bounds.extents.z));
-                        bz.BoundPoints[5] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x - bz.Bounds.extents.x, bz.Bounds.center.y + bz.Bounds.extents.y, bz.Bounds.center.z - bz.Bounds.extents.z));
+                        bz.BoundPoints[4] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x - bz.Bounds.extents.x, Globals.GetLimbPosition(zombie.transform, "Skull").y + (bz.Bounds.extents.y / 2), bz.Bounds.center.z + bz.Bounds.extents.z));
+                        bz.BoundPoints[5] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x - bz.Bounds.extents.x, Globals.GetLimbPosition(zombie.transform, "Skull").y + (bz.Bounds.extents.y / 2), bz.Bounds.center.z - bz.Bounds.extents.z));
                         bz.BoundPoints[6] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x - bz.Bounds.extents.x, bz.Bounds.center.y - bz.Bounds.extents.y, bz.Bounds.center.z + bz.Bounds.extents.z));
                         bz.BoundPoints[7] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x - bz.Bounds.extents.x, bz.Bounds.center.y - bz.Bounds.extents.y, bz.Bounds.center.z - bz.Bounds.extents.z));
 
