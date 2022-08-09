@@ -33,8 +33,48 @@ namespace Hag.Menu
         {
 
             MainMenu();
+            ColourPicker();
             StartCoroutine(KeyControls());
         }
+        void ColourPicker()
+        {
+            Dictionary<string,SubMenu> CreatedMenuList = new Dictionary<string, SubMenu>();
+            foreach (KeyValuePair<string, Color32> value in Globals.Config.Colours.GlobalColors)
+            {
+              
+                    string HostColourMenuString = value.Key.Substring(0, value.Key.IndexOf(" ")); // find the first space and end there
+                    SubMenu HostMenu = new SubMenu(HostColourMenuString, "Fully Automated Colour System And Automated Categorization");
+                    if (CreatedMenuList.ContainsKey(HostColourMenuString))
+                        HostMenu = CreatedMenuList[HostColourMenuString];
+                    else
+                    {
+                        CreatedMenuList[HostColourMenuString] = HostMenu;
+                    }
+                         SubMenu colourmenu = new SubMenu(value.Key.Substring(value.Key.IndexOf(" ") +1,value.Key.Length - value.Key.IndexOf(" ") -1), "Fully Automated Colour System And Automated Categorization");
+                         int alpha = Helpers.ColourHelper.GetColour(value.Key).a;
+                         IntSlider slidera = new IntSlider("Alpha", "Change The Colour Opacity", ref alpha, 0, 255, 10);
+                         int red = Helpers.ColourHelper.GetColour(value.Key).r;
+                         IntSlider sliderr = new IntSlider("Red", "Change Amount Of Red In Colour", ref red, 0, 255, 10);
+                         int green = Helpers.ColourHelper.GetColour(value.Key).g;
+                         IntSlider sliderg = new IntSlider("Green", "Change Amount Of Green In Colour", ref green, 0, 255, 10);
+                         int blue = Helpers.ColourHelper.GetColour(value.Key).b;
+                         IntSlider sliderb = new IntSlider("Blue", "Change Amount Of Blue In Colour", ref blue, 0, 255, 10);
+                         colourmenu.Items.Add(slidera);
+                         colourmenu.Items.Add(sliderr);
+                         colourmenu.Items.Add(sliderg);
+                         colourmenu.Items.Add(sliderb);
+                         colourmenu.Items.Add(new Button("Save Colour", "Right Arrow To Save The Colour", () => Helpers.ColourHelper.SetColour(value.Key, new Color32((byte)red, (byte)green, (byte)blue, (byte)alpha))));
+                         HostMenu.Items.Add(colourmenu);
+                    
+              
+                // got to add the menus after we have initialized all the values
+          
+            }
+            foreach (SubMenu menu in CreatedMenuList.Values)
+                Colours.Items.Add(menu);
+          
+        }
+
         #region Vars
 
         static SubMenu Main = new SubMenu("Main", "Menu");
@@ -117,7 +157,7 @@ namespace Hag.Menu
 
                     if (Input.GetKeyDown(KeyCode.Insert))
                         ShowGUI = !ShowGUI;
-                    if (Input.GetKeyDown(KeyCode.DownArrow) && CurrentMenu.index < CurrentMenu.Items.Count)
+                    if (Input.GetKeyDown(KeyCode.DownArrow) && CurrentMenu.index < CurrentMenu.Items.Count -1)
                         CurrentMenu.index++;
                     if (Input.GetKeyDown(KeyCode.UpArrow) && CurrentMenu.index > 0)
                         CurrentMenu.index--;
