@@ -38,6 +38,12 @@ namespace Hag
 
             return result;
         }
+        public static Vector3 WorldPointToScreenPoint(Vector3 worldPoint)
+        {
+            Vector3 vector = Globals.MainCamera.WorldToScreenPoint(worldPoint);
+            vector.y = (float)Screen.height - vector.y;
+            return vector;
+        }
         void Start()
         {
             

@@ -24,12 +24,18 @@ namespace Hag.Esp_Objects
 
         public Vector3 W2S;
         public Vector3 HeadW2S;
+        public Vector3 FootW2S;
+
+        public Bounds Bounds;
+        public UnityEngine.Vector3[] BoundPoints = new UnityEngine.Vector3[8];
+        public Vector3[] BonePosition = new Vector3[14];
 
         public Color32 Colour;
         public Color32 VisibleColour;
         public Color32 InvisibleColour;
         public Color32 BoxColour;
         public Color32 FilledBoxColour;
+
 
     }
 }

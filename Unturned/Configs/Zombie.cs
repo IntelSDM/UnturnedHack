@@ -13,7 +13,9 @@ namespace Hag.Configs
         public bool Distance = true;
         public int MaxDistance = 200;
         public bool Box = true;
+        public bool Box3D = false;
         public bool FillBox = true;
+        public bool OnlyDrawVisible = true;
         public bool Chams;
         public bool Glow;
     }

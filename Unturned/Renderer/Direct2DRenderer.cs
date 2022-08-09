@@ -829,7 +829,99 @@ namespace Hag.Renderer
             sink.Dispose();
             geometry.Dispose();
         }
+        public void DrawBox3DOutline(UnityEngine.Vector3[] pts,Direct2DColor color)
+        {
+            
+            DrawLine(pts[0].x, pts[0].y, pts[1].x, pts[1].y, 1, color);
+            DrawLine(pts[0].x, pts[0].y, pts[2].x, pts[2].y, 1, color);
+            DrawLine(pts[2].x, pts[2].y, pts[3].x, pts[3].y, 1, color);
+            DrawLine(pts[3].x, pts[3].y, pts[1].x, pts[1].y, 1, color);
 
+            DrawLine(pts[4].x, pts[4].y, pts[5].x, pts[5].y, 1, color);
+            DrawLine(pts[4].x, pts[4].y, pts[6].x, pts[6].y, 1, color);
+            DrawLine(pts[6].x, pts[6].y, pts[7].x, pts[7].y, 1, color);
+            DrawLine(pts[7].x, pts[7].y, pts[5].x, pts[5].y, 1, color);
+
+            DrawLine(pts[0].x, pts[0].y, pts[4].x, pts[4].y, 1, color);
+            DrawLine(pts[3].x, pts[3].y, pts[7].x, pts[7].y, 1, color);
+
+            DrawLine(pts[1].x, pts[1].y, pts[5].x, pts[5].y, 1, color);
+            DrawLine(pts[2].x, pts[2].y, pts[6].x, pts[6].y, 1, color);
+
+        }
+        public void DrawBox3D(UnityEngine.Vector3[] pts, Direct2DColor interiorColor, Direct2DColor color)
+        {
+            var geometry = new PathGeometry(factory);
+
+            var sink = geometry.Open();
+
+            sink.BeginFigure(new RawVector2(pts[0].x, pts[0].y), FigureBegin.Hollow);
+            sink.AddLine(new RawVector2(pts[1].x, pts[1].y));
+            sink.AddLine(new RawVector2(pts[3].x, pts[3].y));
+            sink.AddLine(new RawVector2(pts[2].x, pts[2].y));
+            sink.EndFigure(FigureEnd.Closed);
+
+            sink.BeginFigure(new RawVector2(pts[4].x, pts[4].y), FigureBegin.Hollow);
+            sink.AddLine(new RawVector2(pts[5].x, pts[5].y));
+            sink.AddLine(new RawVector2(pts[7].x, pts[7].y));
+            sink.AddLine(new RawVector2(pts[6].x, pts[6].y));
+            sink.EndFigure(FigureEnd.Closed);
+            
+
+            sink.BeginFigure(new RawVector2(pts[0].x, pts[0].y), FigureBegin.Hollow);
+            sink.AddLine(new RawVector2(pts[2].x, pts[2].y));
+            sink.AddLine(new RawVector2(pts[6].x, pts[6].y));
+            sink.AddLine(new RawVector2(pts[4].x, pts[4].y));
+            sink.EndFigure(FigureEnd.Closed);
+
+            sink.BeginFigure(new RawVector2(pts[1].x, pts[1].y), FigureBegin.Hollow);
+            sink.AddLine(new RawVector2(pts[5].x, pts[5].y));
+            sink.AddLine(new RawVector2(pts[7].x, pts[7].y));
+            sink.AddLine(new RawVector2(pts[3].x, pts[3].y));
+            sink.EndFigure(FigureEnd.Closed);
+
+            sink.Close();
+
+          
+
+            sharedBrush.Color = color;
+
+            device.DrawGeometry(geometry, sharedBrush,1);
+
+            sharedBrush.Color = interiorColor;
+
+            device.FillGeometry(geometry, sharedBrush);
+
+            sink.Dispose();
+            geometry.Dispose();
+        }
+        public void DrawBox2D(UnityEngine.Vector3[] pts, Direct2DColor interiorColor, Direct2DColor color)
+        {
+            var geometry = new PathGeometry(factory);
+
+            var sink = geometry.Open();
+
+            sink.BeginFigure(new RawVector2(pts[0].x, pts[0].y), FigureBegin.Hollow);
+            sink.AddLine(new RawVector2(pts[1].x, pts[1].y));
+            sink.AddLine(new RawVector2(pts[3].x, pts[3].y));
+            sink.AddLine(new RawVector2(pts[2].x, pts[2].y));
+            sink.EndFigure(FigureEnd.Closed);
+
+            sink.Close();
+
+
+
+            sharedBrush.Color = color;
+
+            device.DrawGeometry(geometry, sharedBrush, 1);
+
+            sharedBrush.Color = interiorColor;
+
+            device.FillGeometry(geometry, sharedBrush);
+
+            sink.Dispose();
+            geometry.Dispose();
+        }
         public void DrawBox2D(float x, float y, float width, float height, float stroke, Direct2DBrush interiorBrush, Direct2DBrush brush)
         {
             var geometry = new PathGeometry(factory);
