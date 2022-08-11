@@ -15,6 +15,11 @@ namespace Hag.Esp
         {
             StartCoroutine(CacheVars());
             StartCoroutine(Zombie());
+            try
+            {
+                StartCoroutine(Players());
+            }
+            catch (Exception ex) { System.IO.File.WriteAllText("dgdfg.txt", ex.ToString()); }
         }
         IEnumerator CacheVars()
         {
@@ -43,6 +48,30 @@ namespace Hag.Esp
                 }
                 yield return new WaitForSeconds(3f);
             }
+        }
+        IEnumerator Players()
+        {
+          
+                for (; ; )
+                {
+                    if (Globals.LocalPlayer == null || !Provider.isConnected)
+                        yield return new WaitForSeconds(3.5f);
+                    if (!Globals.EndedFrame)
+                        continue;
+                    Globals.PlayerList.Clear();
+                    foreach (SteamPlayer player in Provider.clients)
+                    {
+                        if (player == null)
+                            continue;
+                    if (player.player == Globals.LocalPlayer)
+                        continue;
+
+                    BasePlayer baseplayer = new BasePlayer(player.player,player);
+                        Globals.PlayerList.Add(baseplayer);
+                    }
+                    yield return new WaitForSeconds(3.5f);
+                }
+         
         }
     }
   

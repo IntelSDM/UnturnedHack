@@ -25,7 +25,16 @@ namespace Hag.Helpers
             AddColour("Zombie Visible Box Colour", Color.magenta);
             AddColour("Zombie Invisible Filled Box Colour", new Color32(0, 0, 0, 95));
             AddColour("Zombie Invisible Box Colour", Color.red);
+            AddColour("Zombie Bone Invisible Colour", Color.magenta);
+            AddColour("Zombie Bone Visible Colour", Color.red);
 
+            AddColour("Player Text Colour", Color.red);
+            AddColour("Player Visible Filled Box Colour", new Color32(255, 0, 100, 50));
+            AddColour("Player Visible Box Colour", Color.magenta);
+            AddColour("Player Invisible Filled Box Colour", new Color32(0, 0, 0, 95));
+            AddColour("Player Invisible Box Colour", Color.red);
+            AddColour("Player Bone Invisible Colour", Color.magenta);
+            AddColour("Player Bone Visible Colour", Color.red);
         }
         public static Color32 GetColour(string identifier)
         {

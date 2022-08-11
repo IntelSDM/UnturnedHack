@@ -50,7 +50,7 @@ namespace Hag.Esp
         Direct2DFont Tahoma4;
 
         Direct2DFont ZombieFont;
-
+        Direct2DFont PlayerFont;
         public void Start()
         {
 
@@ -86,6 +86,7 @@ namespace Hag.Esp
             Tahoma3 = Renderer.CreateFont("Tahoma", 12);
             Tahoma4 = Renderer.CreateFont("Tahoma", 10);
             ZombieFont = Renderer.CreateFont("Tahoma", 9);
+            PlayerFont = Renderer.CreateFont("Tahoma", 10);
             new Thread(delegate ()
             {
 
@@ -102,6 +103,8 @@ namespace Hag.Esp
                     return;
                 foreach (BaseZombie basezombie in Globals.ZombieList)
                 {
+                    if (basezombie.Entity == null || basezombie == null)
+                        continue;
                     if (!Globals.IsScreenPointVisible(basezombie.W2S) || !basezombie.Alive)
                         continue;
                     if (basezombie.Distance > Globals.Config.Zombie.MaxDistance)
@@ -110,7 +113,7 @@ namespace Hag.Esp
                         continue;
                     string tag = Globals.Config.Zombie.Tag ? basezombie.Tag : "";
                     string distance = Globals.Config.Zombie.Distance ? $"({basezombie.Distance}m)" : "";
-                    Renderer.DrawTextCentered($"{tag}{distance}", basezombie.W2S.x, basezombie.W2S.y, ZombieFont, new Direct2DColor(basezombie.Colour.r, basezombie.Colour.g, basezombie.Colour.b, basezombie.Colour.a));
+                  
                     if (Globals.Config.Zombie.Box3D && !Globals.Config.Zombie.FillBox)
                         Renderer.DrawBox3DOutline(basezombie.BoundPoints, new Direct2DColor(basezombie.BoxColour.r, basezombie.BoxColour.g, basezombie.BoxColour.b, basezombie.BoxColour.a));
                     if (Globals.Config.Zombie.Box3D && Globals.Config.Zombie.FillBox)
@@ -136,7 +139,101 @@ namespace Hag.Esp
                         Renderer.DrawRectangle(basezombie.HeadW2S.x - halfwidth, basezombie.W2S.y, width, height, 3f, new Direct2DColor(0, 0, 0, 255)); // background
                         Renderer.DrawRectangle(basezombie.HeadW2S.x - halfwidth, basezombie.W2S.y, width, height, 1f, new Direct2DColor(basezombie.BoxColour.r, basezombie.BoxColour.g, basezombie.BoxColour.b, basezombie.BoxColour.a));
                     }
+                    if (Globals.Config.Zombie.Skeleton)
+                    {
+                        for ( int i = 0;  i < basezombie.BonePosition.Length; i++)
+                        {
+                    //        Renderer.DrawTextCentered($"{ i.ToString()}", basezombie.BonePosition[i].x, basezombie.BonePosition[i].y, ZombieFont, new Direct2DColor(basezombie.Colour.r, basezombie.Colour.g, basezombie.Colour.b, basezombie.Colour.a));
+                        }
+                        
+                        Renderer.DrawLine(basezombie.BonePosition[9].x, basezombie.BonePosition[9].y, basezombie.BonePosition[10].x, basezombie.BonePosition[10].y, 1, new Direct2DColor(basezombie.BoneColour[9].r, basezombie.BoneColour[9].g, basezombie.BoneColour[9].b, basezombie.BoneColour[9].a)); // kinda above the "Spine", basically the real spine
+                        Renderer.DrawLine(basezombie.BonePosition[10].x, basezombie.BonePosition[10].y, basezombie.BonePosition[8].x, basezombie.BonePosition[8].y, 1, new Direct2DColor(basezombie.BoneColour[10].r, basezombie.BoneColour[10].g, basezombie.BoneColour[10].b, basezombie.BoneColour[10].a));
 
+                        Renderer.DrawLine(basezombie.BonePosition[10].x, basezombie.BonePosition[10].y, basezombie.BonePosition[4].x, basezombie.BonePosition[4].y, 1, new Direct2DColor(basezombie.BoneColour[4].r, basezombie.BoneColour[4].g, basezombie.BoneColour[4].b, basezombie.BoneColour[4].a));
+                        Renderer.DrawLine(basezombie.BonePosition[10].x, basezombie.BonePosition[10].y, basezombie.BonePosition[5].x, basezombie.BonePosition[5].y, 1, new Direct2DColor(basezombie.BoneColour[5].r, basezombie.BoneColour[5].g, basezombie.BoneColour[5].b, basezombie.BoneColour[5].a));
+                        Renderer.DrawLine(basezombie.BonePosition[5].x, basezombie.BonePosition[5].y, basezombie.BonePosition[7].x, basezombie.BonePosition[7].y, 1, new Direct2DColor(basezombie.BoneColour[7].r, basezombie.BoneColour[7].g, basezombie.BoneColour[7].b, basezombie.BoneColour[7].a));
+                        Renderer.DrawLine(basezombie.BonePosition[4].x, basezombie.BonePosition[4].y, basezombie.BonePosition[6].x, basezombie.BonePosition[6].y, 1, new Direct2DColor(basezombie.BoneColour[6].r, basezombie.BoneColour[6].g, basezombie.BoneColour[6].b, basezombie.BoneColour[6].a));
+
+
+                        Renderer.DrawLine(basezombie.BonePosition[8].x, basezombie.BonePosition[8].y, basezombie.BonePosition[3].x, basezombie.BonePosition[3].y, 1, new Direct2DColor(basezombie.BoneColour[3].r, basezombie.BoneColour[3].g, basezombie.BoneColour[3].b, basezombie.BoneColour[3].a));
+                        Renderer.DrawLine(basezombie.BonePosition[3].x, basezombie.BonePosition[3].y, basezombie.BonePosition[1].x, basezombie.BonePosition[1].y, 1, new Direct2DColor(basezombie.BoneColour[1].r, basezombie.BoneColour[1].g, basezombie.BoneColour[1].b, basezombie.BoneColour[1].a));
+                        Renderer.DrawLine(basezombie.BonePosition[8].x, basezombie.BonePosition[8].y, basezombie.BonePosition[2].x, basezombie.BonePosition[2].y, 1, new Direct2DColor(basezombie.BoneColour[2].r, basezombie.BoneColour[2].g, basezombie.BoneColour[2].b, basezombie.BoneColour[2].a));
+                        Renderer.DrawLine(basezombie.BonePosition[2].x, basezombie.BonePosition[2].y, basezombie.BonePosition[0].x, basezombie.BonePosition[0].y, 1, new Direct2DColor(basezombie.BoneColour[0].r, basezombie.BoneColour[0].g, basezombie.BoneColour[0].b, basezombie.BoneColour[0].a));
+
+                       Renderer.DrawCircle(basezombie.HeadW2S.x, basezombie.HeadW2S.y, basezombie.Distance > 10 ? 30 / (basezombie.Distance /10) : 10, 1, new Direct2DColor(basezombie.BoneColour[9].r, basezombie.BoneColour[9].g, basezombie.BoneColour[9].b, basezombie.BoneColour[9].a));
+                  
+                    }
+                    Renderer.DrawTextCentered($"{tag}{distance}", basezombie.W2S.x, basezombie.W2S.y, ZombieFont, new Direct2DColor(basezombie.Colour.r, basezombie.Colour.g, basezombie.Colour.b, basezombie.Colour.a));
+                }
+            }
+            catch { }
+        }
+        void DrawPlayer()
+        {
+            try
+            {
+                if (Globals.LocalPlayer == null || !Provider.isConnected || !Globals.Config.Player.Enable)
+                    return;
+                foreach (BasePlayer baseplayer in Globals.PlayerList)
+                {
+                    if (baseplayer.Entity == null || baseplayer == null)
+                        continue;
+                    if (!Globals.IsScreenPointVisible(baseplayer.W2S) || !baseplayer.Alive)
+                        continue;
+                    if (baseplayer.Distance > Globals.Config.Player.MaxDistance)
+                        continue;
+                    if ((Globals.Config.Player.OnlyDrawVisible && !baseplayer.Visible))
+                        continue;
+                    string tag = Globals.Config.Player.Name ? baseplayer.Name : "";
+                    string distance = Globals.Config.Player.Distance ? $"({baseplayer.Distance}m)" : "";
+                    string weapon = Globals.Config.Player.Weapon ? $"\n{baseplayer.Weapon}" : "";
+                    if (Globals.Config.Player.Box3D && !Globals.Config.Player.FillBox)
+                        Renderer.DrawBox3DOutline(baseplayer.BoundPoints, new Direct2DColor(baseplayer.BoxColour.r, baseplayer.BoxColour.g, baseplayer.BoxColour.b, baseplayer.BoxColour.a));
+                    if (Globals.Config.Player.Box3D && Globals.Config.Player.FillBox)
+                        Renderer.DrawBox3D(baseplayer.BoundPoints, new Direct2DColor(baseplayer.FilledBoxColour.r, baseplayer.FilledBoxColour.g, baseplayer.FilledBoxColour.b, baseplayer.FilledBoxColour.a), new Direct2DColor(baseplayer.BoxColour.r, baseplayer.BoxColour.g, baseplayer.BoxColour.b, baseplayer.BoxColour.a));
+
+                    float height = baseplayer.BoundPoints[0].y - baseplayer.BoundPoints[2].y;
+                    float width1 = UnityEngine.Vector3.Distance(baseplayer.BoundPoints[2], baseplayer.BoundPoints[7]);
+                    float width2 = UnityEngine.Vector3.Distance(baseplayer.BoundPoints[3], baseplayer.BoundPoints[6]);
+                    float width = width1 > width2 ? width1 : width2;
+                    float halfwidth = width / 2;
+
+                    if (Globals.Config.Player.Box && Globals.Config.Player.FillBox)
+                    {
+                        Renderer.FillRectangle((baseplayer.HeadW2S.x - halfwidth + 1), baseplayer.W2S.y + 1, width + 1, height - 1, new Direct2DColor(baseplayer.FilledBoxColour.r, baseplayer.FilledBoxColour.g, baseplayer.FilledBoxColour.b, baseplayer.FilledBoxColour.a));
+                        Renderer.DrawRectangle(baseplayer.HeadW2S.x - halfwidth, baseplayer.W2S.y, width, height, 3f, new Direct2DColor(0, 0, 0, 255)); // background
+                        Renderer.DrawRectangle(baseplayer.HeadW2S.x - halfwidth, baseplayer.W2S.y, width, height, 1f, new Direct2DColor(baseplayer.BoxColour.r, baseplayer.BoxColour.g, baseplayer.BoxColour.b, baseplayer.BoxColour.a));
+                    }
+                    if (Globals.Config.Player.Box && !Globals.Config.Player.FillBox)
+                    {
+                        Renderer.DrawRectangle(baseplayer.HeadW2S.x - halfwidth, baseplayer.W2S.y, width, height, 3f, new Direct2DColor(0, 0, 0, 255)); // background
+                        Renderer.DrawRectangle(baseplayer.HeadW2S.x - halfwidth, baseplayer.W2S.y, width, height, 1f, new Direct2DColor(baseplayer.BoxColour.r, baseplayer.BoxColour.g, baseplayer.BoxColour.b, baseplayer.BoxColour.a));
+                    }
+                    if (Globals.Config.Player.Skeleton)
+                    {
+                      /*  for (int i = 0; i < baseplayer.BonePosition.Length; i++)
+                        {
+                            //        Renderer.DrawTextCentered($"{ i.ToString()}", baseplayer.BonePosition[i].x, baseplayer.BonePosition[i].y, ZombieFont, new Direct2DColor(baseplayer.Colour.r, baseplayer.Colour.g, baseplayer.Colour.b, baseplayer.Colour.a));
+                        }
+                      */
+                        Renderer.DrawLine(baseplayer.BonePosition[9].x, baseplayer.BonePosition[9].y, baseplayer.BonePosition[10].x, baseplayer.BonePosition[10].y, 1, new Direct2DColor(baseplayer.BoneColour[9].r, baseplayer.BoneColour[9].g, baseplayer.BoneColour[9].b, baseplayer.BoneColour[9].a)); // kinda above the "Spine", basically the real spine
+                        Renderer.DrawLine(baseplayer.BonePosition[10].x, baseplayer.BonePosition[10].y, baseplayer.BonePosition[8].x, baseplayer.BonePosition[8].y, 1, new Direct2DColor(baseplayer.BoneColour[10].r, baseplayer.BoneColour[10].g, baseplayer.BoneColour[10].b, baseplayer.BoneColour[10].a));
+
+                        Renderer.DrawLine(baseplayer.BonePosition[10].x, baseplayer.BonePosition[10].y, baseplayer.BonePosition[4].x, baseplayer.BonePosition[4].y, 1, new Direct2DColor(baseplayer.BoneColour[4].r, baseplayer.BoneColour[4].g, baseplayer.BoneColour[4].b, baseplayer.BoneColour[4].a));
+                        Renderer.DrawLine(baseplayer.BonePosition[10].x, baseplayer.BonePosition[10].y, baseplayer.BonePosition[5].x, baseplayer.BonePosition[5].y, 1, new Direct2DColor(baseplayer.BoneColour[5].r, baseplayer.BoneColour[5].g, baseplayer.BoneColour[5].b, baseplayer.BoneColour[5].a));
+                        Renderer.DrawLine(baseplayer.BonePosition[5].x, baseplayer.BonePosition[5].y, baseplayer.BonePosition[7].x, baseplayer.BonePosition[7].y, 1, new Direct2DColor(baseplayer.BoneColour[7].r, baseplayer.BoneColour[7].g, baseplayer.BoneColour[7].b, baseplayer.BoneColour[7].a));
+                        Renderer.DrawLine(baseplayer.BonePosition[4].x, baseplayer.BonePosition[4].y, baseplayer.BonePosition[6].x, baseplayer.BonePosition[6].y, 1, new Direct2DColor(baseplayer.BoneColour[6].r, baseplayer.BoneColour[6].g, baseplayer.BoneColour[6].b, baseplayer.BoneColour[6].a));
+
+
+                        Renderer.DrawLine(baseplayer.BonePosition[8].x, baseplayer.BonePosition[8].y, baseplayer.BonePosition[3].x, baseplayer.BonePosition[3].y, 1, new Direct2DColor(baseplayer.BoneColour[3].r, baseplayer.BoneColour[3].g, baseplayer.BoneColour[3].b, baseplayer.BoneColour[3].a));
+                        Renderer.DrawLine(baseplayer.BonePosition[3].x, baseplayer.BonePosition[3].y, baseplayer.BonePosition[1].x, baseplayer.BonePosition[1].y, 1, new Direct2DColor(baseplayer.BoneColour[1].r, baseplayer.BoneColour[1].g, baseplayer.BoneColour[1].b, baseplayer.BoneColour[1].a));
+                        Renderer.DrawLine(baseplayer.BonePosition[8].x, baseplayer.BonePosition[8].y, baseplayer.BonePosition[2].x, baseplayer.BonePosition[2].y, 1, new Direct2DColor(baseplayer.BoneColour[2].r, baseplayer.BoneColour[2].g, baseplayer.BoneColour[2].b, baseplayer.BoneColour[2].a));
+                        Renderer.DrawLine(baseplayer.BonePosition[2].x, baseplayer.BonePosition[2].y, baseplayer.BonePosition[0].x, baseplayer.BonePosition[0].y, 1, new Direct2DColor(baseplayer.BoneColour[0].r, baseplayer.BoneColour[0].g, baseplayer.BoneColour[0].b, baseplayer.BoneColour[0].a));
+
+                        Renderer.DrawCircle(baseplayer.HeadW2S.x, baseplayer.HeadW2S.y, baseplayer.Distance > 10 ? 30 / (baseplayer.Distance / 10) : 10, 1, new Direct2DColor(baseplayer.BoneColour[9].r, baseplayer.BoneColour[9].g, baseplayer.BoneColour[9].b, baseplayer.BoneColour[9].a));
+
+                    }
+                    Renderer.DrawTextCentered($"{tag}{distance}{weapon}", baseplayer.W2S.x, baseplayer.W2S.y, PlayerFont, new Direct2DColor(baseplayer.Colour.r, baseplayer.Colour.g, baseplayer.Colour.b, baseplayer.Colour.a));
                 }
             }
             catch { }
@@ -159,9 +256,11 @@ namespace Hag.Esp
                     catch { }
 
                     #endregion
-                    Renderer.DrawCrosshair(CrosshairStyle.Gap, Screen.width / 2, Screen.height / 2, 6, 1, new Direct2DColor(255, 0, 0, 255));
+                 
                     DrawZombie();
-
+                    DrawPlayer();
+                    Renderer.DrawText($"Zombies: {Globals.ZombieList.Count()}",10,10, PlayerFont, new Direct2DColor(0,255,0,255));
+                    Renderer.DrawCrosshair(CrosshairStyle.Gap, Screen.width / 2, Screen.height / 2, 6, 1, new Direct2DColor(255, 0, 0, 255));
                     #region End
                     Menu.RenderMenu.Render(Renderer);
                     try

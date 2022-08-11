@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Hag.Configs
 {
-    class Zombie
+    class Player
     {
         public bool Enable = true;
-        public bool Tag = true;
+        public bool Name = true;
+        public bool Weapon = true;
         public bool Distance = true;
-        public int MaxDistance = 200;
+        public int MaxDistance = 2000;
         public bool Box = true;
         public bool Box3D = false;
         public bool FillBox = true;

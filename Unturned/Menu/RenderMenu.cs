@@ -33,6 +33,7 @@ namespace Hag.Menu
         {
 
             MainMenu();
+            Players();
             Zombies();
             ColourPicker();
             StartCoroutine(KeyControls());
@@ -47,6 +48,7 @@ namespace Hag.Menu
             Toggle box3d = new Toggle("3D Box", "Draws Box Around Dimensions Of Zombie", ref Globals.Config.Zombie.Box3D);
             Toggle box2d = new Toggle("2D Box", "Draws Box From Head To Toe Of Zombie", ref Globals.Config.Zombie.Box);
             Toggle fillbox = new Toggle("Fill Box", "Fills The Box", ref Globals.Config.Zombie.FillBox);
+            Toggle skeleton = new Toggle("Skeleton", "Draws Bones With Visibility Checks", ref Globals.Config.Zombie.Skeleton);
             Toggle visibleonly = new Toggle("Only Draw On Visible Zombies", "Draws Esp On Visible Zombies", ref Globals.Config.Zombie.OnlyDrawVisible);
             ZombieEsp.Items.Add(enable);
             ZombieEsp.Items.Add(name);
@@ -55,8 +57,35 @@ namespace Hag.Menu
             ZombieEsp.Items.Add(box3d);
             ZombieEsp.Items.Add(box2d);
             ZombieEsp.Items.Add(fillbox);
+            ZombieEsp.Items.Add(skeleton);
             ZombieEsp.Items.Add(visibleonly);
             Esp.Items.Add(ZombieEsp);
+
+        }
+        void Players()
+        {
+            SubMenu playeresp = new SubMenu("Player ESP", "Draw Zombie Visuals");
+            Toggle enable = new Toggle("Enable", "Enable Player Esp", ref Globals.Config.Player.Enable);
+            Toggle name = new Toggle("Name", "Draw Name Of Player", ref Globals.Config.Player.Name);
+            Toggle distance = new Toggle("Distance", "Draw Distance From Player", ref Globals.Config.Player.Distance);
+            Toggle weapon = new Toggle("Weapon", "Draw Player's Weapon", ref Globals.Config.Player.Weapon);
+            IntSlider maxdistance = new IntSlider("Max Distance", "Maximum Draw Distance Of Players", ref Globals.Config.Player.MaxDistance, 0, 2000, 25);
+            Toggle box3d = new Toggle("3D Box", "Draws Box Around Dimensions Of Player", ref Globals.Config.Player.Box3D);
+            Toggle box2d = new Toggle("2D Box", "Draws Box From Head To Toe Of Player", ref Globals.Config.Player.Box);
+            Toggle fillbox = new Toggle("Fill Box", "Fills The Box", ref Globals.Config.Player.FillBox);
+            Toggle skeleton = new Toggle("Skeleton", "Draws Bones With Visibility Checks", ref Globals.Config.Player.Skeleton);
+            Toggle visibleonly = new Toggle("Only Draw On Visible Players", "Draws Esp On Visible Players", ref Globals.Config.Player.OnlyDrawVisible);
+            playeresp.Items.Add(enable);
+            playeresp.Items.Add(name);
+            playeresp.Items.Add(distance);
+            playeresp.Items.Add(weapon);
+            playeresp.Items.Add(maxdistance);
+            playeresp.Items.Add(box3d);
+            playeresp.Items.Add(box2d);
+            playeresp.Items.Add(fillbox);
+            playeresp.Items.Add(skeleton);
+            playeresp.Items.Add(visibleonly);
+            Esp.Items.Add(playeresp);
 
         }
         void ColourPicker()

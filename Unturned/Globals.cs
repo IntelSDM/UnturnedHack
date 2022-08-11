@@ -17,6 +17,7 @@ namespace Hag
         public static bool EndedFrame = true;
 
         public static List<BaseZombie> ZombieList = new List<BaseZombie>();
+        public static List<BasePlayer> PlayerList = new List<BasePlayer>();
         public static bool IsScreenPointVisible(Vector3 screenPoint)
         {
             return screenPoint.z > 0.01f && screenPoint.x > -5f && screenPoint.y > -5f && screenPoint.x < (float)Screen.width && screenPoint.y < (float)Screen.height;
@@ -31,8 +32,10 @@ namespace Hag
             foreach (var transform in componentsInChildren)
             {
                 if (transform.name.Trim() != objName) continue;
-
-                result = transform.position + new Vector3(0f, 0.4f, 0f);
+                if (objName == "Skull")
+                    result = transform.position + new Vector3(0f, 0.4f, 0f);
+                else
+                    result = transform.position;
                 break;
             }
 

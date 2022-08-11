@@ -12,5 +12,6 @@ namespace Hag.Configs
         public Colours Colours = new Colours();
         public Hag.Configs.Menu Menu = new Hag.Configs.Menu();
         public Hag.Configs.Zombie Zombie = new Hag.Configs.Zombie();
+        public Hag.Configs.Player Player = new Hag.Configs.Player();
     }
 }

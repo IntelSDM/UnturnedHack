@@ -7,20 +7,24 @@ using UnityEngine;
 using SDG.Unturned;
 namespace Hag.Esp_Objects
 {
-    class BaseZombie
+    class BasePlayer
     {
-        public BaseZombie(Zombie zombie)
+        public BasePlayer(Player player, SteamPlayer steamplayer)
         {
-            Entity = zombie;
+            Entity = player;
+            this.SteamPlayer = steamplayer;
         }
-        public Zombie Entity;
+        public Player Entity;
+        public SteamPlayer SteamPlayer;
 
         public bool Alive;
+        public bool NPC;
         public bool Visible;
 
         public int Distance;
 
-        public string Tag;
+        public string Name;
+        public string Weapon;
 
         public Vector3 W2S;
         public Vector3 HeadW2S;
