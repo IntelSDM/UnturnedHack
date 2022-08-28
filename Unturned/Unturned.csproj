@@ -104,6 +104,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aimbot\Aimbot.cs" />
+    <Compile Include="Configs\Aimbot.cs" />
+    <Compile Include="Configs\EntityAimbot.cs" />
     <Compile Include="Configs\Menu.cs" />
     <Compile Include="Configs\Player.cs" />
     <Compile Include="Configs\Zombie.cs" />

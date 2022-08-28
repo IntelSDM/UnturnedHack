@@ -13,5 +13,7 @@ namespace Hag.Configs
         public Hag.Configs.Menu Menu = new Hag.Configs.Menu();
         public Hag.Configs.Zombie Zombie = new Hag.Configs.Zombie();
         public Hag.Configs.Player Player = new Hag.Configs.Player();
+        public Hag.Configs.EntityAimbot ZombieAimbot = new Hag.Configs.EntityAimbot();
+        public Hag.Configs.Aimbot Aimbot = new Hag.Configs.Aimbot();
     }
 }

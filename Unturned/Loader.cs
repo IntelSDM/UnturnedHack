@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Hag.Menu;
+using Hag.Aimbot;
 namespace Hag
 {
     public static class Loader
@@ -16,6 +17,7 @@ namespace Hag
             Hackobject.AddComponent<RenderMenu>();
             Hackobject.AddComponent<Hag.Esp.Caching>();
             Hackobject.AddComponent<Hag.Esp.Updating>();
+            Hackobject.AddComponent<Aimbot.Aimbot>();
             GameObject.DontDestroyOnLoad(Hackobject);
         }
         private static GameObject Hackobject = new GameObject();
