@@ -8,6 +8,7 @@ namespace Hag.Configs
 {
     class Aimbot
     {
+        public bool DrawFov = true;
         public int Fov = 200;
     }
 }

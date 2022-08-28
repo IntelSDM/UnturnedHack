@@ -163,7 +163,7 @@ namespace Hag.Esp
                        Renderer.DrawCircle(basezombie.HeadW2S.x, basezombie.HeadW2S.y, basezombie.Distance > 10 ? 30 / (basezombie.Distance /10) : 10, 1, new Direct2DColor(basezombie.BoneColour[9].r, basezombie.BoneColour[9].g, basezombie.BoneColour[9].b, basezombie.BoneColour[9].a));
                   
                     }
-                    Renderer.DrawTextCentered($"{tag}{distance}", basezombie.W2S.x, basezombie.W2S.y, ZombieFont, new Direct2DColor(basezombie.Colour.r, basezombie.Colour.g, basezombie.Colour.b, basezombie.Colour.a));
+                    Renderer.DrawTextCentered($"{tag}{distance}{basezombie.test}", basezombie.W2S.x, basezombie.W2S.y, ZombieFont, new Direct2DColor(basezombie.Colour.r, basezombie.Colour.g, basezombie.Colour.b, basezombie.Colour.a));
                 }
             }
             catch { }
@@ -261,6 +261,8 @@ namespace Hag.Esp
                     DrawPlayer();
                     Renderer.DrawText($"Zombies: {Globals.ZombieList.Count()}",10,10, PlayerFont, new Direct2DColor(0,255,0,255));
                     Renderer.DrawCrosshair(CrosshairStyle.Gap, Screen.width / 2, Screen.height / 2, 6, 1, new Direct2DColor(255, 0, 0, 255));
+                    if(Globals.Config.Aimbot.DrawFov)
+                    Renderer.DrawCircle(Screen.width / 2, Screen.height / 2, Globals.Config.Aimbot.Fov, 1, new Direct2DColor(255, 255, 255, 255));
                     #region End
                     Menu.RenderMenu.Render(Renderer);
                     try

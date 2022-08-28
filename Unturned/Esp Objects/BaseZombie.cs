@@ -19,6 +19,7 @@ namespace Hag.Esp_Objects
         public bool Visible;
 
         public int Distance;
+        public int test;
 
         public string Tag;
 

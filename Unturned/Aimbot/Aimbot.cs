@@ -14,7 +14,7 @@ namespace Hag.Aimbot
 {
     class Aimbot : MonoBehaviour
     {
-        public static Zombie TargetZombie;
+        public static Zombie TargetLegitZombie;
         void Start()
         {
             StartCoroutine(ZombieLegitbot());
@@ -349,7 +349,7 @@ namespace Hag.Aimbot
             return Vector3.zero;
         }
     
-        Vector3 GetTargetZombie()
+        Vector3 GetTargetLegitZombie()
         {
             // write to the targetzombie
             // return the ideal aim position
@@ -360,21 +360,30 @@ namespace Hag.Aimbot
                 {
                     if (!basezombie.Alive || basezombie.Entity == null)
                         continue;
+                    if ((Globals.Config.Zombie.MaxDistance < basezombie.Distance))
+                        continue;
                     if (Globals.Config.ZombieAimbot.LegitAimbotEnabled)
                     {
                         worldpos = GetAimbone(Globals.Config.ZombieAimbot.LegitAimbotBone, Globals.Config.ZombieAimbot.LegitVisiblityChecks, basezombie);
                         if (worldpos == Vector3.zero)
                             continue;
-                        //        if (Vector2.Distance(new Vector2(Screen.width / 2, Screen.height / 2), new Vector2(worldpos.x, worldpos.y)) > Globals.Config.Aimbot.Fov)
-                        //          continue;
+                        if (!Globals.IsScreenPointVisible(Globals.WorldPointToScreenPoint(worldpos)))
+                            continue;
+                        if ((Globals.Config.ZombieAimbot.LegitMaxDistance < basezombie.Distance))
+                            continue;
+                        Vector2 vector = new Vector2((float)(Screen.width / 2), (float)(Screen.height / 2));
+                        int num = (int)Vector2.Distance(Globals.WorldPointToScreenPoint(worldpos), vector); // fov check
+                        if (num > Globals.Config.Aimbot.Fov)
+                            continue;
                         //      if (Vector3.Distance(Globals.MainCamera.transform.position, basezombie.Entity.transform.position) > Globals.Config.ZombieAimbot.LegitMaxDistance)
-                        //        continue;
+                        //      continue;
+                        TargetLegitZombie = basezombie.Entity;
                         return worldpos;
                     }
                 }
             }
             catch { }
-            return worldpos;
+            return Vector3.zero;
         }
         IEnumerator ZombieLegitbot()
         {
@@ -382,14 +391,14 @@ namespace Hag.Aimbot
             {
                 if (Input.GetKey(Globals.Config.ZombieAimbot.LegitAimbotKey))
                 {
-                    Vector3 TargetZombie = GetTargetZombie();
-                    if (TargetZombie == Vector3.zero)
-                        yield return new WaitForEndOfFrame();
-                    try
+                    Vector3 TargetZombie = GetTargetLegitZombie();
+                    if (TargetZombie != Vector3.zero)
                     {
-                       
+                        try
+                        {
 
-                        Player.player.transform.LookAt(TargetZombie);
+
+                            Player.player.transform.LookAt(TargetZombie);
                             Player.player.transform.eulerAngles = new Vector3(0f, Player.player.transform.rotation.eulerAngles.y, 0f);
                             Camera.main.transform.LookAt(TargetZombie);
                             float x = Camera.main.transform.localRotation.eulerAngles.x;
@@ -403,11 +412,12 @@ namespace Hag.Aimbot
                             }
                             Player.player.look.GetType().GetField("_pitch", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(Player.player.look, x);
                             Player.player.look.GetType().GetField("_yaw", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(Player.player.look, Player.player.transform.rotation.eulerAngles.y);
-                        
+
+                        }
+                        catch { }
                     }
-                    catch { }
-                }
-                yield return new WaitForEndOfFrame();
+                    }
+                    yield return new WaitForEndOfFrame();
             }
         }
     }

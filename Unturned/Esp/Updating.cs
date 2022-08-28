@@ -223,7 +223,9 @@ namespace Hag.Esp
                         bz.WorldBonePosition[8] = (Globals.GetLimbPosition(bz.Entity.transform, "Spine"));
                         bz.WorldBonePosition[9] = (Globals.GetLimbPosition(bz.Entity.transform, "Skull"));
                         bz.WorldBonePosition[10] = new Vector3(bz.WorldBonePosition[8].x, bz.WorldBonePosition[5].y, bz.WorldBonePosition[8].z);
-
+                        Vector2 vector = new Vector2((float)(Screen.width / 2), (float)(Screen.height / 2));
+                        int num = (int)Vector2.Distance(bz.HeadW2S, vector); // fov check
+                        bz.test = num;
                         for (int i = 0; i < bz.BonePosition.Count(); i++)
                         {
                             if (RaycastHelper.IsPointVisible(bz.Entity, bz.WorldBonePosition[i]))
