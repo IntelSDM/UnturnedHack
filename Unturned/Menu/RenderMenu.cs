@@ -24,6 +24,7 @@ namespace Hag.Menu
             Main.Items.Add(Colours);
             Main.Items.Add(Config);
 
+            Aimbot.Items.Add(ZombieAimbot);
             // Initialize Main Menu
             MenuHistory.Add(Main);
             CurrentMenu = Main;
@@ -33,10 +34,36 @@ namespace Hag.Menu
         {
 
             MainMenu();
+            AimbotGenerals();
             Players();
             Zombies();
             ColourPicker();
+            LegitZombieAimbots();
             StartCoroutine(KeyControls());
+        }
+        void AimbotGenerals()
+        {
+            SubMenu aimbot = new SubMenu("General", "General Aimbot Options");
+            Toggle enable = new Toggle("Draw Fov", "Draws A Circle To Show Aimbot Area", ref Globals.Config.Aimbot.DrawFov);
+            IntSlider aimfov = new IntSlider("Fov", "Your Aimbot Activation Area", ref Globals.Config.Aimbot.Fov, 0, 2000, 5);
+            aimbot.Items.Add(enable);
+            aimbot.Items.Add(aimfov);
+            Aimbot.Items.Add(aimbot);
+        }
+        void LegitZombieAimbots()
+        {
+            SubMenu aimbot = new SubMenu("Legit Aimbot", "Static Aimbot");
+            Toggle enable = new Toggle("Enable", "Turns On Static Aimbot", ref Globals.Config.ZombieAimbot.LegitAimbotEnabled);
+            IntSlider distance = new IntSlider("Max Distance", "Aimbot Activation Range", ref Globals.Config.ZombieAimbot.LegitMaxDistance, 0, 2000, 15);
+            IntSlider bone = new IntSlider("Target Bone", "0:Head 1:Spine 2:Pelvis", ref Globals.Config.ZombieAimbot.LegitAimbotBone, 0, 7, 1);
+            Toggle vischecks = new Toggle("Visibility Checks", "Only Target Visible Players Based On Target Bone", ref Globals.Config.ZombieAimbot.LegitVisiblityChecks);
+            Keybind bind = new Keybind("Aimbot Key", "Key To Lock Onto Players", ref Globals.Config.ZombieAimbot.LegitAimbotKey);
+            aimbot.Items.Add(enable);
+            aimbot.Items.Add(distance);
+            aimbot.Items.Add(bone);
+            aimbot.Items.Add(vischecks);
+            aimbot.Items.Add(bind);
+            ZombieAimbot.Items.Add(aimbot);
         }
         void Zombies()
         {
@@ -136,6 +163,8 @@ namespace Hag.Menu
         static SubMenu PlayerList = new SubMenu("Player List", "Modify Specific Player Values");
         static SubMenu Colours = new SubMenu("Colour Menu", "Allows You To Change Colours On The Cheat");
         static SubMenu Config = new SubMenu("Config Menu", "Allows You To Save And Load Settings");
+
+        static SubMenu ZombieAimbot = new SubMenu("Zombie Aimbot", "Aimbot Options For Zombies");
         #endregion
         #region Actual Code
 
