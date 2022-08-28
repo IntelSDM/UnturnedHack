@@ -22,14 +22,14 @@ namespace Hag.Aimbot
         public static List<BaseZombie> SortClosestToCrosshair(List<BaseZombie> p)
         {
             return (from tempPlayer in p
-                    orderby Vector2.Distance(new Vector2((float)(Screen.width / 2), (float)(Screen.height / 2)), Camera.main.WorldToScreenPoint(tempPlayer.Entity.transform.position)), tempPlayer.Distance
+                    orderby Vector2.Distance(new Vector2((float)(Screen.width / 2), (float)(Screen.height / 2)),tempPlayer.HeadW2S), tempPlayer.Distance
                    
                     select tempPlayer).ToList<BaseZombie>();
         }
         public static List<BasePlayer> SortClosestToCrosshair(List<BasePlayer> p)
         {
             return (from tempPlayer in p
-                    orderby Vector2.Distance(new Vector2((float)(Screen.width / 2), (float)(Screen.height / 2)), Camera.main.WorldToScreenPoint(tempPlayer.Entity.transform.position)), tempPlayer.Distance
+                    orderby Vector2.Distance(new Vector2((float)(Screen.width / 2), (float)(Screen.height / 2)),tempPlayer.HeadW2S), tempPlayer.Distance
                     select tempPlayer).ToList<BasePlayer>();
         }
         public static Vector3 GetAimbone(int bone,bool vischecks,BasePlayer player)
