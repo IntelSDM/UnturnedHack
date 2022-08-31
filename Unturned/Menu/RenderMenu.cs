@@ -55,12 +55,16 @@ namespace Hag.Menu
             SubMenu aimbot = new SubMenu("Legit Aimbot", "Static Aimbot");
             Toggle enable = new Toggle("Enable", "Turns On Static Aimbot", ref Globals.Config.ZombieAimbot.LegitAimbotEnabled);
             IntSlider distance = new IntSlider("Max Distance", "Aimbot Activation Range", ref Globals.Config.ZombieAimbot.LegitMaxDistance, 0, 2000, 15);
+            Toggle enablesmooth = new Toggle("Enable Smoothing", "Turns On Smoothing", ref Globals.Config.ZombieAimbot.Smooth);
+            IntSlider smoothing = new IntSlider("Smoothing", "Amount Of Smoothing", ref Globals.Config.ZombieAimbot.Smoothing, 0, 100, 2);
             IntSlider bone = new IntSlider("Target Bone", "0:Head 1:Spine 2:Pelvis", ref Globals.Config.ZombieAimbot.LegitAimbotBone, 0, 7, 1);
             Toggle vischecks = new Toggle("Visibility Checks", "Only Target Visible Players Based On Target Bone", ref Globals.Config.ZombieAimbot.LegitVisiblityChecks);
             Keybind bind = new Keybind("Aimbot Key", "Key To Lock Onto Players", ref Globals.Config.ZombieAimbot.LegitAimbotKey);
             aimbot.Items.Add(enable);
             aimbot.Items.Add(distance);
             aimbot.Items.Add(bone);
+            aimbot.Items.Add(enablesmooth);
+            aimbot.Items.Add(smoothing);
             aimbot.Items.Add(vischecks);
             aimbot.Items.Add(bind);
             ZombieAimbot.Items.Add(aimbot);

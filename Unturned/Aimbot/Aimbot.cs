@@ -9,6 +9,7 @@ using System.Collections;
 using Hag.Esp_Objects;
 using Hag.Helpers;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Hag.Aimbot
 {
@@ -384,6 +385,14 @@ namespace Hag.Aimbot
             catch { }
             return Vector3.zero;
         }
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, UIntPtr dwExtraInfo);
+        public static void AimMouseTo(float x, float y)
+        {
+          
+            
+        }
         IEnumerator ZombieLegitbot()
         {
             for (; ; )
@@ -395,25 +404,77 @@ namespace Hag.Aimbot
                     {
                         try
                         {
-
-
-                            Player.player.transform.LookAt(TargetZombie);
-                            Player.player.transform.eulerAngles = new Vector3(0f, Player.player.transform.rotation.eulerAngles.y, 0f);
-                            Camera.main.transform.LookAt(TargetZombie);
-                            float x = Camera.main.transform.localRotation.eulerAngles.x;
-                            if (x <= 90f && x <= 270f)
+                            float ScreenCenterX = (Screen.width / 2);
+                            float ScreenCenterY = (Screen.height / 2);
+                            float TargetX = 0;
+                            float TargetY = 0;
+                            float x = Globals.WorldPointToScreenPoint(TargetZombie).x; 
+                            float y = Globals.WorldPointToScreenPoint(TargetZombie).y;
+                            float AimSpeed = ((100 - Globals.Config.ZombieAimbot.Smoothing) + 1) * 1000;
+                            if (x != 0)
                             {
-                                x = Camera.main.transform.localRotation.eulerAngles.x + 90f;
+                                if (x > ScreenCenterX)
+                                {
+                                    TargetX = -(ScreenCenterX - x);
+                                    if (Globals.Config.ZombieAimbot.Smooth)
+                                        TargetX /= AimSpeed;
+                                    if (TargetX + ScreenCenterX > ScreenCenterX * 2) TargetX = 0;
+                                }
+                                if (x < ScreenCenterX)
+                                {
+                                    TargetX = x - ScreenCenterX;
+                                    if (Globals.Config.ZombieAimbot.Smooth)
+                                        TargetX /= AimSpeed;
+                                    if (TargetX + ScreenCenterX < 0) TargetX = 0;
+                                }
                             }
-                            else if (x >= 270f && x <= 360f)
+                            if (y != 0)
                             {
-                                x = Camera.main.transform.localRotation.eulerAngles.x - 270f;
+                                if (y > ScreenCenterY)
+                                {
+                                    TargetY = -(ScreenCenterY - y);
+                                    if (Globals.Config.ZombieAimbot.Smooth)
+                                        TargetY /= AimSpeed;
+                                    if (TargetY + ScreenCenterY > ScreenCenterY * 2) TargetY = 0;
+                                }
+                                if (y < ScreenCenterY)
+                                {
+                                    TargetY = y - ScreenCenterY;
+                                    if (Globals.Config.ZombieAimbot.Smooth)
+                                        TargetY /= AimSpeed;
+                                    if (TargetY + ScreenCenterY < 0) TargetY = 0;
+                                }
                             }
-                            Player.player.look.GetType().GetField("_pitch", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(Player.player.look, x);
-                            Player.player.look.GetType().GetField("_yaw", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(Player.player.look, Player.player.transform.rotation.eulerAngles.y);
-                            System.IO.File.WriteAllText("test.txt", SortClosestToCrosshair(Globals.ZombieList).IndexOf(TargetLegitZombie).ToString());
-                        }
+
+                            //  mouse_event(0x0001, (uint)(TargetX), (uint)(TargetY), 0, UIntPtr.Zero);
+                            if (Globals.Config.ZombieAimbot.Smooth)
+                            {
+                                TargetX /= 10;
+                                TargetY /= 10;
+                                if (Math.Abs(TargetX) < 1)
+                                {
+                                    if (TargetX > 0)
+                                        TargetX = 1;
+                                    if (TargetX < 0)
+                                        TargetX = -1;
+                                }
+                                if (Math.Abs(TargetY) < 1)
+                                {
+                                    if (TargetY > 0)
+                                        TargetY = 1;
+                                    if (TargetY < 0)
+                                        TargetY = -1;
+                                }
+                                mouse_event(0x0001, (uint)TargetX, (uint)TargetY, 0, UIntPtr.Zero);
+                            }
+                            else
+                            {
+                                mouse_event(0x0001, (uint)(TargetX), (uint)(TargetY), 0, UIntPtr.Zero);
+                            }
+                            }
                         catch { }
+
+
                     }
                     }
                     yield return new WaitForEndOfFrame();

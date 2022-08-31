@@ -13,5 +13,7 @@ namespace Hag.Configs
         public int LegitAimbotBone = 0;
         public bool LegitVisiblityChecks = true;
         public int LegitMaxDistance = 400;
+        public bool Smooth = true;
+        public int Smoothing = 100;
     }
 }
