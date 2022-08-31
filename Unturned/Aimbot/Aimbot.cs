@@ -396,7 +396,7 @@ namespace Hag.Aimbot
         public float DropCalc(Vector3 point)
         {
             // thanks bocheats
-            float ret = 0f;
+            float treturn = 0f;
 
             if (Vector3.Distance(point, Player.player.look.aim.position) < 5f)
                 return 0f;
@@ -428,17 +428,17 @@ namespace Hag.Aimbot
                     < firearm.ballisticTravel
                     )
                 {
-                    ret = bulletInfo.pos.y - point.y;
+                    treturn = bulletInfo.pos.y - point.y;
                     break;
                 }
             }
 
-            if (ret < 0)
-                ret -= ret * 2;
+            if (treturn < 0)
+                treturn -= treturn * 2.5;
             else
-                ret = 0f;
+                treturn = 0f;
 
-            return ret;
+            return treturn;
         }
         IEnumerator ZombieLegitbot()
         {
@@ -453,11 +453,15 @@ namespace Hag.Aimbot
                         {
                          
                             float drop = 0;
-                            if(Globals.Config.ZombieAimbot.BulletDropPrediction && (!(Provider.mode == EGameMode.EASY)  || Provider.modeConfigData.Gameplay.Ballistics) && Player.player.equipment.asset is ItemGearAsset)
+                            try
                             {
-                                drop = DropCalc(TargetZombie);
+                                if (Globals.Config.ZombieAimbot.BulletDropPrediction) //&& (!(Provider.mode == EGameMode.EASY)  || Provider.modeConfigData.Gameplay.Ballistics) && Player.player.equipment.asset is ItemGearAsset)
+                                {
+                                    drop = DropCalc(TargetZombie);
+                                }
                             }
-                            TargetZombie.y += drop;
+                            catch { }
+                                TargetZombie.y += drop;
                             float ScreenCenterX = (Screen.width / 2);
                             float ScreenCenterY = (Screen.height / 2);
                             float TargetX = 0;
