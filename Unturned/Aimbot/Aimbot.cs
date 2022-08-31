@@ -393,6 +393,53 @@ namespace Hag.Aimbot
           
             
         }
+        public float DropCalc(Vector3 point)
+        {
+            // thanks bocheats
+            float ret = 0f;
+
+            if (Vector3.Distance(point, Player.player.look.aim.position) < 5f)
+                return 0f;
+
+            ItemGunAsset firearm = (ItemGunAsset)Player.player.equipment.asset;
+
+            Quaternion quaternion = Quaternion.LookRotation(point - Player.player.look.transform.position, Player.player.look.transform.up);
+            Vector3 targetForward = quaternion * Vector3.forward;
+
+            BulletInfo bulletInfo = new BulletInfo();
+            bulletInfo.pos = Player.player.look.transform.position;
+            bulletInfo.dir = targetForward.normalized;
+
+            float num = firearm.ballisticDrop;
+            bulletInfo.barrelAsset = Player.player.equipment.thirdModel.gameObject.GetComponent<Attachments>().barrelAsset;
+            if (bulletInfo.barrelAsset != null)
+                num *= bulletInfo.barrelAsset.ballisticDrop;
+
+            int ticker = 0;
+            while (++ticker < firearm.ballisticSteps)
+            {
+                bulletInfo.pos += bulletInfo.dir * firearm.ballisticTravel;
+                bulletInfo.dir.y -= num;
+                bulletInfo.dir.Normalize();
+
+                if (Vector3.Distance(
+                    new Vector3(point.x, 0f, point.z),
+                    new Vector3(bulletInfo.pos.x, 0f, bulletInfo.pos.z))
+                    < firearm.ballisticTravel
+                    )
+                {
+                    ret = bulletInfo.pos.y - point.y;
+                    break;
+                }
+            }
+
+            if (ret < 0)
+                ret -= ret * 2;
+            else
+                ret = 0f;
+
+            return ret;
+        }
         IEnumerator ZombieLegitbot()
         {
             for (; ; )
@@ -404,6 +451,13 @@ namespace Hag.Aimbot
                     {
                         try
                         {
+                         
+                            float drop = 0;
+                            if(Globals.Config.ZombieAimbot.BulletDropPrediction && (!(Provider.mode == EGameMode.EASY)  || Provider.modeConfigData.Gameplay.Ballistics) && Player.player.equipment.asset is ItemGearAsset)
+                            {
+                                drop = DropCalc(TargetZombie);
+                            }
+                            TargetZombie.y += drop;
                             float ScreenCenterX = (Screen.width / 2);
                             float ScreenCenterY = (Screen.height / 2);
                             float TargetX = 0;
