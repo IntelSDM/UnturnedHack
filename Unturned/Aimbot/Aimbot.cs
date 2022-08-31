@@ -434,7 +434,7 @@ namespace Hag.Aimbot
             }
 
             if (treturn < 0)
-                treturn -= treturn * 2.5;
+                treturn -= treturn * 2.1f;
             else
                 treturn = 0f;
 
@@ -455,7 +455,7 @@ namespace Hag.Aimbot
                             float drop = 0;
                             try
                             {
-                                if (Globals.Config.ZombieAimbot.BulletDropPrediction) //&& (!(Provider.mode == EGameMode.EASY)  || Provider.modeConfigData.Gameplay.Ballistics) && Player.player.equipment.asset is ItemGearAsset)
+                                if (Globals.Config.ZombieAimbot.BulletDropPrediction && (Provider.mode != EGameMode.EASY  || Provider.modeConfigData.Gameplay.Ballistics))
                                 {
                                     drop = DropCalc(TargetZombie);
                                 }
