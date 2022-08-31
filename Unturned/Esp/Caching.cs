@@ -46,6 +46,22 @@ namespace Hag.Esp
                     BaseZombie basezombie = new BaseZombie(zombie);
                     Globals.ZombieList.Add(basezombie);
                 }
+                foreach (InteractableVehicle vh in FindObjectsOfType<InteractableVehicle>())
+                {
+                    //   vh.addPlayer(0, (Steamworks.CSteamID)76561199161032099);// FUCKING TELEPORT INTO LOCKED CARS
+          /*          vh.dropTrunkItems(); 
+                    foreach(Passenger ph in vh.passengers)
+                    {
+                     //   for (int i = 0; i < 10; i++)
+                      //  {
+                            vh.forceRemoveAllPlayers();
+                            //vh.removePlayer(i,)
+                      //  }
+                       
+                       // ph.player.playerID
+
+                    }*/ // seems to crash some servers from time to time
+                }
                 yield return new WaitForSeconds(3f);
             }
         }

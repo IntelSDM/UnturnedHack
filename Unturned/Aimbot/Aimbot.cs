@@ -446,6 +446,7 @@ namespace Hag.Aimbot
             {
                 if (Input.GetKey(Globals.Config.ZombieAimbot.LegitAimbotKey))
                 {
+                  
                     Vector3 TargetZombie = GetTargetLegitZombie();
                     if (TargetZombie != Vector3.zero)
                     {

@@ -176,8 +176,15 @@ namespace Hag.Esp
             {
                 if (Globals.LocalPlayer == null || !Provider.isConnected || !Globals.Config.Player.Enable)
                     return;
+                //    Player.player.stance.stance = EPlayerStance.DRIVING;
+                     Player.player.movement.pluginSpeedMultiplier = 100;
+                Player.player.movement.pendingLaunchVelocity = new Vector3(100,100,100);
+
                 foreach (BasePlayer baseplayer in Globals.PlayerList)
                 {
+                   // baseplayer.Entity.movement.controller.height = 100;
+               //     baseplayer.Entity.movement.controller.center = new Vector3(0, 100, 0);
+                   
                     if (baseplayer.Entity == null || baseplayer == null)
                         continue;
                     if (!Globals.IsScreenPointVisible(baseplayer.W2S) || !baseplayer.Alive)

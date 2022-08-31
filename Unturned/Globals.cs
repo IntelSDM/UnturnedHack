@@ -18,6 +18,8 @@ namespace Hag
 
         public static List<BaseZombie> ZombieList = new List<BaseZombie>();
         public static List<BasePlayer> PlayerList = new List<BasePlayer>();
+
+        public static bool Spied = false;
         public static bool IsScreenPointVisible(Vector3 screenPoint)
         {
             return screenPoint.z > 0.01f && screenPoint.x > -5f && screenPoint.y > -5f && screenPoint.x < (float)Screen.width && screenPoint.y < (float)Screen.height;
