@@ -36,11 +36,24 @@ namespace Hag.Menu
             MainMenu();
             AimbotGenerals();
             Players();
+            Weapons();
             Zombies();
             ColourPicker();
             LegitZombieAimbots();
             LegitPlayerAimbots();
+
             StartCoroutine(KeyControls());
+        }
+        void Weapons()
+        {
+            SubMenu weapon = new SubMenu("Weapons", "Weapon Options");
+            Toggle norecoil = new Toggle("No Recoil", "Changes Recoil To Set Value", ref Globals.Config.Weapon.NoRecoil);
+            FloatSlider recoilx = new FloatSlider("Recoil x Amount", "Your Amount Of Recoil On X Axis", ref Globals.Config.Weapon.RecoilxAmount, 0, 1, 0.05f);
+            FloatSlider recoily = new FloatSlider("Recoil y Amount", "Your Amount Of Recoil On Y Axis", ref Globals.Config.Weapon.RecoilyAmount, 0, 1, 0.05f);
+            weapon.Items.Add(norecoil);
+            weapon.Items.Add(recoilx);
+            weapon.Items.Add(recoily);
+            Misc.Items.Add(weapon);
         }
         void AimbotGenerals()
         {

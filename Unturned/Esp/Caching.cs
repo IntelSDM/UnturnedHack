@@ -48,7 +48,9 @@ namespace Hag.Esp
                 }
                 foreach (InteractableVehicle vh in FindObjectsOfType<InteractableVehicle>())
                 {
-                    //   vh.addPlayer(0, (Steamworks.CSteamID)76561199161032099);// FUCKING TELEPORT INTO LOCKED CARS
+                 //     vh.addPlayer(0, (Steamworks.CSteamID)76561199161032099);// FUCKING TELEPORT INTO LOCKED CARS
+              //      vh.grantTrunkAccess(Globals.LocalPlayer);
+             //       vh.
           /*          vh.dropTrunkItems(); 
                     foreach(Passenger ph in vh.passengers)
                     {

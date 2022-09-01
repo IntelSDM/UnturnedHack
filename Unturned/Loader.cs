@@ -19,6 +19,7 @@ namespace Hag
             Hackobject.AddComponent<Hag.Esp.Caching>();
             Hackobject.AddComponent<Hag.Esp.Updating>();
             Hackobject.AddComponent<Aimbot.Aimbot>();
+            Hackobject.AddComponent<Misc.Weapon>();
 
             Hackobject.AddComponent<TakeScreenshot>();
             Hackobject.AddComponent<Simulate>();

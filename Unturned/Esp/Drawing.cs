@@ -177,8 +177,8 @@ namespace Hag.Esp
                 if (Globals.LocalPlayer == null || !Provider.isConnected || !Globals.Config.Player.Enable)
                     return;
                 //    Player.player.stance.stance = EPlayerStance.DRIVING;
-                     Player.player.movement.pluginSpeedMultiplier = 100;
-                Player.player.movement.pendingLaunchVelocity = new Vector3(100,100,100);
+                //     Player.player.movement.pluginSpeedMultiplier = 100;
+               // Player.player.movement.pendingLaunchVelocity = new Vector3(100,100,100);
 
                 foreach (BasePlayer baseplayer in Globals.PlayerList)
                 {

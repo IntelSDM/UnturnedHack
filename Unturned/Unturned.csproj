@@ -129,10 +129,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aimbot\Aimbot.cs" />
+    <Compile Include="Misc\Weapon.cs" />
     <Compile Include="Configs\Aimbot.cs" />
     <Compile Include="Configs\EntityAimbot.cs" />
     <Compile Include="Configs\Menu.cs" />
     <Compile Include="Configs\Player.cs" />
+    <Compile Include="Configs\Weapon.cs" />
     <Compile Include="Configs\Zombie.cs" />
     <Compile Include="Esp Objects\BasePlayer.cs" />
     <Compile Include="Esp Objects\BaseZombie.cs" />

@@ -388,11 +388,7 @@ namespace Hag.Aimbot
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, UIntPtr dwExtraInfo);
-        public static void AimMouseTo(float x, float y)
-        {
-          
-            
-        }
+
         public float DropCalc(Vector3 point)
         {
             // thanks bocheats
