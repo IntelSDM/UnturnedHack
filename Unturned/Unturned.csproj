@@ -129,6 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aimbot\Aimbot.cs" />
+    <Compile Include="Hooks\Fire.cs" />
+    <Compile Include="Hooks\UpdateCrosshair.cs" />
     <Compile Include="Misc\Weapon.cs" />
     <Compile Include="Configs\Aimbot.cs" />
     <Compile Include="Configs\EntityAimbot.cs" />

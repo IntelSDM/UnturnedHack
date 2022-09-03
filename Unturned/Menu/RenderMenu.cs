@@ -50,9 +50,21 @@ namespace Hag.Menu
             Toggle norecoil = new Toggle("No Recoil", "Changes Recoil To Set Value", ref Globals.Config.Weapon.NoRecoil);
             FloatSlider recoilx = new FloatSlider("Recoil x Amount", "Your Amount Of Recoil On X Axis", ref Globals.Config.Weapon.RecoilxAmount, 0, 1, 0.05f);
             FloatSlider recoily = new FloatSlider("Recoil y Amount", "Your Amount Of Recoil On Y Axis", ref Globals.Config.Weapon.RecoilyAmount, 0, 1, 0.05f);
+            Toggle nospread = new Toggle("No Spread", "Changes Spread To Set Value", ref Globals.Config.Weapon.NoSpread);
+            FloatSlider spread1 = new FloatSlider("Spread Aim Amount", "Your Amount Of Recoil On X Axis", ref Globals.Config.Weapon.NoSpreadAim, 0, 1, 0.05f);
+            FloatSlider spread2 = new FloatSlider("Spread Crouch Amount", "Your Amount Of Recoil On Y Axis", ref Globals.Config.Weapon.NoSpreadCrouch, 0, 1, 0.05f);
+            FloatSlider spread3 = new FloatSlider("Spread Hip Amount", "Your Amount Of Recoil On X Axis", ref Globals.Config.Weapon.NoSpreadHip, 0, 1, 0.05f);
+            FloatSlider spread4 = new FloatSlider("Spread Prone Amount", "Your Amount Of Recoil On Y Axis", ref Globals.Config.Weapon.NoSpreadProne, 0, 1, 0.05f);
+            FloatSlider spread5 = new FloatSlider("Spread Sprint Amount", "Your Amount Of Recoil On Y Axis", ref Globals.Config.Weapon.NoSpreadSprint, 0, 1, 0.05f);
             weapon.Items.Add(norecoil);
             weapon.Items.Add(recoilx);
             weapon.Items.Add(recoily);
+            weapon.Items.Add(nospread);
+            weapon.Items.Add(spread1);
+            weapon.Items.Add(spread2);
+            weapon.Items.Add(spread3);
+            weapon.Items.Add(spread4);
+            weapon.Items.Add(spread5);
             Misc.Items.Add(weapon);
         }
         void AimbotGenerals()

@@ -15,11 +15,13 @@ namespace Hag.Misc
     class Weapon :MonoBehaviour
     {
         public static Dictionary<ushort, float[]> ValueLog = new Dictionary<ushort, float[]>();
+        public static MethodInfo UpdateCrosshair = typeof(UseableGun).GetMethod("updateCrosshair", BindingFlags.Instance | BindingFlags.NonPublic);
         void Start()
         {
             StartCoroutine(Weapons());
+            
         }
-
+       
         IEnumerator Weapons()
         {
             for (; ; )
@@ -43,13 +45,12 @@ namespace Hag.Misc
                                 Weapon.spreadProne,
                                 Weapon.spreadSprint
                          };
-                        Backups[6] = Weapon.spreadHip;
                         ValueLog.Add(Weapon.id, Backups);
                         Backups = null;
                     }
                     else
                     {
-                        if (Weapon != null)
+                        if (Weapon != null && ! Globals.Spied)
                         {
                             if(Globals.Config.Weapon.NoRecoil)
                             {
@@ -59,6 +60,16 @@ namespace Hag.Misc
                                 Weapon.recoilMax_y = Globals.Config.Weapon.RecoilyAmount;
 
                             }
+                            if (Globals.Config.Weapon.NoSpread)
+                            {
+                       //         Weapon.spreadAim = Globals.Config.Weapon.NoSpreadAim;
+                       //         Weapon.spreadHip = Globals.Config.Weapon.NoSpreadHip;
+                       //         Weapon.spreadCrouch = Globals.Config.Weapon.NoSpreadCrouch;
+                       //        Weapon.spreadProne = Globals.Config.Weapon.NoSpreadProne;
+                        //        Weapon.spreadSprint = Globals.Config.Weapon.NoSpreadSprint;
+
+                            }
+                            UpdateCrosshair.Invoke(Player.player.equipment.useable, null);
                         }
                         }
 

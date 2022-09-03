@@ -17,7 +17,13 @@ namespace Hag.Helpers
 			FieldInfo field = type.GetField(name, bindingAttr);
 			return (T)((object)field.GetValue(obj));
 		}
-
+		internal static T GetPublicField<T>(this object obj, string name)
+		{
+			BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.Public;
+			Type type = obj.GetType();
+			FieldInfo field = type.GetField(name, bindingAttr);
+			return (T)((object)field.GetValue(obj));
+		}
 		// Token: 0x06000002 RID: 2 RVA: 0x00002084 File Offset: 0x00000284
 		internal static void SetPrivateField(this object obj, string name, object value)
 		{
