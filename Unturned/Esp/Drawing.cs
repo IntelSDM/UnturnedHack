@@ -169,6 +169,27 @@ namespace Hag.Esp
             }
             catch { }
         }
+        void DrawItems()
+        {
+            try
+            {
+
+                if (Globals.LocalPlayer == null || !Provider.isConnected || !Globals.Config.Item.Enable)
+                    return;
+                foreach (BaseItem baseitem in Globals.ItemList)
+                {
+                    if (baseitem == null || baseitem.Entity == null)
+                        continue;
+                    if (baseitem.Distance > Globals.Config.Item.MaxDistance)
+                        continue;
+                    string name = Globals.Config.Item.Name ? baseitem.Name : "";
+                    string distance = Globals.Config.Item.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                    Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, VehicleFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                }
+            }
+            catch { }
+
+        }
         void DrawVehicles()
         {
             try
@@ -364,6 +385,7 @@ namespace Hag.Esp
 
                     #endregion
                     DrawVehicles();
+                    DrawItems();
                     DrawZombie();
                     DrawPlayer();
                

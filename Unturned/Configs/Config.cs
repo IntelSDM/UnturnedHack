@@ -20,5 +20,6 @@ namespace Hag.Configs
         public Friends Friends = new Friends();
         public FriendlyPlayer FriendlyPlayer = new FriendlyPlayer();
         public Vehicle Vehicle = new Vehicle();
+        public Item Item = new Item();
     }
 }

@@ -71,14 +71,18 @@ namespace Hag.Menu
         {
 
             MainMenu();
-            AimbotGenerals();
+           
             Players();
             FriendlyPlayers();
             Friends();
-            VehicleEsps();
-            Weapons();
             Zombies();
+            ItemEsps();
+            VehicleEsps();
+
+            Weapons();
             ColourPicker();
+
+            AimbotGenerals();
             LegitZombieAimbots();
             LegitPlayerAimbots();
 
@@ -218,17 +222,35 @@ namespace Hag.Menu
             Esp.Items.Add(playeresp);
 
         }
+        void ItemEsps()
+        {
+            SubMenu itemesp = new SubMenu("Item ESP", "Draw Item Visuals");
+            Toggle enable = new Toggle("Enable", "Enable Item Esp", ref Globals.Config.Item.Enable);
+            Toggle name = new Toggle("Name", "Draw Name Of Items", ref Globals.Config.Item.Name);
+            Toggle distance = new Toggle("Distance", "Draw Distance From Items", ref Globals.Config.Item.Distance);
+            IntSlider maxdistance = new IntSlider("Max Distance", "Maximum Draw Distance Of Items", ref Globals.Config.Item.MaxDistance, 0, 3000, 25);
+            Toggle filters = new Toggle("Enable Item Filters", "Enables Custom Item Filters", ref Globals.Config.Item.Filters);
+
+
+            itemesp.Items.Add(enable);
+            itemesp.Items.Add(name);
+            itemesp.Items.Add(distance);
+            itemesp.Items.Add(maxdistance);
+            itemesp.Items.Add(filters);
+            Esp.Items.Add(itemesp);
+
+        }
         void VehicleEsps()
         {
             SubMenu vehicleesp = new SubMenu("Vehicle ESP", "Draw Vehicle Visuals");
-            Toggle enable = new Toggle("Enable", "Enable Player Esp", ref Globals.Config.Vehicle.Enabled);
-            Toggle name = new Toggle("Name", "Draw Name Of Player", ref Globals.Config.Vehicle.Name);
-            Toggle status = new Toggle("Name", "Draw Name Of Player", ref Globals.Config.Vehicle.LockedStatus);
-            Toggle distance = new Toggle("Distance", "Draw Distance From Player", ref Globals.Config.Vehicle.Distance);
-            IntSlider maxdistance = new IntSlider("Max Distance", "Maximum Draw Distance Of Players", ref Globals.Config.Vehicle.MaxDistance, 0, 3000, 25);
-            Toggle ownvehicles = new Toggle("Draw Own Vehicles", "Draws Box Around Dimensions Of Player", ref Globals.Config.Vehicle.DrawOwnVehicles);
-            Toggle unlocked = new Toggle("Draw Unlocked Vehicles", "Draws Box From Head To Toe Of Player", ref Globals.Config.Vehicle.DrawUnlocked);
-            Toggle locked = new Toggle("Draw Locked Vehicles", "Draws Box From Head To Toe Of Player", ref Globals.Config.Vehicle.DrawLocked);
+            Toggle enable = new Toggle("Enable", "Enable Vehicle Esp", ref Globals.Config.Vehicle.Enabled);
+            Toggle name = new Toggle("Name", "Draw Name Of Vehicle", ref Globals.Config.Vehicle.Name);
+            Toggle status = new Toggle("Status", "Draws If Vehicle Is Locked Or Unlocked", ref Globals.Config.Vehicle.LockedStatus);
+            Toggle distance = new Toggle("Distance", "Draw Distance From Vehicles", ref Globals.Config.Vehicle.Distance);
+            IntSlider maxdistance = new IntSlider("Max Distance", "Maximum Draw Distance Of Vehicles", ref Globals.Config.Vehicle.MaxDistance, 0, 3000, 25);
+            Toggle ownvehicles = new Toggle("Draw Own Vehicles", "Draws Vehicles You Own", ref Globals.Config.Vehicle.DrawOwnVehicles);
+            Toggle unlocked = new Toggle("Draw Unlocked Vehicles", "Draws Unlocked Vehicles", ref Globals.Config.Vehicle.DrawUnlocked);
+            Toggle locked = new Toggle("Draw Locked Vehicles", "Draws Locked Vehicles", ref Globals.Config.Vehicle.DrawLocked);
 
             vehicleesp.Items.Add(enable);
             vehicleesp.Items.Add(name);

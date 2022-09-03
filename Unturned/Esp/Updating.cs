@@ -23,6 +23,33 @@ namespace Hag.Esp
             StartCoroutine(UpdateZombies());
             StartCoroutine(UpdatePlayers());
             StartCoroutine(UpdateVehicles());
+            StartCoroutine(UpdateItems());
+        }
+        IEnumerator UpdateItems()
+        {
+            for (; ; )
+            {
+                try
+                {
+                    foreach (BaseItem bi in Globals.ItemList)
+                    {
+                        if (bi == null || bi.Entity == null)
+                            continue;
+                        //    if (vh.Entity.isDead)
+                        //      continue;
+
+                        bi.W2S = Globals.WorldPointToScreenPoint(bi.Entity.transform.position);
+                        bi.Name = bi.Entity.asset.itemName;
+                        bi.Distance = (int)Vector3.Distance(bi.Entity.transform.position, Globals.MainCamera.transform.position);
+                       
+
+                        bi.Colour = ColourHelper.GetColour("Items Colour");
+                     
+                    }
+                }
+                catch { }
+                yield return new WaitForEndOfFrame();
+            }
         }
         IEnumerator UpdateVehicles()
         {

@@ -16,6 +16,7 @@ namespace Hag.Esp
             StartCoroutine(CacheVars());
             StartCoroutine(Zombie());
             StartCoroutine(Vehicles());
+            StartCoroutine(Items());
             try
             {
                 StartCoroutine(Players());
@@ -29,6 +30,22 @@ namespace Hag.Esp
                 Globals.MainCamera = Camera.main;
                 Globals.LocalPlayer = Player.player;
                 yield return new WaitForSeconds(3f);
+            }
+        }
+        IEnumerator Items()
+        {
+            for (; ; )
+            {
+                Globals.ItemList.Clear();
+                foreach (InteractableItem Item in FindObjectsOfType<InteractableItem>())
+                {
+                    if (Item == null)
+                        continue;
+                    BaseItem baseitem = new BaseItem(Item);
+                    Globals.ItemList.Add(baseitem);
+                }
+
+                    yield return new WaitForSeconds(3);
             }
         }
         IEnumerator Zombie()

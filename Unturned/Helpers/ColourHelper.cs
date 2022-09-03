@@ -47,6 +47,8 @@ namespace Hag.Helpers
             AddColour("Vehicles Unlocked Colour", Color.cyan);
             AddColour("Vehicles Colour", Color.green);
             AddColour("Vehicles Owned By You Colour", Color.blue);
+
+            AddColour("Items Colour", Color.white);
         }
         public static Color32 GetColour(string identifier)
         {

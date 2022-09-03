@@ -131,7 +131,9 @@
     <Compile Include="Aimbot\Aimbot.cs" />
     <Compile Include="Configs\FriendlyPlayer.cs" />
     <Compile Include="Configs\Friends.cs" />
+    <Compile Include="Configs\Item.cs" />
     <Compile Include="Configs\Vehicle.cs" />
+    <Compile Include="Esp Objects\BaseItem.cs" />
     <Compile Include="Esp Objects\BaseVehicle.cs" />
     <Compile Include="Hooks\AddPlayer.cs" />
     <Compile Include="Hooks\Fire.cs" />
