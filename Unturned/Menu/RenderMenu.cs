@@ -30,6 +30,43 @@ namespace Hag.Menu
             CurrentMenu = Main;
             Selected = Esp;
         }
+        void RemovePlayerFromFriendsList(ulong steamid)
+        {
+            if (!Globals.Config.Friends.FriendsList.ContainsKey(steamid))
+                return;
+            Globals.Config.Friends.FriendsList.Remove(steamid);
+        }
+        void AddPlayerToFriendsList(ulong steamid,string name)
+        {
+            if (Globals.Config.Friends.FriendsList.ContainsKey(steamid))
+                return;
+            Globals.Config.Friends.FriendsList.Add(steamid,name);
+        }
+        IEnumerator RefreshLists()
+        {
+            for (; ; )
+            {
+                if (ShowGUI)
+                {
+                    FriendsList.Items.Clear();
+                    foreach (KeyValuePair<ulong, string> pair in Globals.Config.Friends.FriendsList)
+                    {
+                        SubMenu menu = new SubMenu(pair.Value, "");
+                        menu.Items.Add(new Button("Remove Friend", "Remove Player From Friends List", () => RemovePlayerFromFriendsList(pair.Key)));
+                        FriendsList.Items.Add(menu);
+
+                    }
+                    PlayersList.Items.Clear();
+                    foreach (Esp_Objects.BasePlayer bp in Globals.PlayerList)
+                    {
+                        SubMenu menu = new SubMenu($"{bp.Name} | {bp.SteamPlayer.playerID.characterName} | {bp.SteamPlayer.playerID.nickName}", "");
+                        menu.Items.Add(new Button("Add Friend", "Add Player To Friends List", () => AddPlayerToFriendsList(bp.SteamPlayer.playerID.steamID.m_SteamID,bp.Name)));
+                        PlayersList.Items.Add(menu);
+                    }
+                }
+                yield return new WaitForSeconds(2f);
+            }
+        }
         void Start()
         {
 
@@ -37,6 +74,7 @@ namespace Hag.Menu
             AimbotGenerals();
             Players();
             FriendlyPlayers();
+            Friends();
             Weapons();
             Zombies();
             ColourPicker();
@@ -44,6 +82,20 @@ namespace Hag.Menu
             LegitPlayerAimbots();
 
             StartCoroutine(KeyControls());
+            StartCoroutine(RefreshLists());
+        }
+        void Friends()
+        {
+            SubMenu friendoptions = new SubMenu("Friend Options", "Manage How Friends Are Collected");
+            Toggle steamfriends = new Toggle("Use Steam Friends", "Uses Friends Added From Steam", ref Globals.Config.Friends.SteamFriends);
+            Toggle groupmembers = new Toggle("Use Group Members", "Uses Your Active Group's Members", ref Globals.Config.Friends.GroupAsFriends);
+          
+
+            friendoptions.Items.Add(steamfriends);
+            friendoptions.Items.Add(groupmembers);
+            friendoptions.Items.Add(FriendsList);
+            PlayerList.Items.Add(friendoptions);
+            PlayerList.Items.Add(PlayersList);
         }
         void Weapons()
         {
@@ -236,12 +288,15 @@ namespace Hag.Menu
         static SubMenu Esp = new SubMenu("ESP", "Draw Visuals");
         static SubMenu Aimbot = new SubMenu("Aimbot", "Lock Onto Enemies");
         static SubMenu Misc = new SubMenu("Misc", "Modify World And Local Player Values");
-        static SubMenu PlayerList = new SubMenu("Player List", "Modify Specific Player Values");
+        static SubMenu PlayerList = new SubMenu("Players", "Modify Specific Player Values And Manage Friends");
         static SubMenu Colours = new SubMenu("Colour Menu", "Allows You To Change Colours On The Cheat");
         static SubMenu Config = new SubMenu("Config Menu", "Allows You To Save And Load Settings");
 
         static SubMenu ZombieAimbot = new SubMenu("Zombie Aimbot", "Aimbot Options For Zombies");
         static SubMenu PlayerAimbot = new SubMenu("Player Aimbot", "Aimbot Options For Players");
+
+        SubMenu FriendsList = new SubMenu("Friend List", "Managed Friends In Your Friends List");
+        SubMenu PlayersList = new SubMenu("Player List", "Managed Players In Your Game");
         #endregion
         #region Actual Code
 

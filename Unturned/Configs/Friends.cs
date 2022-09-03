@@ -8,7 +8,7 @@ namespace Hag.Configs
 {
     class Friends
     {
-        public Dictionary<ulong, ulong> FriendsList = new Dictionary<ulong, ulong>();
+        public Dictionary<ulong, string> FriendsList = new Dictionary<ulong, string>();
         public bool SteamFriends = true;
         public bool GroupAsFriends = true;
     }
