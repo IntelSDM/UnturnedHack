@@ -180,8 +180,11 @@ namespace Hag.Esp
                 {
                     if (baseitem == null || baseitem.Entity == null)
                         continue;
+                    if (!Globals.IsScreenPointVisible(baseitem.W2S))
+                        continue;
                     if (baseitem.Distance > Globals.Config.Item.MaxDistance)
                         continue;
+                  
                     string name = Globals.Config.Item.Name ? baseitem.Name : "";
                     string distance = Globals.Config.Item.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
                     Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, VehicleFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
