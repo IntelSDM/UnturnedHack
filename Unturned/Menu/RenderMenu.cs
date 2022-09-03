@@ -75,6 +75,7 @@ namespace Hag.Menu
             Players();
             FriendlyPlayers();
             Friends();
+            VehicleEsps();
             Weapons();
             Zombies();
             ColourPicker();
@@ -217,6 +218,29 @@ namespace Hag.Menu
             Esp.Items.Add(playeresp);
 
         }
+        void VehicleEsps()
+        {
+            SubMenu vehicleesp = new SubMenu("Vehicle ESP", "Draw Vehicle Visuals");
+            Toggle enable = new Toggle("Enable", "Enable Player Esp", ref Globals.Config.Vehicle.Enabled);
+            Toggle name = new Toggle("Name", "Draw Name Of Player", ref Globals.Config.Vehicle.Name);
+            Toggle status = new Toggle("Name", "Draw Name Of Player", ref Globals.Config.Vehicle.LockedStatus);
+            Toggle distance = new Toggle("Distance", "Draw Distance From Player", ref Globals.Config.Vehicle.Distance);
+            IntSlider maxdistance = new IntSlider("Max Distance", "Maximum Draw Distance Of Players", ref Globals.Config.Vehicle.MaxDistance, 0, 3000, 25);
+            Toggle ownvehicles = new Toggle("Draw Own Vehicles", "Draws Box Around Dimensions Of Player", ref Globals.Config.Vehicle.DrawOwnVehicles);
+            Toggle unlocked = new Toggle("Draw Unlocked Vehicles", "Draws Box From Head To Toe Of Player", ref Globals.Config.Vehicle.DrawUnlocked);
+            Toggle locked = new Toggle("Draw Locked Vehicles", "Draws Box From Head To Toe Of Player", ref Globals.Config.Vehicle.DrawLocked);
+
+            vehicleesp.Items.Add(enable);
+            vehicleesp.Items.Add(name);
+            vehicleesp.Items.Add(distance);
+            vehicleesp.Items.Add(status);
+            vehicleesp.Items.Add(maxdistance);
+            vehicleesp.Items.Add(ownvehicles);
+            vehicleesp.Items.Add(unlocked);
+            vehicleesp.Items.Add(locked);
+            Esp.Items.Add(vehicleesp);
+
+        }
         void FriendlyPlayers()
         {
             SubMenu playeresp = new SubMenu("Friendly Player ESP", "Draw Zombie Visuals");
@@ -288,7 +312,7 @@ namespace Hag.Menu
         static SubMenu Esp = new SubMenu("ESP", "Draw Visuals");
         static SubMenu Aimbot = new SubMenu("Aimbot", "Lock Onto Enemies");
         static SubMenu Misc = new SubMenu("Misc", "Modify World And Local Player Values");
-        static SubMenu PlayerList = new SubMenu("Players", "Modify Specific Player Values And Manage Friends");
+        static SubMenu PlayerList = new SubMenu("Lists", "Modify Specific Player Values And Manage Friends Or Certain Items");
         static SubMenu Colours = new SubMenu("Colour Menu", "Allows You To Change Colours On The Cheat");
         static SubMenu Config = new SubMenu("Config Menu", "Allows You To Save And Load Settings");
 

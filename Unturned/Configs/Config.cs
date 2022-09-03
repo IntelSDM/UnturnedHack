@@ -19,5 +19,6 @@ namespace Hag.Configs
         public Weapon Weapon = new Weapon();
         public Friends Friends = new Friends();
         public FriendlyPlayer FriendlyPlayer = new FriendlyPlayer();
+        public Vehicle Vehicle = new Vehicle();
     }
 }

@@ -22,6 +22,39 @@ namespace Hag.Esp
         {
             StartCoroutine(UpdateZombies());
             StartCoroutine(UpdatePlayers());
+            StartCoroutine(UpdateVehicles());
+        }
+        IEnumerator UpdateVehicles()
+        {
+            for (; ; )
+            {
+                try
+                {
+                    foreach (BaseVehicle vh in Globals.VehicleList)
+                    {
+                        if (vh == null || vh.Entity == null)
+                            continue;
+                    //    if (vh.Entity.isDead)
+                      //      continue;
+                        vh.Locked = vh.Entity.isLocked;
+                        vh.W2S = Globals.WorldPointToScreenPoint(vh.Entity.transform.position);
+                        vh.Name = vh.Entity.asset.vehicleName;
+                        vh.Distance = (int)Vector3.Distance(vh.Entity.transform.position, Globals.MainCamera.transform.position);
+                        vh.IsDriven = vh.Entity.isDriven;
+                        if ((vh.Entity.lockedGroup == Player.player.quests.groupID || vh.Entity.lockedOwner.m_SteamID == Player.player.channel.owner.playerID.steamID.m_SteamID) && vh.Locked && vh.Entity.lockedGroup != null && vh.Entity.lockedOwner != null)
+                            vh.OwnedByYou = true;
+                        else
+                            vh.OwnedByYou = false;
+                        vh.Colour = ColourHelper.GetColour("Vehicles Colour");
+                        if(!vh.Locked)
+                            vh.Colour = ColourHelper.GetColour("Vehicles Unlocked Colour");
+                        if (vh.OwnedByYou && vh.Locked)
+                            vh.Colour = ColourHelper.GetColour("Vehicles Owned By You Colour");
+                    }
+                }
+                catch { }
+                yield return new WaitForEndOfFrame();
+                }
         }
         IEnumerator UpdatePlayers()
         {

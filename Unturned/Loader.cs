@@ -33,5 +33,6 @@ namespace Hag
         // usablegun.fire = shoot function
         // base.player.look.aim.forward
         // ov_playerinput in thanking has spinbot
+        // add auto fish
     }
 }

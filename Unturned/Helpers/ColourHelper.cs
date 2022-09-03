@@ -43,6 +43,10 @@ namespace Hag.Helpers
             AddColour("Friendly-Player Invisible Box Colour", Color.green);
             AddColour("Friendly-Player Bone Invisible Colour", Color.green);
             AddColour("Friendly-Player Bone Visible Colour", new Color32(0, 255, 111, 255));
+
+            AddColour("Vehicles Unlocked Colour", Color.cyan);
+            AddColour("Vehicles Colour", Color.green);
+            AddColour("Vehicles Owned By You Colour", Color.blue);
         }
         public static Color32 GetColour(string identifier)
         {

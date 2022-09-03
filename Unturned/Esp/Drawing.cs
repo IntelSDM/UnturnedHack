@@ -53,6 +53,7 @@ namespace Hag.Esp
 
         Direct2DFont ZombieFont;
         Direct2DFont PlayerFont;
+        Direct2DFont VehicleFont;
         public void Start()
         {
 
@@ -89,6 +90,7 @@ namespace Hag.Esp
             Tahoma4 = Renderer.CreateFont("Tahoma", 10);
             ZombieFont = Renderer.CreateFont("Tahoma", 9);
             PlayerFont = Renderer.CreateFont("Tahoma", 10);
+            VehicleFont = Renderer.CreateFont("Tahoma", 9);
             new Thread(delegate ()
             {
 
@@ -167,6 +169,39 @@ namespace Hag.Esp
             }
             catch { }
         }
+        void DrawVehicles()
+        {
+            try
+            {
+
+                if (Globals.LocalPlayer == null || !Provider.isConnected || !Globals.Config.Vehicle.Enabled)
+                    return;
+                foreach (BaseVehicle basevehicle in Globals.VehicleList)
+                { 
+                  if (!Globals.IsScreenPointVisible(basevehicle.W2S) || basevehicle.Entity.isDead)
+                        continue;
+
+                    string name = Globals.Config.Vehicle.Name ? basevehicle.Name : "";
+                    string distance = Globals.Config.Vehicle.Distance ? $"({basevehicle.Distance.ToString()}m)" : "";
+                    string locked = basevehicle.Locked ? "[Locked]" : "[Unlocked]";
+                    string lockedstr = Globals.Config.Vehicle.LockedStatus ? locked : "";
+                    if (basevehicle.Distance > Globals.Config.Vehicle.MaxDistance)
+                        continue;
+                    if (basevehicle.OwnedByYou && Globals.Config.Vehicle.DrawOwnVehicles)
+                        Renderer.DrawTextCentered($"{name}{lockedstr}{distance}", basevehicle.W2S.x, basevehicle.W2S.y, VehicleFont, new Direct2DColor(basevehicle.Colour.r, basevehicle.Colour.g, basevehicle.Colour.b, basevehicle.Colour.a));
+                    
+                    if (basevehicle.OwnedByYou)
+                        continue;
+                   // if ((!basevehicle.OwnedByYou && Globals.Config.Vehicle.DrawOwnVehicles && !basevehicle.Locked))
+                     //   continue;
+                    //   if ((Globals.Config.Vehicle.DrawUnlocked && basevehicle.Locked && (!basevehicle.OwnedByYou && Globals.Config.Vehicle.DrawOwnVehicles))) // this line is meant to check if it is locked and only draw unlocked but ignore owned vehicles if drawownvehicles is on
+                    //     continue;
+                    if((Globals.Config.Vehicle.DrawUnlocked && !basevehicle.Locked) || (Globals.Config.Vehicle.DrawLocked && basevehicle.Locked))
+                    Renderer.DrawTextCentered($"{name}{lockedstr}{distance}", basevehicle.W2S.x, basevehicle.W2S.y, VehicleFont, new Direct2DColor(basevehicle.Colour.r, basevehicle.Colour.g, basevehicle.Colour.b, basevehicle.Colour.a));
+                }
+            }
+            catch { }
+            }
         void DrawPlayer()
         {
             try
@@ -328,7 +363,7 @@ namespace Hag.Esp
                     catch { }
 
                     #endregion
-                 
+                    DrawVehicles();
                     DrawZombie();
                     DrawPlayer();
                

@@ -18,6 +18,7 @@ namespace Hag
 
         public static List<BaseZombie> ZombieList = new List<BaseZombie>();
         public static List<BasePlayer> PlayerList = new List<BasePlayer>();
+        public static List<BaseVehicle> VehicleList = new List<BaseVehicle>();
 
         public static bool Spied = false;
         public static bool IsScreenPointVisible(Vector3 screenPoint)

@@ -15,6 +15,7 @@ namespace Hag.Esp
         {
             StartCoroutine(CacheVars());
             StartCoroutine(Zombie());
+            StartCoroutine(Vehicles());
             try
             {
                 StartCoroutine(Players());
@@ -46,25 +47,43 @@ namespace Hag.Esp
                     BaseZombie basezombie = new BaseZombie(zombie);
                     Globals.ZombieList.Add(basezombie);
                 }
+            
+                yield return new WaitForSeconds(2f);
+            }
+        }
+        IEnumerator Vehicles()
+        {
+            for (; ; )
+            {
+                if (Globals.LocalPlayer == null || !Provider.isConnected)
+                    yield return new WaitForSeconds(3f);
+                if (!Globals.EndedFrame)
+                    continue;
+                Globals.VehicleList.Clear();
+               
                 foreach (InteractableVehicle vh in FindObjectsOfType<InteractableVehicle>())
                 {
-                 //     vh.addPlayer(0, (Steamworks.CSteamID)76561199161032099);// FUCKING TELEPORT INTO LOCKED CARS
-              //      vh.grantTrunkAccess(Globals.LocalPlayer);
-             //       vh.
-          /*          vh.dropTrunkItems(); 
-                    foreach(Passenger ph in vh.passengers)
-                    {
-                     //   for (int i = 0; i < 10; i++)
-                      //  {
-                            vh.forceRemoveAllPlayers();
-                            //vh.removePlayer(i,)
-                      //  }
-                       
-                       // ph.player.playerID
+                    //     vh.addPlayer(0, (Steamworks.CSteamID)76561199161032099);// FUCKING TELEPORT INTO LOCKED CARS
+                    //      vh.grantTrunkAccess(Globals.LocalPlayer);
+                    //       vh.
+                    /*          vh.dropTrunkItems(); 
+                              foreach(Passenger ph in vh.passengers)
+                              {
+                               //   for (int i = 0; i < 10; i++)
+                                //  {
+                                      vh.forceRemoveAllPlayers();
+                                      //vh.removePlayer(i,)
+                                //  }
 
-                    }*/ // seems to crash some servers from time to time
+                                 // ph.player.playerID
+
+                              }*/ // seems to crash some servers from time to time
+                    if (vh == null)
+                        continue;
+                    BaseVehicle bvh = new BaseVehicle(vh);
+                    Globals.VehicleList.Add(bvh);
                 }
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(5f);
             }
         }
         IEnumerator Players()
