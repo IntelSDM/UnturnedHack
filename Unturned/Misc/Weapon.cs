@@ -52,12 +52,20 @@ namespace Hag.Misc
                     {
                         if (Weapon != null && ! Globals.Spied)
                         {
-                            if(Globals.Config.Weapon.NoRecoil)
+                            if (Globals.Config.Weapon.NoRecoil)
                             {
                                 Weapon.recoilMin_x = 0;
                                 Weapon.recoilMin_y = 0;
                                 Weapon.recoilMax_x = Globals.Config.Weapon.RecoilxAmount;
                                 Weapon.recoilMax_y = Globals.Config.Weapon.RecoilyAmount;
+
+                            }
+                            else
+                            {
+                                Weapon.recoilMin_x = ValueLog[Weapon.id][3];
+                                Weapon.recoilMin_y = ValueLog[Weapon.id][4];
+                                Weapon.recoilMax_x = ValueLog[Weapon.id][1];
+                                Weapon.recoilMax_y = ValueLog[Weapon.id][2];
 
                             }
                             if (Globals.Config.Weapon.NoSpread)

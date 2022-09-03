@@ -110,13 +110,14 @@ namespace Hag.Hooks
                     {
                         return;
                     }
-                    if (!Weapon.infiniteAmmo)
+                    if (!useablegun.equippedGunAsset.infiniteAmmo)
                     {
                         if (ammo < useablegun.equippedGunAsset.ammoPerShot)
                         {
                             throw new Exception("Insufficient ammo");
                         }
-                        ammo -= useablegun.equippedGunAsset.ammoPerShot;
+                    useablegun.SetPrivateField("ammo", ammo -= useablegun.equippedGunAsset.ammoPerShot);
+                    
                         if (useablegun.equippedGunAsset.action != EAction.String)
                         {
                             Player.player.equipment.state[10] = ammo;
