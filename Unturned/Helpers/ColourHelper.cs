@@ -35,6 +35,14 @@ namespace Hag.Helpers
             AddColour("Player Invisible Box Colour", Color.red);
             AddColour("Player Bone Invisible Colour", Color.magenta);
             AddColour("Player Bone Visible Colour", Color.red);
+
+            AddColour("Friendly-Player Text Colour", Color.green);
+            AddColour("Friendly-Player Visible Filled Box Colour", new Color32(0, 255, 0, 75));
+            AddColour("Friendly-Player Visible Box Colour", new Color32(0,255,111,255));
+            AddColour("Friendly-Player Invisible Filled Box Colour", new Color32(0, 255, 0, 75));
+            AddColour("Friendly-Player Invisible Box Colour", Color.green);
+            AddColour("Friendly-Player Bone Invisible Colour", Color.green);
+            AddColour("Friendly-Player Bone Visible Colour", new Color32(0, 255, 111, 255));
         }
         public static Color32 GetColour(string identifier)
         {

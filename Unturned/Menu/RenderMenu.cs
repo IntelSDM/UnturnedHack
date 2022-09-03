@@ -36,6 +36,7 @@ namespace Hag.Menu
             MainMenu();
             AimbotGenerals();
             Players();
+            FriendlyPlayers();
             Weapons();
             Zombies();
             ColourPicker();
@@ -83,7 +84,7 @@ namespace Hag.Menu
             IntSlider distance = new IntSlider("Max Distance", "Aimbot Activation Range", ref Globals.Config.ZombieAimbot.LegitMaxDistance, 0, 2000, 15);
             Toggle enablesmooth = new Toggle("Enable Smoothing", "Turns On Smoothing", ref Globals.Config.ZombieAimbot.Smooth);
             IntSlider smoothing = new IntSlider("Smoothing", "Amount Of Smoothing", ref Globals.Config.ZombieAimbot.Smoothing, 0, 100, 2);
-            IntSlider bone = new IntSlider("Target Bone", "0:Head 1:Spine 2:Pelvis", ref Globals.Config.ZombieAimbot.LegitAimbotBone, 0, 7, 1);
+            IntSlider bone = new IntSlider("Target Bone", "0:Head 1:Spine 2:Pelvis 3:Arms 4:Hands 5:Legs 6:Feet 7:Nearest", ref Globals.Config.ZombieAimbot.LegitAimbotBone, 0, 7, 1);
             Toggle vischecks = new Toggle("Visibility Checks", "Only Target Visible Players Based On Target Bone", ref Globals.Config.ZombieAimbot.LegitVisiblityChecks);
             Keybind bind = new Keybind("Aimbot Key", "Key To Lock Onto Players", ref Globals.Config.ZombieAimbot.LegitAimbotKey);
             aimbot.Items.Add(enable);
@@ -140,17 +141,43 @@ namespace Hag.Menu
         }
         void Players()
         {
-            SubMenu playeresp = new SubMenu("Player ESP", "Draw Zombie Visuals");
+            SubMenu playeresp = new SubMenu("Player ESP", "Draw Player Visuals");
             Toggle enable = new Toggle("Enable", "Enable Player Esp", ref Globals.Config.Player.Enable);
             Toggle name = new Toggle("Name", "Draw Name Of Player", ref Globals.Config.Player.Name);
             Toggle distance = new Toggle("Distance", "Draw Distance From Player", ref Globals.Config.Player.Distance);
             Toggle weapon = new Toggle("Weapon", "Draw Player's Weapon", ref Globals.Config.Player.Weapon);
-            IntSlider maxdistance = new IntSlider("Max Distance", "Maximum Draw Distance Of Players", ref Globals.Config.Player.MaxDistance, 0, 2000, 25);
+            IntSlider maxdistance = new IntSlider("Max Distance", "Maximum Draw Distance Of Players", ref Globals.Config.Player.MaxDistance, 0, 3000, 25);
             Toggle box3d = new Toggle("3D Box", "Draws Box Around Dimensions Of Player", ref Globals.Config.Player.Box3D);
             Toggle box2d = new Toggle("2D Box", "Draws Box From Head To Toe Of Player", ref Globals.Config.Player.Box);
             Toggle fillbox = new Toggle("Fill Box", "Fills The Box", ref Globals.Config.Player.FillBox);
             Toggle skeleton = new Toggle("Skeleton", "Draws Bones With Visibility Checks", ref Globals.Config.Player.Skeleton);
             Toggle visibleonly = new Toggle("Only Draw On Visible Players", "Draws Esp On Visible Players", ref Globals.Config.Player.OnlyDrawVisible);
+            playeresp.Items.Add(enable);
+            playeresp.Items.Add(name);
+            playeresp.Items.Add(distance);
+            playeresp.Items.Add(weapon);
+            playeresp.Items.Add(maxdistance);
+            playeresp.Items.Add(box3d);
+            playeresp.Items.Add(box2d);
+            playeresp.Items.Add(fillbox);
+            playeresp.Items.Add(skeleton);
+            playeresp.Items.Add(visibleonly);
+            Esp.Items.Add(playeresp);
+
+        }
+        void FriendlyPlayers()
+        {
+            SubMenu playeresp = new SubMenu("Friendly Player ESP", "Draw Zombie Visuals");
+            Toggle enable = new Toggle("Enable", "Enable Player Esp", ref Globals.Config.FriendlyPlayer.Enable);
+            Toggle name = new Toggle("Name", "Draw Name Of Player", ref Globals.Config.FriendlyPlayer.Name);
+            Toggle distance = new Toggle("Distance", "Draw Distance From Player", ref Globals.Config.FriendlyPlayer.Distance);
+            Toggle weapon = new Toggle("Weapon", "Draw Player's Weapon", ref Globals.Config.FriendlyPlayer.Weapon);
+            IntSlider maxdistance = new IntSlider("Max Distance", "Maximum Draw Distance Of Players", ref Globals.Config.FriendlyPlayer.MaxDistance, 0, 3000, 25);
+            Toggle box3d = new Toggle("3D Box", "Draws Box Around Dimensions Of Player", ref Globals.Config.FriendlyPlayer.Box3D);
+            Toggle box2d = new Toggle("2D Box", "Draws Box From Head To Toe Of Player", ref Globals.Config.FriendlyPlayer.Box);
+            Toggle fillbox = new Toggle("Fill Box", "Fills The Box", ref Globals.Config.FriendlyPlayer.FillBox);
+            Toggle skeleton = new Toggle("Skeleton", "Draws Bones With Visibility Checks", ref Globals.Config.FriendlyPlayer.Skeleton);
+            Toggle visibleonly = new Toggle("Only Draw On Visible Players", "Draws Esp On Visible Players", ref Globals.Config.FriendlyPlayer.OnlyDrawVisible);
             playeresp.Items.Add(enable);
             playeresp.Items.Add(name);
             playeresp.Items.Add(distance);

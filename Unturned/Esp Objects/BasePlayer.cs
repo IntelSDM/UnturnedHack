@@ -20,6 +20,7 @@ namespace Hag.Esp_Objects
         public bool Alive;
         public bool NPC;
         public bool Visible;
+        public bool Friendly = false;
 
         public int Distance;
 

@@ -17,5 +17,7 @@ namespace Hag.Configs
         public Hag.Configs.EntityAimbot PlayerAimbot = new Hag.Configs.EntityAimbot();
         public Hag.Configs.Aimbot Aimbot = new Hag.Configs.Aimbot();
         public Weapon Weapon = new Weapon();
+        public Friends Friends = new Friends();
+        public FriendlyPlayer FriendlyPlayer = new FriendlyPlayer();
     }
 }

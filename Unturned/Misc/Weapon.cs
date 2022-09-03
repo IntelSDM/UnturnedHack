@@ -26,9 +26,12 @@ namespace Hag.Misc
         {
             for (; ; )
             {
+              
+
                 if ((Player.player?.equipment?.asset is ItemGunAsset))
                 {
                     ItemGunAsset Weapon = (ItemGunAsset)Player.player?.equipment?.asset;
+
                     if (!ValueLog.ContainsKey(Weapon.id))
                     {
 

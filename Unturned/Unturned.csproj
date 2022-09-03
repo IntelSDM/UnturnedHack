@@ -129,6 +129,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aimbot\Aimbot.cs" />
+    <Compile Include="Configs\FriendlyPlayer.cs" />
+    <Compile Include="Configs\Friends.cs" />
+    <Compile Include="Hooks\AddPlayer.cs" />
     <Compile Include="Hooks\Fire.cs" />
     <Compile Include="Hooks\UpdateCrosshair.cs" />
     <Compile Include="Misc\Weapon.cs" />

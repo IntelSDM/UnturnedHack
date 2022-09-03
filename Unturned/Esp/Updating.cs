@@ -34,24 +34,54 @@ namespace Hag.Esp
                         Player player = bp.Entity;
                         if (player == null)
                             continue;
+                        if (Globals.Config.Friends.FriendsList.ContainsKey(bp.SteamPlayer.playerID.steamID.m_SteamID))
+                            bp.Friendly = true;
+                        if (Globals.Config.Friends.SteamFriends)
+                        {
+                            for (int i = 0; i < Steamworks.SteamFriends.GetFriendCount(Steamworks.EFriendFlags.k_EFriendFlagImmediate); i++)
+                                if (bp.SteamPlayer.playerID.steamID.m_SteamID == (Steamworks.SteamFriends.GetFriendByIndex(i, Steamworks.EFriendFlags.k_EFriendFlagImmediate).m_SteamID))
+                                    bp.Friendly = true;
+                        }
+                        if (bp.Entity.quests.isMemberOfSameGroupAs(Player.player))
+                            bp.Friendly = true;
+
+
                         bp.Distance = (int)Vector3.Distance(player.transform.position, Globals.LocalPlayer.transform.position);
                         bp.Name = bp.SteamPlayer.playerID.playerName;
                         bp.Colour = ColourHelper.GetColour("Player Text Colour");
+                        if(bp.Friendly)
+                            bp.Colour = ColourHelper.GetColour("Friendly-Player Text Colour");
                         bp.W2S = WorldPointToScreenPoint(player.transform.position);
                         bp.HeadW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(player.transform, "Skull"));
                         bp.FootW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(player.transform, "Left_Foot"));
                         bp.Alive = !player.life.isDead;
                         bp.Weapon = player.equipment.asset != null ? player.equipment?.asset?.itemName : "Empty";
                         bp.Visible = RaycastHelper.IsPointVisible(player, Globals.GetLimbPosition(player.transform, "Skull"));
-                        if (bp.Visible)
+                        if (!bp.Friendly)
                         {
-                            bp.BoxColour = ColourHelper.GetColour("Player Visible Box Colour");
-                            bp.FilledBoxColour = ColourHelper.GetColour("Player Visible Filled Box Colour");
+                            if (bp.Visible)
+                            {
+                                bp.BoxColour = ColourHelper.GetColour("Player Visible Box Colour");
+                                bp.FilledBoxColour = ColourHelper.GetColour("Player Visible Filled Box Colour");
+                            }
+                            else
+                            {
+                                bp.BoxColour = ColourHelper.GetColour("Player Invisible Box Colour");
+                                bp.FilledBoxColour = ColourHelper.GetColour("Player Invisible Filled Box Colour");
+                            }
                         }
-                        else
+                        else 
                         {
-                            bp.BoxColour = ColourHelper.GetColour("Player Invisible Box Colour");
-                            bp.FilledBoxColour = ColourHelper.GetColour("Player Invisible Filled Box Colour");
+                            if (bp.Visible)
+                            {
+                                bp.BoxColour = ColourHelper.GetColour("Friendly-Player Visible Box Colour");
+                                bp.FilledBoxColour = ColourHelper.GetColour("Friendly-Player Visible Filled Box Colour");
+                            }
+                            else
+                            {
+                                bp.BoxColour = ColourHelper.GetColour("Friendly-Player Invisible Box Colour");
+                                bp.FilledBoxColour = ColourHelper.GetColour("Friendly-Player Invisible Filled Box Colour");
+                            }
                         }
                         bp.Bounds = new Bounds(bp.Entity.transform.position + new Vector3(0, 1.1f, 0), bp.Entity.transform.localScale + new Vector3(0, .95f, 0));
                         bp.BoundPoints[0] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x + bp.Bounds.extents.x, Globals.GetLimbPosition(player.transform, "Skull").y + (bp.Bounds.extents.y / 2), bp.Bounds.center.z + bp.Bounds.extents.z));
@@ -86,16 +116,28 @@ namespace Hag.Esp
                         bp.WorldBonePosition[8] = (Globals.GetLimbPosition(bp.Entity.transform, "Spine"));
                         bp.WorldBonePosition[9] = (Globals.GetLimbPosition(bp.Entity.transform, "Skull"));
                         bp.WorldBonePosition[10] = new Vector3(bp.WorldBonePosition[8].x, bp.WorldBonePosition[5].y, bp.WorldBonePosition[8].z);
-
-                        for (int i = 0; i < bp.BonePosition.Count(); i++)
+                        if (!bp.Friendly)
                         {
-                            if (RaycastHelper.IsPointVisible(bp.Entity, bp.WorldBonePosition[i]))
-                                bp.BoneColour[i] = ColourHelper.GetColour("Player Bone Visible Colour");
-                            else
-                                bp.BoneColour[i] = ColourHelper.GetColour("Player Bone Invisible Colour");
+                            for (int i = 0; i < bp.BonePosition.Count(); i++)
+                            {
+                                if (RaycastHelper.IsPointVisible(bp.Entity, bp.WorldBonePosition[i]))
+                                    bp.BoneColour[i] = ColourHelper.GetColour("Player Bone Visible Colour");
+                                else
+                                    bp.BoneColour[i] = ColourHelper.GetColour("Player Bone Invisible Colour");
+                            }
+                        }
+                        else 
+                        {
+                            for (int i = 0; i < bp.BonePosition.Count(); i++)
+                            {
+                                if (RaycastHelper.IsPointVisible(bp.Entity, bp.WorldBonePosition[i]))
+                                    bp.BoneColour[i] = ColourHelper.GetColour("Friendly-Player Bone Visible Colour");
+                                else
+                                    bp.BoneColour[i] = ColourHelper.GetColour("Friendly-Player Bone Invisible Colour");
+                            }
+                        }
                         }
                     }
-                }
                 catch(Exception ex) { System.IO.File.WriteAllText("test2454.txt", ex.Message); }
                 yield return new WaitForEndOfFrame();
             }
