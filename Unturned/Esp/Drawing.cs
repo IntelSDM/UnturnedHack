@@ -143,10 +143,7 @@ namespace Hag.Esp
                     }
                     if (Globals.Config.Zombie.Skeleton)
                     {
-                        for ( int i = 0;  i < basezombie.BonePosition.Length; i++)
-                        {
-                    //        Renderer.DrawTextCentered($"{ i.ToString()}", basezombie.BonePosition[i].x, basezombie.BonePosition[i].y, ZombieFont, new Direct2DColor(basezombie.Colour.r, basezombie.Colour.g, basezombie.Colour.b, basezombie.Colour.a));
-                        }
+                     
                         
                         Renderer.DrawLine(basezombie.BonePosition[9].x, basezombie.BonePosition[9].y, basezombie.BonePosition[10].x, basezombie.BonePosition[10].y, 1, new Direct2DColor(basezombie.BoneColour[9].r, basezombie.BoneColour[9].g, basezombie.BoneColour[9].b, basezombie.BoneColour[9].a)); // kinda above the "Spine", basically the real spine
                         Renderer.DrawLine(basezombie.BonePosition[10].x, basezombie.BonePosition[10].y, basezombie.BonePosition[8].x, basezombie.BonePosition[8].y, 1, new Direct2DColor(basezombie.BoneColour[10].r, basezombie.BoneColour[10].g, basezombie.BoneColour[10].b, basezombie.BoneColour[10].a));

@@ -53,6 +53,7 @@ namespace Hag.Esp
                             bp.BoxColour = ColourHelper.GetColour("Player Invisible Box Colour");
                             bp.FilledBoxColour = ColourHelper.GetColour("Player Invisible Filled Box Colour");
                         }
+                        bp.Bounds = new Bounds(bp.Entity.transform.position + new Vector3(0, 1.1f, 0), bp.Entity.transform.localScale + new Vector3(0, .95f, 0));
                         bp.BoundPoints[0] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x + bp.Bounds.extents.x, Globals.GetLimbPosition(player.transform, "Skull").y + (bp.Bounds.extents.y / 2), bp.Bounds.center.z + bp.Bounds.extents.z));
                         bp.BoundPoints[1] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x + bp.Bounds.extents.x, Globals.GetLimbPosition(player.transform, "Skull").y + (bp.Bounds.extents.y / 2), bp.Bounds.center.z - bp.Bounds.extents.z));
                         bp.BoundPoints[2] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x + bp.Bounds.extents.x, bp.Bounds.center.y - bp.Bounds.extents.y, bp.Bounds.center.z + bp.Bounds.extents.z));
