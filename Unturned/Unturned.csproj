@@ -132,6 +132,7 @@
     <Compile Include="Configs\FriendlyPlayer.cs" />
     <Compile Include="Configs\Friends.cs" />
     <Compile Include="Configs\Item.cs" />
+    <Compile Include="Configs\ItemFilter.cs" />
     <Compile Include="Configs\Vehicle.cs" />
     <Compile Include="Esp Objects\BaseItem.cs" />
     <Compile Include="Esp Objects\BaseVehicle.cs" />

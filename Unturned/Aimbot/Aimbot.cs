@@ -394,7 +394,7 @@ namespace Hag.Aimbot
             // thanks bocheats
             float treturn = 0f;
 
-            if (Vector3.Distance(point, Player.player.look.aim.position) < 5f)
+            if (Vector3.Distance(point, Player.player.look.aim.position) < 35f)
                 return 0f;
 
             ItemGunAsset firearm = (ItemGunAsset)Player.player.equipment.asset;

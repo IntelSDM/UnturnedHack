@@ -34,5 +34,6 @@ namespace Hag
         // base.player.look.aim.forward
         // ov_playerinput in thanking has spinbot
         // add auto fish
+        // hook input.getinput() to prevent arrest
     }
 }

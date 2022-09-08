@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Hag.Configs
 {
-    class Item
+    class ItemFilter
     {
         public bool Enable = true;
         public bool Name = true;
         public bool Distance = true;
-        public int MaxDistance = 150;
-        public bool Filters = true;
+        public int MaxDistance = 300;
     }
 }

@@ -54,6 +54,7 @@ namespace Hag.Esp
         Direct2DFont ZombieFont;
         Direct2DFont PlayerFont;
         Direct2DFont VehicleFont;
+        Direct2DFont ItemFont;
         public void Start()
         {
 
@@ -91,6 +92,7 @@ namespace Hag.Esp
             ZombieFont = Renderer.CreateFont("Tahoma", 9);
             PlayerFont = Renderer.CreateFont("Tahoma", 10);
             VehicleFont = Renderer.CreateFont("Tahoma", 9);
+            ItemFont = Renderer.CreateFont("Tahoma", 8);
             new Thread(delegate ()
             {
 
@@ -182,14 +184,110 @@ namespace Hag.Esp
                         continue;
                     if (!Globals.IsScreenPointVisible(baseitem.W2S))
                         continue;
-                    if (baseitem.Distance > Globals.Config.Item.MaxDistance)
-                        continue;
-                  
-                    string name = Globals.Config.Item.Name ? baseitem.Name : "";
-                    string distance = Globals.Config.Item.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
-                    Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, VehicleFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                 
+                    if (Globals.Config.Item.Filters)
+                    {
+                        if (baseitem.Entity.asset is ItemGunAsset && Globals.Config.GunFilter.Enable && baseitem.Distance < Globals.Config.GunFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.GunFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.GunFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if (baseitem.Entity.asset is ItemMeleeAsset && Globals.Config.MeleeFilter.Enable && baseitem.Distance < Globals.Config.MeleeFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.MeleeFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.MeleeFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if (baseitem.Entity.asset is ItemMedicalAsset && Globals.Config.MedicalFilter.Enable && baseitem.Distance < Globals.Config.MedicalFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.MedicalFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.MedicalFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if ((baseitem.Entity.asset is ItemFoodAsset || baseitem.Entity.asset is ItemWaterAsset) && Globals.Config.FoodAndWaterFilter.Enable && baseitem.Distance < Globals.Config.FoodAndWaterFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.FoodAndWaterFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.FoodAndWaterFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if (baseitem.Entity.asset is ItemClothingAsset && Globals.Config.ClothingFilter.Enable && baseitem.Distance < Globals.Config.ClothingFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.ClothingFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.ClothingFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if (baseitem.Entity.asset is ItemBackpackAsset && Globals.Config.BackpackFilter.Enable && baseitem.Distance < Globals.Config.BackpackFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.BackpackFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.BackpackFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if (baseitem.Entity.asset is ItemCaliberAsset && Globals.Config.AmmoFilter.Enable && baseitem.Distance < Globals.Config.AmmoFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.AmmoFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.AmmoFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if (baseitem.Entity.asset is ItemMagazineAsset && Globals.Config.MagazineFilter.Enable && baseitem.Distance < Globals.Config.MagazineFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.MagazineFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.MagazineFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if (baseitem.Entity.asset is ItemFuelAsset && Globals.Config.FuelFilter.Enable && baseitem.Distance < Globals.Config.FuelFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.FuelFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.FuelFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if (baseitem.Entity.asset is ItemThrowableAsset && Globals.Config.ThrowableFilter.Enable && baseitem.Distance < Globals.Config.ThrowableFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.ThrowableFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.ThrowableFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if (baseitem.Entity.asset is ItemOpticAsset && Globals.Config.OpticFilter.Enable && baseitem.Distance < Globals.Config.OpticFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.OpticFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.OpticFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if (baseitem.Entity.asset is ItemBarrelAsset && Globals.Config.BarrelFilter.Enable && baseitem.Distance < Globals.Config.BarrelFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.BarrelFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.BarrelFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if ((baseitem.Entity.asset is ItemFarmAsset || baseitem.Entity.asset is ItemFisherAsset) && Globals.Config.FarmFilter.Enable && baseitem.Distance < Globals.Config.FarmFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.FarmFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.FarmFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if ((baseitem.Entity.asset is ItemDetonatorAsset || baseitem.Entity.asset is ItemChargeAsset)  && Globals.Config.Explosives.Enable && baseitem.Distance < Globals.Config.Explosives.MaxDistance)
+                        {
+                            string name = Globals.Config.Explosives.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.Explosives.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                        if (baseitem.Entity.asset is ItemSupplyAsset && Globals.Config.SupplyFilter.Enable && baseitem.Distance < Globals.Config.SupplyFilter.MaxDistance)
+                        {
+                            string name = Globals.Config.SupplyFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.SupplyFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                        }
+                    }
+                    else
+                    {
+                        if (baseitem.Distance > Globals.Config.Item.MaxDistance)
+                            continue;
+                        string name = Globals.Config.Item.Name ? baseitem.Name : "";
+                        string distance = Globals.Config.Item.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                        Renderer.DrawTextCentered($"{name}{distance}{baseitem.Entity.asset.ToString()}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
+                    }
+                    }
                 }
-            }
             catch { }
 
         }

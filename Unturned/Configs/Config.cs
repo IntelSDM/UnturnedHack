@@ -21,5 +21,21 @@ namespace Hag.Configs
         public FriendlyPlayer FriendlyPlayer = new FriendlyPlayer();
         public Vehicle Vehicle = new Vehicle();
         public Item Item = new Item();
+
+        public ItemFilter MagazineFilter = new ItemFilter();
+        public ItemFilter AmmoFilter = new ItemFilter();
+        public ItemFilter BarrelFilter = new ItemFilter();
+        public ItemFilter OpticFilter = new ItemFilter();
+        public ItemFilter BackpackFilter = new ItemFilter();
+        public ItemFilter ClothingFilter = new ItemFilter();
+        public ItemFilter FuelFilter = new ItemFilter();
+        public ItemFilter MedicalFilter = new ItemFilter();
+        public ItemFilter MeleeFilter = new ItemFilter();
+        public ItemFilter ThrowableFilter = new ItemFilter();
+        public ItemFilter FoodAndWaterFilter = new ItemFilter();
+        public ItemFilter GunFilter = new ItemFilter();
+        public ItemFilter FarmFilter = new ItemFilter();
+        public ItemFilter Explosives = new ItemFilter();
+        public ItemFilter SupplyFilter = new ItemFilter();
     }
 }
