@@ -19,6 +19,7 @@ namespace Hag.Aimbot
         void Start()
         {
             StartCoroutine(ZombieLegitbot());
+            StartCoroutine(PlayerLegitBot());
         }
         public static List<BaseZombie> SortClosestToCrosshair(List<BaseZombie> p)
         {
@@ -385,6 +386,41 @@ namespace Hag.Aimbot
             catch { }
             return Vector3.zero;
         }
+        Vector3 GetTargetPlayer()
+        {
+            // write to the targetzombie
+            // return the ideal aim position
+            Vector3 worldpos = Vector3.zero;
+            try
+            {
+
+                foreach (BasePlayer baseplayer in SortClosestToCrosshair(Globals.PlayerList))
+                {
+                    if (!baseplayer.Alive || baseplayer.Entity == null)
+                        continue;
+                    if ((Globals.Config.Player.MaxDistance < baseplayer.Distance))
+                        continue;
+                    if (Globals.Config.PlayerAimbot.LegitAimbotEnabled)
+                    {
+                        worldpos = GetAimbone(Globals.Config.PlayerAimbot.LegitAimbotBone, Globals.Config.PlayerAimbot.LegitVisiblityChecks, baseplayer);
+                        if (worldpos == Vector3.zero)
+                            continue;
+                        if (!Globals.IsScreenPointVisible(Globals.WorldPointToScreenPoint(worldpos)))
+                            continue;
+                        if ((Globals.Config.PlayerAimbot.LegitMaxDistance < baseplayer.Distance))
+                            continue;
+                        Vector2 vector = new Vector2((float)(Screen.width / 2), (float)(Screen.height / 2));
+                        int num = (int)Vector2.Distance(Globals.WorldPointToScreenPoint(worldpos), vector); // fov check
+                        if (num > Globals.Config.Aimbot.Fov)
+                            continue;
+                      //  TargetLegitZombie = baseplayer;
+                        return worldpos;
+                    }
+                }
+            }
+            catch { }
+            return Vector3.zero;
+        }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, UIntPtr dwExtraInfo);
@@ -442,28 +478,28 @@ namespace Hag.Aimbot
             {
                 if (Input.GetKey(Globals.Config.ZombieAimbot.LegitAimbotKey))
                 {
-                  
+
                     Vector3 TargetZombie = GetTargetLegitZombie();
                     if (TargetZombie != Vector3.zero)
                     {
                         try
                         {
-                         
+
                             float drop = 0;
                             try
                             {
-                                if (Globals.Config.ZombieAimbot.BulletDropPrediction && (Provider.mode != EGameMode.EASY  || Provider.modeConfigData.Gameplay.Ballistics))
+                                if (Globals.Config.ZombieAimbot.BulletDropPrediction && (Provider.mode != EGameMode.EASY || Provider.modeConfigData.Gameplay.Ballistics))
                                 {
                                     drop = DropCalc(TargetZombie);
                                 }
                             }
                             catch { }
-                                TargetZombie.y += drop;
+                            TargetZombie.y += drop;
                             float ScreenCenterX = (Screen.width / 2);
                             float ScreenCenterY = (Screen.height / 2);
                             float TargetX = 0;
                             float TargetY = 0;
-                            float x = Globals.WorldPointToScreenPoint(TargetZombie).x; 
+                            float x = Globals.WorldPointToScreenPoint(TargetZombie).x;
                             float y = Globals.WorldPointToScreenPoint(TargetZombie).y;
                             float AimSpeed = ((100 - Globals.Config.ZombieAimbot.Smoothing) + 1) * 1000;
                             if (x != 0)
@@ -526,14 +562,114 @@ namespace Hag.Aimbot
                             {
                                 mouse_event(0x0001, (uint)(TargetX), (uint)(TargetY), 0, UIntPtr.Zero);
                             }
-                            }
+                        }
                         catch { }
 
 
                     }
-                    }
-                    yield return new WaitForEndOfFrame();
+                }
+                yield return new WaitForEndOfFrame();
             }
         }
+            IEnumerator PlayerLegitBot()
+            {
+                for (; ; )
+                {
+                    if (Input.GetKey(Globals.Config.ZombieAimbot.LegitAimbotKey))
+                    {
+
+                        Vector3 tartgetplayer = GetTargetPlayer();
+                        if (tartgetplayer != Vector3.zero)
+                        {
+                            try
+                            {
+
+                                float drop = 0;
+                                try
+                                {
+                                    if (Globals.Config.PlayerAimbot.BulletDropPrediction && (Provider.mode != EGameMode.EASY || Provider.modeConfigData.Gameplay.Ballistics))
+                                    {
+                                        drop = DropCalc(tartgetplayer);
+                                    }
+                                }
+                                catch { }
+                                tartgetplayer.y += drop;
+                                float ScreenCenterX = (Screen.width / 2);
+                                float ScreenCenterY = (Screen.height / 2);
+                                float TargetX = 0;
+                                float TargetY = 0;
+                                float x = Globals.WorldPointToScreenPoint(tartgetplayer).x;
+                                float y = Globals.WorldPointToScreenPoint(tartgetplayer).y;
+                                float AimSpeed = ((100 - Globals.Config.PlayerAimbot.Smoothing) + 1) * 1000;
+                                if (x != 0)
+                                {
+                                    if (x > ScreenCenterX)
+                                    {
+                                        TargetX = -(ScreenCenterX - x);
+                                        if (Globals.Config.PlayerAimbot.Smooth)
+                                            TargetX /= AimSpeed;
+                                        if (TargetX + ScreenCenterX > ScreenCenterX * 2) TargetX = 0;
+                                    }
+                                    if (x < ScreenCenterX)
+                                    {
+                                        TargetX = x - ScreenCenterX;
+                                        if (Globals.Config.PlayerAimbot.Smooth)
+                                            TargetX /= AimSpeed;
+                                        if (TargetX + ScreenCenterX < 0) TargetX = 0;
+                                    }
+                                }
+                                if (y != 0)
+                                {
+                                    if (y > ScreenCenterY)
+                                    {
+                                        TargetY = -(ScreenCenterY - y);
+                                        if (Globals.Config.PlayerAimbot.Smooth)
+                                            TargetY /= AimSpeed;
+                                        if (TargetY + ScreenCenterY > ScreenCenterY * 2) TargetY = 0;
+                                    }
+                                    if (y < ScreenCenterY)
+                                    {
+                                        TargetY = y - ScreenCenterY;
+                                        if (Globals.Config.PlayerAimbot.Smooth)
+                                            TargetY /= AimSpeed;
+                                        if (TargetY + ScreenCenterY < 0) TargetY = 0;
+                                    }
+                                }
+
+                                //  mouse_event(0x0001, (uint)(TargetX), (uint)(TargetY), 0, UIntPtr.Zero);
+                                if (Globals.Config.PlayerAimbot.Smooth)
+                                {
+                                    TargetX /= 10;
+                                    TargetY /= 10;
+                                    if (Math.Abs(TargetX) < 1)
+                                    {
+                                        if (TargetX > 0)
+                                            TargetX = 1;
+                                        if (TargetX < 0)
+                                            TargetX = -1;
+                                    }
+                                    if (Math.Abs(TargetY) < 1)
+                                    {
+                                        if (TargetY > 0)
+                                            TargetY = 1;
+                                        if (TargetY < 0)
+                                            TargetY = -1;
+                                    }
+                                    mouse_event(0x0001, (uint)TargetX, (uint)TargetY, 0, UIntPtr.Zero);
+                                }
+                                else
+                                {
+                                    mouse_event(0x0001, (uint)(TargetX), (uint)(TargetY), 0, UIntPtr.Zero);
+                                }
+                            }
+                            catch { }
+
+
+                        }
+                    }
+                    yield return new WaitForEndOfFrame();
+                }
+            }
+            
     }
 }

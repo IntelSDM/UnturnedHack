@@ -18,14 +18,12 @@ namespace Hag
             Hackobject.AddComponent<RenderMenu>();
             Hackobject.AddComponent<Hag.Esp.Caching>();
             Hackobject.AddComponent<Hag.Esp.Updating>();
-            Hackobject.AddComponent<Aimbot.Aimbot>();
-            Hackobject.AddComponent<Misc.Weapon>();
+      //      Hackobject.AddComponent<Aimbot.Aimbot>();
+      //      Hackobject.AddComponent<Misc.Weapon>();
 
             Hackobject.AddComponent<TakeScreenshot>();
-     //       Hackobject.AddComponent<Simulate>();
-    //        Hackobject.AddComponent<UpdateCrosshair>();
+
             Hackobject.AddComponent<Fire>();
-        //    Hackobject.AddComponent<AddPlayer>();
             GameObject.DontDestroyOnLoad(Hackobject);
         }
         private static GameObject Hackobject = new GameObject();

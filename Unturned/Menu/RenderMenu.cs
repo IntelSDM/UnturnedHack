@@ -25,6 +25,7 @@ namespace Hag.Menu
             Main.Items.Add(Config);
 
             Aimbot.Items.Add(ZombieAimbot);
+            Aimbot.Items.Add(PlayerAimbot);
             // Initialize Main Menu
             MenuHistory.Add(Main);
             CurrentMenu = Main;

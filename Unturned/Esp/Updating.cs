@@ -109,13 +109,15 @@ namespace Hag.Esp
                         bp.Distance = (int)Vector3.Distance(player.transform.position, Globals.LocalPlayer.transform.position);
                         bp.Name = bp.SteamPlayer.playerID.playerName;
                         bp.Colour = ColourHelper.GetColour("Player Text Colour");
-                        if(bp.Friendly)
+                        if (bp.Friendly)
                             bp.Colour = ColourHelper.GetColour("Friendly-Player Text Colour");
                         bp.W2S = WorldPointToScreenPoint(player.transform.position);
                         bp.HeadW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(player.transform, "Skull"));
                         bp.FootW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(player.transform, "Left_Foot"));
                         bp.Alive = !player.life.isDead;
                         bp.Weapon = player.equipment.asset != null ? player.equipment?.asset?.itemName : "Empty";
+                        if (bp.Distance > Globals.Config.Player.MaxDistance)
+                            continue;
                         bp.Visible = RaycastHelper.IsPointVisible(player, Globals.GetLimbPosition(player.transform, "Skull"));
                         if (!bp.Friendly)
                         {
@@ -130,7 +132,7 @@ namespace Hag.Esp
                                 bp.FilledBoxColour = ColourHelper.GetColour("Player Invisible Filled Box Colour");
                             }
                         }
-                        else 
+                        else
                         {
                             if (bp.Visible)
                             {
@@ -176,29 +178,32 @@ namespace Hag.Esp
                         bp.WorldBonePosition[8] = (Globals.GetLimbPosition(bp.Entity.transform, "Spine"));
                         bp.WorldBonePosition[9] = (Globals.GetLimbPosition(bp.Entity.transform, "Skull"));
                         bp.WorldBonePosition[10] = new Vector3(bp.WorldBonePosition[8].x, bp.WorldBonePosition[5].y, bp.WorldBonePosition[8].z);
-                        if (!bp.Friendly)
+                        if (bp.Distance < 200 && Globals.Config.Player.Skeleton)
                         {
-                            for (int i = 0; i < bp.BonePosition.Count(); i++)
+                            if (!bp.Friendly)
                             {
-                                if (RaycastHelper.IsPointVisible(bp.Entity, bp.WorldBonePosition[i]))
-                                    bp.BoneColour[i] = ColourHelper.GetColour("Player Bone Visible Colour");
-                                else
-                                    bp.BoneColour[i] = ColourHelper.GetColour("Player Bone Invisible Colour");
+                                for (int i = 0; i < bp.BonePosition.Count(); i++)
+                                {
+                                    if (RaycastHelper.IsPointVisible(bp.Entity, bp.WorldBonePosition[i]))
+                                        bp.BoneColour[i] = ColourHelper.GetColour("Player Bone Visible Colour");
+                                    else
+                                        bp.BoneColour[i] = ColourHelper.GetColour("Player Bone Invisible Colour");
+                                }
                             }
-                        }
-                        else 
-                        {
-                            for (int i = 0; i < bp.BonePosition.Count(); i++)
+                            else
                             {
-                                if (RaycastHelper.IsPointVisible(bp.Entity, bp.WorldBonePosition[i]))
-                                    bp.BoneColour[i] = ColourHelper.GetColour("Friendly-Player Bone Visible Colour");
-                                else
-                                    bp.BoneColour[i] = ColourHelper.GetColour("Friendly-Player Bone Invisible Colour");
+                                for (int i = 0; i < bp.BonePosition.Count(); i++)
+                                {
+                                    if (RaycastHelper.IsPointVisible(bp.Entity, bp.WorldBonePosition[i]))
+                                        bp.BoneColour[i] = ColourHelper.GetColour("Friendly-Player Bone Visible Colour");
+                                    else
+                                        bp.BoneColour[i] = ColourHelper.GetColour("Friendly-Player Bone Invisible Colour");
+                                }
                             }
-                        }
                         }
                     }
-                catch(Exception ex) { System.IO.File.WriteAllText("test2454.txt", ex.Message); }
+                    }
+                catch (Exception ex) { System.IO.File.WriteAllText("test2454.txt", ex.Message); }
                 yield return new WaitForEndOfFrame();
             }
         }
@@ -329,12 +334,15 @@ namespace Hag.Esp
                         Vector2 vector = new Vector2((float)(Screen.width / 2), (float)(Screen.height / 2));
                         int num = (int)Vector2.Distance(bz.HeadW2S, vector); // fov check
                         bz.test = num;
-                        for (int i = 0; i < bz.BonePosition.Count(); i++)
+                        if (bz.Distance < 200 && Globals.Config.z.Skeleton)
                         {
-                            if (RaycastHelper.IsPointVisible(bz.Entity, bz.WorldBonePosition[i]))
-                                bz.BoneColour[i] = ColourHelper.GetColour("Zombie Bone Visible Colour");
-                            else
-                                bz.BoneColour[i] = ColourHelper.GetColour("Zombie Bone Invisible Colour");
+                            for (int i = 0; i < bz.BonePosition.Count(); i++)
+                            {
+                                if (RaycastHelper.IsPointVisible(bz.Entity, bz.WorldBonePosition[i]))
+                                    bz.BoneColour[i] = ColourHelper.GetColour("Zombie Bone Visible Colour");
+                                else
+                                    bz.BoneColour[i] = ColourHelper.GetColour("Zombie Bone Invisible Colour");
+                            }
                         }
                     }
                        

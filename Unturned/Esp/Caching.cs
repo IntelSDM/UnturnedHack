@@ -21,7 +21,7 @@ namespace Hag.Esp
             {
                 StartCoroutine(Players());
             }
-            catch (Exception ex) { System.IO.File.WriteAllText("dgdfg.txt", ex.ToString()); }
+            catch (Exception ex) {  }
         }
         IEnumerator CacheVars()
         {
