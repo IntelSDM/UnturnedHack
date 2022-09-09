@@ -35,7 +35,7 @@ namespace Hag.Configs
         public ItemFilter FoodAndWaterFilter = new ItemFilter();
         public ItemFilter GunFilter = new ItemFilter();
         public ItemFilter FarmFilter = new ItemFilter();
-        public ItemFilter Explosives = new ItemFilter();
+        public ItemFilter ExplosivesFilter = new ItemFilter();
         public ItemFilter SupplyFilter = new ItemFilter();
     }
 }

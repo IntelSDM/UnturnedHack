@@ -265,10 +265,10 @@ namespace Hag.Esp
                             string distance = Globals.Config.FarmFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
                             Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
                         }
-                        if ((baseitem.Entity.asset is ItemDetonatorAsset || baseitem.Entity.asset is ItemChargeAsset)  && Globals.Config.Explosives.Enable && baseitem.Distance < Globals.Config.Explosives.MaxDistance)
+                        if ((baseitem.Entity.asset is ItemDetonatorAsset || baseitem.Entity.asset is ItemChargeAsset)  && Globals.Config.ExplosivesFilter.Enable && baseitem.Distance < Globals.Config.ExplosivesFilter.MaxDistance)
                         {
-                            string name = Globals.Config.Explosives.Name ? baseitem.Name : "";
-                            string distance = Globals.Config.Explosives.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
+                            string name = Globals.Config.ExplosivesFilter.Name ? baseitem.Name : "";
+                            string distance = Globals.Config.ExplosivesFilter.Distance ? $"({baseitem.Distance.ToString()}m)" : "";
                             Renderer.DrawTextCentered($"{name}{distance}", baseitem.W2S.x, baseitem.W2S.y, ItemFont, new Direct2DColor(baseitem.Colour.r, baseitem.Colour.g, baseitem.Colour.b, baseitem.Colour.a));
                         }
                         if (baseitem.Entity.asset is ItemSupplyAsset && Globals.Config.SupplyFilter.Enable && baseitem.Distance < Globals.Config.SupplyFilter.MaxDistance)

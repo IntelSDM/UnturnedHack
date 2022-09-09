@@ -222,6 +222,7 @@ namespace Hag.Menu
             Esp.Items.Add(playeresp);
 
         }
+        Dictionary<string, Configs.ItemFilter> ItemFilters = new Dictionary<string, Configs.ItemFilter>();
         void ItemEsps()
         {
             SubMenu itemesp = new SubMenu("Item ESP", "Draw Item Visuals");
@@ -230,13 +231,41 @@ namespace Hag.Menu
             Toggle distance = new Toggle("Distance", "Draw Distance From Items", ref Globals.Config.Item.Distance);
             IntSlider maxdistance = new IntSlider("Max Distance", "Maximum Draw Distance Of Items", ref Globals.Config.Item.MaxDistance, 0, 3000, 25);
             Toggle filters = new Toggle("Enable Item Filters", "Enables Custom Item Filters", ref Globals.Config.Item.Filters);
-
-
+            SubMenu submenu = new SubMenu("Item Filters Menu", "Menu Of Filters");
+            ItemFilters.Add("Weapon Filter", Globals.Config.GunFilter);
+            ItemFilters.Add("Ammo Filter", Globals.Config.AmmoFilter);
+            ItemFilters.Add("Magazine Filter", Globals.Config.MagazineFilter);
+            ItemFilters.Add("Misc Supplies Filter", Globals.Config.SupplyFilter);
+            ItemFilters.Add("Backpack Filter", Globals.Config.BackpackFilter);
+            ItemFilters.Add("Clothing Filter", Globals.Config.ClothingFilter);
+            ItemFilters.Add("Explosives Filter", Globals.Config.ExplosivesFilter);
+            ItemFilters.Add("Farming Filter", Globals.Config.FarmFilter);
+            ItemFilters.Add("Food/Water Filter", Globals.Config.FoodAndWaterFilter);
+            ItemFilters.Add("Fuel Filter", Globals.Config.FuelFilter);
+            ItemFilters.Add("Medical Filter", Globals.Config.MedicalFilter);
+            ItemFilters.Add("Melee Filter", Globals.Config.MeleeFilter);
+            ItemFilters.Add("Optic Filter", Globals.Config.OpticFilter);
+            ItemFilters.Add("Barrel Filter", Globals.Config.BarrelFilter);
+            ItemFilters.Add("Throwable Filter", Globals.Config.ThrowableFilter);
+            foreach (KeyValuePair<string,Configs.ItemFilter> pair in ItemFilters)
+            {
+                SubMenu filtermenu = new SubMenu(pair.Key, "");
+                Toggle filterenable = new Toggle("Enable", "Enables Filter", ref pair.Value.Enable);
+                Toggle filtername = new Toggle("Name", "Draw Distance For Filter Names", ref pair.Value.Name);
+                Toggle filterdistance = new Toggle("Distance", "Draw Distance For Filter Items", ref pair.Value.Distance);
+                IntSlider filtermaxdistance = new IntSlider("Max Distance", "Maximum Draw Distance Of Filter Items", ref pair.Value.MaxDistance, 0, 3000, 25);
+                filtermenu.Items.Add(filterenable);
+                filtermenu.Items.Add(filtername);
+                filtermenu.Items.Add(filterdistance);
+                filtermenu.Items.Add(filtermaxdistance);
+                submenu.Items.Add(filtermenu);
+            }
             itemesp.Items.Add(enable);
             itemesp.Items.Add(name);
             itemesp.Items.Add(distance);
             itemesp.Items.Add(maxdistance);
             itemesp.Items.Add(filters);
+            itemesp.Items.Add(submenu);
             Esp.Items.Add(itemesp);
 
         }
