@@ -105,20 +105,19 @@ namespace Hag.Esp
                         if (bp.Entity.quests.isMemberOfSameGroupAs(Player.player))
                             bp.Friendly = true;
 
-
+                        Vector3 skull = Globals.GetLimbPosition(player.transform, "Skull");
                         bp.Distance = (int)Vector3.Distance(player.transform.position, Globals.LocalPlayer.transform.position);
                         bp.Name = bp.SteamPlayer.playerID.playerName;
                         bp.Colour = ColourHelper.GetColour("Player Text Colour");
                         if (bp.Friendly)
                             bp.Colour = ColourHelper.GetColour("Friendly-Player Text Colour");
                         bp.W2S = WorldPointToScreenPoint(player.transform.position);
-                        bp.HeadW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(player.transform, "Skull"));
-                        bp.FootW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(player.transform, "Left_Foot"));
+                        bp.HeadW2S = WorldPointToScreenPoint(skull);
                         bp.Alive = !player.life.isDead;
                         bp.Weapon = player.equipment.asset != null ? player.equipment?.asset?.itemName : "Empty";
                         if (bp.Distance > Globals.Config.Player.MaxDistance)
                             continue;
-                        bp.Visible = RaycastHelper.IsPointVisible(player, Globals.GetLimbPosition(player.transform, "Skull"));
+                        bp.Visible = RaycastHelper.IsPointVisible(player,skull);
                         if (!bp.Friendly)
                         {
                             if (bp.Visible)
@@ -145,41 +144,49 @@ namespace Hag.Esp
                                 bp.FilledBoxColour = ColourHelper.GetColour("Friendly-Player Invisible Filled Box Colour");
                             }
                         }
+                        Vector3 spine = Globals.GetLimbPosition(player.transform, "Spine");
+                        Vector3 lefthand = Globals.GetLimbPosition(player.transform, "Left_Hand");
+                        Vector3 righthand = Globals.GetLimbPosition(player.transform, "Right_Hand");
+                        Vector3 leftarm = Globals.GetLimbPosition(player.transform, "Left_Arm");
+                        Vector3 rightarm = Globals.GetLimbPosition(player.transform, "Right_Arm");
+                        Vector3 leftleg = Globals.GetLimbPosition(player.transform, "Left_Leg");
+                        Vector3 rightleg = Globals.GetLimbPosition(player.transform, "Right_Leg");
+                        Vector3 leftfoot = Globals.GetLimbPosition(player.transform, "Left_Foot");
+                        Vector3 rightfoot = Globals.GetLimbPosition(player.transform, "Right_Foot");
                         bp.Bounds = new Bounds(bp.Entity.transform.position + new Vector3(0, 1.1f, 0), bp.Entity.transform.localScale + new Vector3(0, .95f, 0));
-                        bp.BoundPoints[0] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x + bp.Bounds.extents.x, Globals.GetLimbPosition(player.transform, "Skull").y + (bp.Bounds.extents.y / 2), bp.Bounds.center.z + bp.Bounds.extents.z));
-                        bp.BoundPoints[1] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x + bp.Bounds.extents.x, Globals.GetLimbPosition(player.transform, "Skull").y + (bp.Bounds.extents.y / 2), bp.Bounds.center.z - bp.Bounds.extents.z));
+                        bp.BoundPoints[0] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x + bp.Bounds.extents.x, skull.y + (bp.Bounds.extents.y / 2), bp.Bounds.center.z + bp.Bounds.extents.z));
+                        bp.BoundPoints[1] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x + bp.Bounds.extents.x, skull.y + (bp.Bounds.extents.y / 2), bp.Bounds.center.z - bp.Bounds.extents.z));
                         bp.BoundPoints[2] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x + bp.Bounds.extents.x, bp.Bounds.center.y - bp.Bounds.extents.y, bp.Bounds.center.z + bp.Bounds.extents.z));
                         bp.BoundPoints[3] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x + bp.Bounds.extents.x, bp.Bounds.center.y - bp.Bounds.extents.y, bp.Bounds.center.z - bp.Bounds.extents.z));
-                        bp.BoundPoints[4] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x - bp.Bounds.extents.x, Globals.GetLimbPosition(player.transform, "Skull").y + (bp.Bounds.extents.y / 2), bp.Bounds.center.z + bp.Bounds.extents.z));
-                        bp.BoundPoints[5] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x - bp.Bounds.extents.x, Globals.GetLimbPosition(player.transform, "Skull").y + (bp.Bounds.extents.y / 2), bp.Bounds.center.z - bp.Bounds.extents.z));
+                        bp.BoundPoints[4] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x - bp.Bounds.extents.x, skull.y + (bp.Bounds.extents.y / 2), bp.Bounds.center.z + bp.Bounds.extents.z));
+                        bp.BoundPoints[5] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x - bp.Bounds.extents.x, skull.y + (bp.Bounds.extents.y / 2), bp.Bounds.center.z - bp.Bounds.extents.z));
                         bp.BoundPoints[6] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x - bp.Bounds.extents.x, bp.Bounds.center.y - bp.Bounds.extents.y, bp.Bounds.center.z + bp.Bounds.extents.z));
                         bp.BoundPoints[7] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bp.Bounds.center.x - bp.Bounds.extents.x, bp.Bounds.center.y - bp.Bounds.extents.y, bp.Bounds.center.z - bp.Bounds.extents.z));
-
-                        bp.BonePosition[0] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bp.Entity.transform, "Right_Foot"));
-                        bp.BonePosition[1] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bp.Entity.transform, "Left_Foot"));
-                        bp.BonePosition[2] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bp.Entity.transform, "Right_Leg"));
-                        bp.BonePosition[3] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bp.Entity.transform, "Left_Leg"));
-                        bp.BonePosition[4] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bp.Entity.transform, "Right_Arm"));
-                        bp.BonePosition[5] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bp.Entity.transform, "Left_Arm"));
-                        bp.BonePosition[6] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bp.Entity.transform, "Right_Hand"));
-                        bp.BonePosition[7] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bp.Entity.transform, "Left_Hand"));
-                        bp.BonePosition[8] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bp.Entity.transform, "Spine"));
-                        bp.BonePosition[9] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bp.Entity.transform, "Skull"));
+                     //   bp.Entity.animator.
+                        bp.BonePosition[0] = Globals.WorldPointToScreenPoint(rightfoot);
+                        bp.BonePosition[1] = Globals.WorldPointToScreenPoint(leftfoot);
+                        bp.BonePosition[2] = Globals.WorldPointToScreenPoint(rightleg);
+                        bp.BonePosition[3] = Globals.WorldPointToScreenPoint(leftleg);
+                        bp.BonePosition[4] = Globals.WorldPointToScreenPoint(rightarm);
+                        bp.BonePosition[5] = Globals.WorldPointToScreenPoint(leftarm);
+                        bp.BonePosition[6] = Globals.WorldPointToScreenPoint(righthand);
+                        bp.BonePosition[7] = Globals.WorldPointToScreenPoint(lefthand);
+                        bp.BonePosition[8] = Globals.WorldPointToScreenPoint(spine);
+                        bp.BonePosition[9] = Globals.WorldPointToScreenPoint(skull);
                         bp.BonePosition[10] = new Vector3(bp.BonePosition[8].x, bp.BonePosition[5].y, bp.BonePosition[5].z);
 
-                        bp.WorldBonePosition[0] = (Globals.GetLimbPosition(bp.Entity.transform, "Right_Foot"));
-                        bp.WorldBonePosition[1] = (Globals.GetLimbPosition(bp.Entity.transform, "Left_Foot"));
-                        bp.WorldBonePosition[2] = (Globals.GetLimbPosition(bp.Entity.transform, "Right_Leg"));
-                        bp.WorldBonePosition[3] = (Globals.GetLimbPosition(bp.Entity.transform, "Left_Leg"));
-                        bp.WorldBonePosition[4] = (Globals.GetLimbPosition(bp.Entity.transform, "Right_Arm"));
-                        bp.WorldBonePosition[5] = (Globals.GetLimbPosition(bp.Entity.transform, "Left_Arm"));
-                        bp.WorldBonePosition[6] = (Globals.GetLimbPosition(bp.Entity.transform, "Right_Hand"));
-                        bp.WorldBonePosition[7] = (Globals.GetLimbPosition(bp.Entity.transform, "Left_Hand"));
-                        bp.WorldBonePosition[8] = (Globals.GetLimbPosition(bp.Entity.transform, "Spine"));
-                        bp.WorldBonePosition[9] = (Globals.GetLimbPosition(bp.Entity.transform, "Skull"));
+                        bp.WorldBonePosition[0] = rightfoot; 
+                        bp.WorldBonePosition[1] = leftfoot;
+                        bp.WorldBonePosition[2] = rightleg;
+                        bp.WorldBonePosition[3] = leftleg;
+                        bp.WorldBonePosition[4] = rightarm;
+                        bp.WorldBonePosition[5] = leftarm;
+                        bp.WorldBonePosition[6] = righthand;
+                        bp.WorldBonePosition[7] = lefthand;
+                        bp.WorldBonePosition[8] = spine;
+                        bp.WorldBonePosition[9] = skull;
                         bp.WorldBonePosition[10] = new Vector3(bp.WorldBonePosition[8].x, bp.WorldBonePosition[5].y, bp.WorldBonePosition[8].z);
-                        if (bp.Distance < 200 && Globals.Config.Player.Skeleton)
-                        {
+                      
                             if (!bp.Friendly)
                             {
                                 for (int i = 0; i < bp.BonePosition.Count(); i++)
@@ -200,10 +207,10 @@ namespace Hag.Esp
                                         bp.BoneColour[i] = ColourHelper.GetColour("Friendly-Player Bone Invisible Colour");
                                 }
                             }
-                        }
+                        
                     }
                     }
-                catch (Exception ex) { System.IO.File.WriteAllText("test2454.txt", ex.Message); }
+                catch (Exception ex) {  }
                 yield return new WaitForEndOfFrame();
             }
         }
@@ -221,10 +228,11 @@ namespace Hag.Esp
                         bz.Distance = (int)Vector3.Distance(zombie.transform.position, Globals.LocalPlayer.transform.position);
                         bz.Colour = ColourHelper.GetColour("Zombie Text Colour");
                         bz.W2S = WorldPointToScreenPoint(zombie.transform.position);
-                        bz.HeadW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(zombie.transform, "Skull"));
-                        bz.FootW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(zombie.transform, "Left_Foot"));
+                        Vector3 skull = Globals.GetLimbPosition(zombie.transform, "Skull");
+                        bz.HeadW2S = WorldPointToScreenPoint(skull);
+                      //  bz.FootW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(zombie.transform, "Left_Foot"));
                         bz.Alive = !zombie.isDead;
-                        bz.Visible = RaycastHelper.IsPointVisible(zombie, Globals.GetLimbPosition(zombie.transform, "Skull"));
+                        bz.Visible = RaycastHelper.IsPointVisible(zombie, skull);
                         if (bz.Visible)
                         {
                             bz.BoxColour = ColourHelper.GetColour("Zombie Visible Box Colour");
@@ -299,43 +307,54 @@ namespace Hag.Esp
                                 bz.Tag = "Zombie";
                                 break;
                         }
-                        bz.BoundPoints[0] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x + bz.Bounds.extents.x, Globals.GetLimbPosition(zombie.transform, "Skull").y + (bz.Bounds.extents.y / 2), bz.Bounds.center.z + bz.Bounds.extents.z));
-                        bz.BoundPoints[1] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x + bz.Bounds.extents.x,  Globals.GetLimbPosition(zombie.transform, "Skull").y + (bz.Bounds.extents.y / 2), bz.Bounds.center.z - bz.Bounds.extents.z));
+                        if (bz.Distance > Globals.Config.Zombie.MaxDistance)
+                            continue;
+                        Vector3 spine = Globals.GetLimbPosition(zombie.transform, "Spine");
+                        Vector3 lefthand = Globals.GetLimbPosition(zombie.transform, "Left_Hand");
+                        Vector3 righthand = Globals.GetLimbPosition(zombie.transform, "Right_Hand");
+                        Vector3 leftarm = Globals.GetLimbPosition(zombie.transform, "Left_Arm");
+                        Vector3 rightarm = Globals.GetLimbPosition(zombie.transform, "Right_Arm");
+                        Vector3 leftleg = Globals.GetLimbPosition(zombie.transform, "Left_Leg");
+                        Vector3 rightleg = Globals.GetLimbPosition(zombie.transform, "Right_Leg");
+                        Vector3 leftfoot = Globals.GetLimbPosition(zombie.transform, "Left_Foot");
+                        Vector3 rightfoot = Globals.GetLimbPosition(zombie.transform, "Right_Foot");
+
+                        bz.BoundPoints[0] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x + bz.Bounds.extents.x, skull.y + (bz.Bounds.extents.y / 2), bz.Bounds.center.z + bz.Bounds.extents.z));
+                        bz.BoundPoints[1] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x + bz.Bounds.extents.x,  skull.y + (bz.Bounds.extents.y / 2), bz.Bounds.center.z - bz.Bounds.extents.z));
                         bz.BoundPoints[2] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x + bz.Bounds.extents.x, bz.Bounds.center.y - bz.Bounds.extents.y, bz.Bounds.center.z + bz.Bounds.extents.z));
                         bz.BoundPoints[3] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x + bz.Bounds.extents.x, bz.Bounds.center.y - bz.Bounds.extents.y, bz.Bounds.center.z - bz.Bounds.extents.z));
-                        bz.BoundPoints[4] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x - bz.Bounds.extents.x, Globals.GetLimbPosition(zombie.transform, "Skull").y + (bz.Bounds.extents.y / 2), bz.Bounds.center.z + bz.Bounds.extents.z));
-                        bz.BoundPoints[5] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x - bz.Bounds.extents.x, Globals.GetLimbPosition(zombie.transform, "Skull").y + (bz.Bounds.extents.y / 2), bz.Bounds.center.z - bz.Bounds.extents.z));
+                        bz.BoundPoints[4] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x - bz.Bounds.extents.x, skull.y + (bz.Bounds.extents.y / 2), bz.Bounds.center.z + bz.Bounds.extents.z));
+                        bz.BoundPoints[5] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x - bz.Bounds.extents.x, skull.y + (bz.Bounds.extents.y / 2), bz.Bounds.center.z - bz.Bounds.extents.z));
                         bz.BoundPoints[6] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x - bz.Bounds.extents.x, bz.Bounds.center.y - bz.Bounds.extents.y, bz.Bounds.center.z + bz.Bounds.extents.z));
                         bz.BoundPoints[7] = Globals.WorldPointToScreenPoint(new UnityEngine.Vector3(bz.Bounds.center.x - bz.Bounds.extents.x, bz.Bounds.center.y - bz.Bounds.extents.y, bz.Bounds.center.z - bz.Bounds.extents.z));
 
-                        bz.BonePosition[0] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bz.Entity.transform, "Right_Foot"));
-                        bz.BonePosition[1] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bz.Entity.transform, "Left_Foot"));
-                        bz.BonePosition[2] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bz.Entity.transform, "Right_Leg"));
-                        bz.BonePosition[3] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bz.Entity.transform, "Left_Leg"));
-                        bz.BonePosition[4] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bz.Entity.transform, "Right_Arm"));
-                        bz.BonePosition[5] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bz.Entity.transform, "Left_Arm"));
-                        bz.BonePosition[6] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bz.Entity.transform, "Right_Hand"));
-                        bz.BonePosition[7] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bz.Entity.transform, "Left_Hand"));
-                        bz.BonePosition[8] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bz.Entity.transform, "Spine"));
-                        bz.BonePosition[9] = Globals.WorldPointToScreenPoint(Globals.GetLimbPosition(bz.Entity.transform, "Skull"));
+                        bz.BonePosition[0] = Globals.WorldPointToScreenPoint(rightfoot);
+                        bz.BonePosition[1] = Globals.WorldPointToScreenPoint(leftfoot);
+                        bz.BonePosition[2] = Globals.WorldPointToScreenPoint(rightleg);
+                        bz.BonePosition[3] = Globals.WorldPointToScreenPoint(leftleg);
+                        bz.BonePosition[4] = Globals.WorldPointToScreenPoint(rightarm);
+                        bz.BonePosition[5] = Globals.WorldPointToScreenPoint(leftarm);
+                        bz.BonePosition[6] = Globals.WorldPointToScreenPoint(righthand);
+                        bz.BonePosition[7] = Globals.WorldPointToScreenPoint(lefthand);
+                        bz.BonePosition[8] = Globals.WorldPointToScreenPoint(spine);
+                        bz.BonePosition[9] = Globals.WorldPointToScreenPoint(skull);
                         bz.BonePosition[10] = new Vector3(bz.BonePosition[8].x, bz.BonePosition[5].y, bz.BonePosition[5].z);
 
-                        bz.WorldBonePosition[0] = (Globals.GetLimbPosition(bz.Entity.transform, "Right_Foot"));
-                        bz.WorldBonePosition[1] = (Globals.GetLimbPosition(bz.Entity.transform, "Left_Foot"));
-                        bz.WorldBonePosition[2] = (Globals.GetLimbPosition(bz.Entity.transform, "Right_Leg"));
-                        bz.WorldBonePosition[3] = (Globals.GetLimbPosition(bz.Entity.transform, "Left_Leg"));
-                        bz.WorldBonePosition[4] = (Globals.GetLimbPosition(bz.Entity.transform, "Right_Arm"));
-                        bz.WorldBonePosition[5] = (Globals.GetLimbPosition(bz.Entity.transform, "Left_Arm"));
-                        bz.WorldBonePosition[6] = (Globals.GetLimbPosition(bz.Entity.transform, "Right_Hand"));
-                        bz.WorldBonePosition[7] = (Globals.GetLimbPosition(bz.Entity.transform, "Left_Hand"));
-                        bz.WorldBonePosition[8] = (Globals.GetLimbPosition(bz.Entity.transform, "Spine"));
-                        bz.WorldBonePosition[9] = (Globals.GetLimbPosition(bz.Entity.transform, "Skull"));
+                        bz.WorldBonePosition[0] = rightfoot;
+                        bz.WorldBonePosition[1] = leftfoot;
+                        bz.WorldBonePosition[2] = rightleg;
+                        bz.WorldBonePosition[3] = leftleg;
+                        bz.WorldBonePosition[4] = rightarm;
+                        bz.WorldBonePosition[5] = leftarm;
+                        bz.WorldBonePosition[6] = righthand;
+                        bz.WorldBonePosition[7] = lefthand;
+                        bz.WorldBonePosition[8] = spine;
+                        bz.WorldBonePosition[9] = skull;
                         bz.WorldBonePosition[10] = new Vector3(bz.WorldBonePosition[8].x, bz.WorldBonePosition[5].y, bz.WorldBonePosition[8].z);
                         Vector2 vector = new Vector2((float)(Screen.width / 2), (float)(Screen.height / 2));
                         int num = (int)Vector2.Distance(bz.HeadW2S, vector); // fov check
                         bz.test = num;
-                        if (bz.Distance < 200 && Globals.Config.z.Skeleton)
-                        {
+                       
                             for (int i = 0; i < bz.BonePosition.Count(); i++)
                             {
                                 if (RaycastHelper.IsPointVisible(bz.Entity, bz.WorldBonePosition[i]))
@@ -343,7 +362,7 @@ namespace Hag.Esp
                                 else
                                     bz.BoneColour[i] = ColourHelper.GetColour("Zombie Bone Invisible Colour");
                             }
-                        }
+                        
                     }
                        
                 }
