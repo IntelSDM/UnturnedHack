@@ -13,6 +13,20 @@ namespace Hag.Esp_Objects
         {
             Entity = vehicle;
         }
+        public void TeleportToCar()
+        {
+
+          //  Entity.forceRemoveAllPlayers();
+            Entity.addPlayer(0, Player.player.channel.owner.playerID.steamID);// FUCKING TELEPORT INTO LOCKED CARS
+
+        }
+        public void LeaveCar()
+        {
+         
+                    Entity.removePlayer(0, Vector3.zero, (byte)0, true);
+            
+     //   Entity.removePlayer
+        }
         public InteractableVehicle Entity;
         public string Name;
 

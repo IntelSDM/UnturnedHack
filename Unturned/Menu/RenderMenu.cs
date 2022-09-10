@@ -49,22 +49,43 @@ namespace Hag.Menu
             {
                 if (ShowGUI)
                 {
-                    FriendsList.Items.Clear();
-                    foreach (KeyValuePair<ulong, string> pair in Globals.Config.Friends.FriendsList)
-                    {
-                        SubMenu menu = new SubMenu(pair.Value, "");
-                        menu.Items.Add(new Button("Remove Friend", "Remove Player From Friends List", () => RemovePlayerFromFriendsList(pair.Key)));
-                        FriendsList.Items.Add(menu);
 
-                    }
-                    PlayersList.Items.Clear();
-                    foreach (Esp_Objects.BasePlayer bp in Globals.PlayerList)
+                    try
                     {
-                        SubMenu menu = new SubMenu($"{bp.Name} | {bp.SteamPlayer.playerID.characterName} | {bp.SteamPlayer.playerID.nickName}", "");
-                        menu.Items.Add(new Button("Add Friend", "Add Player To Friends List", () => AddPlayerToFriendsList(bp.SteamPlayer.playerID.steamID.m_SteamID,bp.Name)));
-                        PlayersList.Items.Add(menu);
+                        FriendsList.Items.Clear();
+                        foreach (KeyValuePair<ulong, string> pair in Globals.Config.Friends.FriendsList)
+                        {
+                            SubMenu menu = new SubMenu(pair.Value, "");
+                            menu.Items.Add(new Button("Remove Friend", "Remove Player From Friends List", () => RemovePlayerFromFriendsList(pair.Key)));
+                            FriendsList.Items.Add(menu);
+
+                        }
                     }
-                }
+                    catch { }
+                    try
+                    {
+                        PlayersList.Items.Clear();
+                        foreach (Esp_Objects.BasePlayer bp in Globals.PlayerList)
+                        {
+                            SubMenu menu = new SubMenu($"{bp.Name} | {bp.SteamPlayer.playerID.characterName} | {bp.SteamPlayer.playerID.nickName}", "");
+                            menu.Items.Add(new Button("Add Friend", "Add Player To Friends List", () => AddPlayerToFriendsList(bp.SteamPlayer.playerID.steamID.m_SteamID, bp.Name)));
+                            PlayersList.Items.Add(menu);
+                        }
+                    }
+                    catch { }
+                    try
+                    {
+                        VehiclesList.Items.Clear();
+                        foreach (Esp_Objects.BaseVehicle bv in Globals.VehicleList)
+                        {
+                            SubMenu menu = new SubMenu($"{bv.Name} | Cords: {bv.Entity.transform.position} | Distance: {bv.Distance} | Owned By You: {bv.OwnedByYou} | Driven: {bv.IsDriven}", "");
+                            menu.Items.Add(new Button("Teleport To Vehicle", "Buggy But Teleports You To Vehicle", () => bv.TeleportToCar()));
+                            menu.Items.Add(new Button("UnTeleport To Vehicle", "Removes You From Teleported Vehicle", () => bv.LeaveCar()));
+                            VehiclesList.Items.Add(menu);
+                        }
+                    }
+                    catch { }
+                    }
                 yield return new WaitForSeconds(2f);
             }
         }
@@ -102,6 +123,7 @@ namespace Hag.Menu
             friendoptions.Items.Add(FriendsList);
             PlayerList.Items.Add(friendoptions);
             PlayerList.Items.Add(PlayersList);
+            PlayerList.Items.Add(VehiclesList);
         }
         void Weapons()
         {
@@ -373,6 +395,7 @@ namespace Hag.Menu
 
         SubMenu FriendsList = new SubMenu("Friend List", "Managed Friends In Your Friends List");
         SubMenu PlayersList = new SubMenu("Player List", "Managed Players In Your Game");
+        SubMenu VehiclesList = new SubMenu("Vehicle List", "Managed Vehicles In Your Game");
         #endregion
         #region Actual Code
 
