@@ -89,6 +89,7 @@ namespace Hag.Esp
             {
                 try
                 {
+                  
                     foreach (BasePlayer bp in Globals.PlayerList)
                     {
                         Player player = bp.Entity;

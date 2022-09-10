@@ -133,12 +133,15 @@
     <Compile Include="Configs\Friends.cs" />
     <Compile Include="Configs\Item.cs" />
     <Compile Include="Configs\ItemFilter.cs" />
+    <Compile Include="Configs\Movement.cs" />
     <Compile Include="Configs\Vehicle.cs" />
     <Compile Include="Esp Objects\BaseItem.cs" />
     <Compile Include="Esp Objects\BaseVehicle.cs" />
+    <Compile Include="Esp Objects\Container.cs" />
     <Compile Include="Hooks\AddPlayer.cs" />
     <Compile Include="Hooks\Fire.cs" />
     <Compile Include="Hooks\UpdateCrosshair.cs" />
+    <Compile Include="Misc\Movement.cs" />
     <Compile Include="Misc\Weapon.cs" />
     <Compile Include="Configs\Aimbot.cs" />
     <Compile Include="Configs\EntityAimbot.cs" />

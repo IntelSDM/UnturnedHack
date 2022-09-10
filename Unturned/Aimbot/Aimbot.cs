@@ -400,6 +400,8 @@ namespace Hag.Aimbot
                         continue;
                     if ((Globals.Config.Player.MaxDistance < baseplayer.Distance))
                         continue;
+                    if (baseplayer.Friendly)
+                        continue;
                     if (Globals.Config.PlayerAimbot.LegitAimbotEnabled)
                     {
                         worldpos = GetAimbone(Globals.Config.PlayerAimbot.LegitAimbotBone, Globals.Config.PlayerAimbot.LegitVisiblityChecks, baseplayer);
@@ -575,8 +577,8 @@ namespace Hag.Aimbot
             {
                 for (; ; )
                 {
-                    if (Input.GetKey(Globals.Config.ZombieAimbot.LegitAimbotKey))
-                    {
+                    if (Input.GetKey(Globals.Config.PlayerAimbot.LegitAimbotKey))
+                    {   
 
                         Vector3 tartgetplayer = GetTargetPlayer();
                         if (tartgetplayer != Vector3.zero)

@@ -80,13 +80,13 @@ namespace Hag.Misc
                         //        Weapon.spreadSprint = Globals.Config.Weapon.NoSpreadSprint;
 
                             }
-                            UpdateCrosshair.Invoke(Player.player.equipment.useable, null);
+                        //    UpdateCrosshair.Invoke(Player.player.equipment.useable, null);
                         }
                         }
 
                 }
 
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForEndOfFrame();
             }
         }
         }

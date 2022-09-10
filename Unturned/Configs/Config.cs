@@ -21,6 +21,7 @@ namespace Hag.Configs
         public FriendlyPlayer FriendlyPlayer = new FriendlyPlayer();
         public Vehicle Vehicle = new Vehicle();
         public Item Item = new Item();
+        public Movement Movement = new Movement();
 
         public ItemFilter MagazineFilter = new ItemFilter();
         public ItemFilter AmmoFilter = new ItemFilter();
