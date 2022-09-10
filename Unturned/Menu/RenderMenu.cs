@@ -471,10 +471,11 @@ namespace Hag.Menu
                 try
                 {
 
-                    if (ShowGUI)
-                    {
+                   
                         if (Input.GetKeyDown(KeyCode.Insert))
                             ShowGUI = !ShowGUI;
+                    if (ShowGUI)
+                    {
                         if (Input.GetKeyDown(KeyCode.DownArrow) && CurrentMenu.index < CurrentMenu.Items.Count - 1)
                             CurrentMenu.index++;
                         if (Input.GetKeyDown(KeyCode.UpArrow) && CurrentMenu.index > 0)
