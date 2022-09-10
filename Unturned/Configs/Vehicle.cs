@@ -16,5 +16,7 @@ namespace Hag.Configs
         public bool DrawUnlocked = true;
         public bool DrawLocked = false;
         public bool LockedStatus = true;
+
+        public bool IgnoreOwnedVehiclesInList = true;
     }
 }

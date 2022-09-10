@@ -76,9 +76,13 @@ namespace Hag.Menu
                     try
                     {
                         VehiclesList.Items.Clear();
+                        Toggle ignoreowned = new Toggle("Ignore Locked Vehicles", "", ref Globals.Config.Vehicle.IgnoreOwnedVehiclesInList);
+                        VehiclesList.Items.Add(ignoreowned);
                         foreach (Esp_Objects.BaseVehicle bv in Globals.VehicleList)
                         {
-                            SubMenu menu = new SubMenu($"{bv.Name} | Cords: {bv.Entity.transform.position} | Distance: {bv.Distance} | Owned By You: {bv.OwnedByYou} | Driven: {bv.IsDriven}", "");
+                            if (bv.Locked && Globals.Config.Vehicle.IgnoreOwnedVehiclesInList)
+                                continue;
+                            SubMenu menu = new SubMenu($"{bv.Name} | Cords: {bv.Entity.transform.position} | Distance: {bv.Distance} | Locked {bv.Locked} | Driven: {bv.IsDriven}", "");
                             menu.Items.Add(new Button("Teleport To Vehicle", "Buggy But Teleports You To Vehicle", () => bv.TeleportToCar()));
                             menu.Items.Add(new Button("UnTeleport To Vehicle", "Removes You From Teleported Vehicle", () => bv.LeaveCar()));
                             VehiclesList.Items.Add(menu);
@@ -467,108 +471,111 @@ namespace Hag.Menu
                 try
                 {
 
-                    if (Input.GetKeyDown(KeyCode.Insert))
-                        ShowGUI = !ShowGUI;
-                    if (Input.GetKeyDown(KeyCode.DownArrow) && CurrentMenu.index < CurrentMenu.Items.Count -1)
-                        CurrentMenu.index++;
-                    if (Input.GetKeyDown(KeyCode.UpArrow) && CurrentMenu.index > 0)
-                        CurrentMenu.index--;
-                    if (Input.GetKeyDown(KeyCode.Backspace) && MenuHistory.Count > 1)
+                    if (ShowGUI)
                     {
-                        CurrentMenu = MenuHistory[MenuHistory.Count - 2];
-                        MenuHistory.Remove(MenuHistory.Last<SubMenu>());
-                        goto End;
-                    }
-                    if (((Input.GetKeyDown(KeyCode.LeftArrow) && Selected is SubMenu)) && CurrentMenu.index < CurrentMenu.Items.Count)
-                    {
+                        if (Input.GetKeyDown(KeyCode.Insert))
+                            ShowGUI = !ShowGUI;
+                        if (Input.GetKeyDown(KeyCode.DownArrow) && CurrentMenu.index < CurrentMenu.Items.Count - 1)
+                            CurrentMenu.index++;
+                        if (Input.GetKeyDown(KeyCode.UpArrow) && CurrentMenu.index > 0)
+                            CurrentMenu.index--;
+                        if (Input.GetKeyDown(KeyCode.Backspace) && MenuHistory.Count > 1)
+                        {
+                            CurrentMenu = MenuHistory[MenuHistory.Count - 2];
+                            MenuHistory.Remove(MenuHistory.Last<SubMenu>());
+                            goto End;
+                        }
+                        if (((Input.GetKeyDown(KeyCode.LeftArrow) && Selected is SubMenu)) && CurrentMenu.index < CurrentMenu.Items.Count)
+                        {
 
-                        CurrentMenu = MenuHistory[MenuHistory.Count - 2];
-                        MenuHistory.Remove(MenuHistory.Last<SubMenu>());
-                        goto End;
-                    }
-                    foreach (Entity entity in CurrentMenu.Items)
-                    {
+                            CurrentMenu = MenuHistory[MenuHistory.Count - 2];
+                            MenuHistory.Remove(MenuHistory.Last<SubMenu>());
+                            goto End;
+                        }
+                        foreach (Entity entity in CurrentMenu.Items)
+                        {
 
-                        if (CurrentMenu.index == CurrentMenu.Items.IndexOf(entity))
-                            Selected = entity;
-                        if (entity != Selected)
-                            continue;
+                            if (CurrentMenu.index == CurrentMenu.Items.IndexOf(entity))
+                                Selected = entity;
+                            if (entity != Selected)
+                                continue;
+
+                        }
+                        if (Selected is Keybind)
+                        {
+                            Keybind bind = Selected as Keybind;
+                            if (bind.Value == KeyCode.None)
+                                bind.Value = SetKey();
+
+                        }
+                        if (Selected is SubMenu && (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.Return)))
+                        {
+                            CurrentMenu = Selected as SubMenu;
+                            MenuHistory.Add(Selected as SubMenu);
+                            goto End;// opens a new menu so we need to exit the loop to then render our new currentmenu
+                        }
+                        if (Selected is Toggle && Input.GetKeyDown(KeyCode.RightArrow))
+                        {
+                            Toggle toggle = Selected as Toggle;
+                            toggle.Value = true;
+                        }
+                        if (Selected is Toggle && Input.GetKeyDown(KeyCode.LeftArrow))
+                        {
+                            Toggle toggle = Selected as Toggle;
+                            toggle.Value = false;
+                        }
+                        if (Selected is Button && (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.Return)))
+                        {
+                            Button button = Selected as Button;
+                            button.Method();
+                        }
+                        if (Selected is IntSlider && Input.GetKeyDown(KeyCode.RightArrow))
+                        {
+                            IntSlider slider = Selected as IntSlider;
+                            int result = slider.Value + slider.IncrementValue;
+
+                            if (result > slider.MaxValue)
+                                slider.Value = slider.MaxValue;
+                            else
+                                slider.Value = result;
+                        }
+                        if (Selected is IntSlider && Input.GetKeyDown(KeyCode.LeftArrow))
+                        {
+                            IntSlider slider = Selected as IntSlider;
+                            int result = slider.Value - slider.IncrementValue;
+
+                            if (result < slider.MinValue)
+                                slider.Value = slider.MinValue;
+                            else
+                                slider.Value = result;
+                        }
+                        if (Selected is FloatSlider && Input.GetKeyDown(KeyCode.RightArrow))
+                        {
+                            FloatSlider slider = Selected as FloatSlider;
+                            float result = slider.Value + slider.IncrementValue;
+
+                            if (result > slider.MaxValue)
+                                slider.Value = slider.MaxValue;
+                            else
+                                slider.Value = result;
+                        }
+                        if (Selected is FloatSlider && Input.GetKeyDown(KeyCode.LeftArrow))
+                        {
+                            FloatSlider slider = Selected as FloatSlider;
+                            float result = slider.Value - slider.IncrementValue;
+
+                            if (result < slider.MinValue)
+                                slider.Value = slider.MinValue;
+                            else
+                                slider.Value = result;
+                        }
+                        if (Selected is Keybind && (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.Return)))
+                        {
+                            Keybind bind = Selected as Keybind;
+                            bind.Value = KeyCode.None;
+                        }
 
                     }
-                    if (Selected is Keybind)
-                    {
-                        Keybind bind = Selected as Keybind;
-                        if (bind.Value == KeyCode.None)
-                            bind.Value = SetKey();
-
-                    }
-                    if (Selected is SubMenu && (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.Return)))
-                    {
-                        CurrentMenu = Selected as SubMenu;
-                        MenuHistory.Add(Selected as SubMenu);
-                        goto End;// opens a new menu so we need to exit the loop to then render our new currentmenu
-                    }
-                    if (Selected is Toggle && Input.GetKeyDown(KeyCode.RightArrow))
-                    {
-                        Toggle toggle = Selected as Toggle;
-                        toggle.Value = true;
-                    }
-                    if (Selected is Toggle && Input.GetKeyDown(KeyCode.LeftArrow))
-                    {
-                        Toggle toggle = Selected as Toggle;
-                        toggle.Value = false;
-                    }
-                    if (Selected is Button && (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.Return)))
-                    {
-                        Button button = Selected as Button;
-                        button.Method();
-                    }
-                    if (Selected is IntSlider && Input.GetKeyDown(KeyCode.RightArrow))
-                    {
-                        IntSlider slider = Selected as IntSlider;
-                        int result = slider.Value + slider.IncrementValue;
-
-                        if (result > slider.MaxValue)
-                            slider.Value = slider.MaxValue;
-                        else
-                            slider.Value = result;
-                    }
-                    if (Selected is IntSlider && Input.GetKeyDown(KeyCode.LeftArrow))
-                    {
-                        IntSlider slider = Selected as IntSlider;
-                        int result = slider.Value - slider.IncrementValue;
-
-                        if (result < slider.MinValue)
-                            slider.Value = slider.MinValue;
-                        else
-                            slider.Value = result;
-                    }
-                    if (Selected is FloatSlider && Input.GetKeyDown(KeyCode.RightArrow))
-                    {
-                        FloatSlider slider = Selected as FloatSlider;
-                        float result = slider.Value + slider.IncrementValue;
-
-                        if (result > slider.MaxValue)
-                            slider.Value = slider.MaxValue;
-                        else
-                            slider.Value = result;
-                    }
-                    if (Selected is FloatSlider && Input.GetKeyDown(KeyCode.LeftArrow))
-                    {
-                        FloatSlider slider = Selected as FloatSlider;
-                        float result = slider.Value - slider.IncrementValue;
-
-                        if (result < slider.MinValue)
-                            slider.Value = slider.MinValue;
-                        else
-                            slider.Value = result;
-                    }
-                    if (Selected is Keybind && (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.Return)))
-                    {
-                        Keybind bind = Selected as Keybind;
-                        bind.Value = KeyCode.None;
-                    }
-
                 }
                 catch (Exception ex) { }
                 End:
