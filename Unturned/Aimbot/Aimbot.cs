@@ -450,6 +450,7 @@ namespace Hag.Aimbot
                 num *= bulletInfo.barrelAsset.ballisticDrop;
 
             int ticker = 0;
+            // firearm.ballisticSteps = (int)0;
             while (++ticker < firearm.ballisticSteps)
             {
                 bulletInfo.pos += bulletInfo.dir * firearm.ballisticTravel;
@@ -494,6 +495,7 @@ namespace Hag.Aimbot
                                 {
                                     drop = DropCalc(TargetZombie);
                                 }
+                            
                             }
                             catch { }
                             TargetZombie.y += drop;

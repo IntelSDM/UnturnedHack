@@ -112,6 +112,10 @@ namespace Hag.Menu
             LegitZombieAimbots();
             LegitPlayerAimbots();
 
+            Movements();
+            Visuals();
+            Vehicles();
+
             StartCoroutine(KeyControls());
             StartCoroutine(RefreshLists());
         }
@@ -152,6 +156,27 @@ namespace Hag.Menu
             weapon.Items.Add(spread5);
             Misc.Items.Add(weapon);
         }
+        void Vehicles()
+        {
+            SubMenu vehicle = new SubMenu("Vehicles", "Vehicle Options");
+            Toggle vehicleflight = new Toggle("Vehicle Flight", "VROOM", ref Globals.Config.VehicleMisc.VehicleFlight);
+            vehicle.Items.Add(vehicleflight);
+            Misc.Items.Add(vehicle);
+        }
+        void Visuals()
+        {
+            SubMenu visual = new SubMenu("Visuals", "Visual Options");
+            Misc.Items.Add(visual);
+        }
+        void Movements()
+        {
+            SubMenu movement = new SubMenu("Movement", "Movement Options");
+            Toggle freecam = new Toggle("Freecam", "Toggle Freecam", ref Globals.Config.Movement.FreeCam);
+            Keybind freecamkey = new Keybind("Freecam Key", "Key To Toggle Into Freecam", ref Globals.Config.Movement.FreeCamKey);
+            movement.Items.Add(freecam);
+            movement.Items.Add(freecamkey);
+            Misc.Items.Add(movement);
+        }
         void AimbotGenerals()
         {
             SubMenu aimbot = new SubMenu("General", "General Aimbot Options");
@@ -169,6 +194,7 @@ namespace Hag.Menu
             Toggle enablesmooth = new Toggle("Enable Smoothing", "Turns On Smoothing", ref Globals.Config.ZombieAimbot.Smooth);
             IntSlider smoothing = new IntSlider("Smoothing", "Amount Of Smoothing", ref Globals.Config.ZombieAimbot.Smoothing, 0, 100, 2);
             IntSlider bone = new IntSlider("Target Bone", "0:Head 1:Spine 2:Pelvis 3:Arms 4:Hands 5:Legs 6:Feet 7:Nearest", ref Globals.Config.ZombieAimbot.LegitAimbotBone, 0, 7, 1);
+            Toggle dropprediction = new Toggle("Drop Prediction", "Predicts Bullet Drop", ref Globals.Config.ZombieAimbot.BulletDropPrediction);
             Toggle vischecks = new Toggle("Visibility Checks", "Only Target Visible Players Based On Target Bone", ref Globals.Config.ZombieAimbot.LegitVisiblityChecks);
             Keybind bind = new Keybind("Aimbot Key", "Key To Lock Onto Players", ref Globals.Config.ZombieAimbot.LegitAimbotKey);
             aimbot.Items.Add(enable);
@@ -176,6 +202,7 @@ namespace Hag.Menu
             aimbot.Items.Add(bone);
             aimbot.Items.Add(enablesmooth);
             aimbot.Items.Add(smoothing);
+            aimbot.Items.Add(dropprediction);
             aimbot.Items.Add(vischecks);
             aimbot.Items.Add(bind);
             ZombieAimbot.Items.Add(aimbot);
@@ -188,6 +215,7 @@ namespace Hag.Menu
             Toggle enablesmooth = new Toggle("Enable Smoothing", "Turns On Smoothing", ref Globals.Config.PlayerAimbot.Smooth);
             IntSlider smoothing = new IntSlider("Smoothing", "Amount Of Smoothing", ref Globals.Config.PlayerAimbot.Smoothing, 0, 100, 2);
             IntSlider bone = new IntSlider("Target Bone", "0:Head 1:Spine 2:Pelvis", ref Globals.Config.PlayerAimbot.LegitAimbotBone, 0, 7, 1);
+            Toggle dropprediction = new Toggle("Drop Prediction", "Predicts Bullet Drop", ref Globals.Config.PlayerAimbot.BulletDropPrediction);
             Toggle vischecks = new Toggle("Visibility Checks", "Only Target Visible Players Based On Target Bone", ref Globals.Config.PlayerAimbot.LegitVisiblityChecks);
             Keybind bind = new Keybind("Aimbot Key", "Key To Lock Onto Players", ref Globals.Config.PlayerAimbot.LegitAimbotKey);
             aimbot.Items.Add(enable);
@@ -195,6 +223,7 @@ namespace Hag.Menu
             aimbot.Items.Add(bone);
             aimbot.Items.Add(enablesmooth);
             aimbot.Items.Add(smoothing);
+            aimbot.Items.Add(dropprediction);
             aimbot.Items.Add(vischecks);
             aimbot.Items.Add(bind);
             PlayerAimbot.Items.Add(aimbot);

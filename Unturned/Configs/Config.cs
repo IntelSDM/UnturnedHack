@@ -22,6 +22,7 @@ namespace Hag.Configs
         public Vehicle Vehicle = new Vehicle();
         public Item Item = new Item();
         public Movement Movement = new Movement();
+        public VehicleMisc VehicleMisc = new VehicleMisc();
 
         public ItemFilter MagazineFilter = new ItemFilter();
         public ItemFilter AmmoFilter = new ItemFilter();
