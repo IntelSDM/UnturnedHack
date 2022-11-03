@@ -20,7 +20,7 @@ namespace Hag.Misc
         {
             for (; ; )
             {
-                if (Player.player && Provider.isConnected )
+                if (Player.player && Provider.isConnected  )
                 {
                     InteractableVehicle car = Player.player?.movement?.getVehicle();
                     if (car != null && car && Provider.isConnected && !Provider.isLoading)

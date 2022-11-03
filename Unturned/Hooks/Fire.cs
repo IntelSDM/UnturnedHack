@@ -304,8 +304,9 @@ namespace Hag.Hooks
                             num9 *= SHAKE_PRONE;
                         }
                         Player.player.look.recoil(num5, num6, useablegun.equippedGunAsset.recover_x, useablegun.equippedGunAsset.recover_y);
-                        Player.player.animator.shake(num7, num8, num9);
-                        updateinfo.Invoke(useablegun, null);
+                        Player.player.animator.AddRecoilViewmodelCameraOffset(num7, num8, num9);
+                    Player.player.animator.AddRecoilViewmodelCameraRotation(num5, num6);
+                    updateinfo.Invoke(useablegun, null);
                         if (useablegun.equippedGunAsset.projectile == null)
                         {
                             shoot.Invoke(useablegun, null);
