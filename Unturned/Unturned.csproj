@@ -136,6 +136,7 @@
     <Compile Include="Configs\Movement.cs" />
     <Compile Include="Configs\Vehicle.cs" />
     <Compile Include="Configs\VehicleMisc.cs" />
+    <Compile Include="Configs\World.cs" />
     <Compile Include="Esp Objects\BaseItem.cs" />
     <Compile Include="Esp Objects\BaseVehicle.cs" />
     <Compile Include="Esp Objects\Container.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Menu\RenderMenu.cs" />
     <Compile Include="Menu\SubMenu.cs" />
     <Compile Include="Menu\Toggle.cs" />
+    <Compile Include="Misc\World.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer\Direct2DRenderer.cs" />
     <Compile Include="Renderer\DwmApi.cs" />

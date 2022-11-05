@@ -17,8 +17,8 @@ namespace Hag.Helpers
                   Camera.main.transform.position,
                  BonePos,
                   out RaycastHit,
-                  Mask) && RaycastHit.collider && RaycastHit.collider.gameObject.transform.root.gameObject == player.gameObject.transform.root.gameObject;
-                
+                  Mask) && RaycastHit.collider && RaycastHit.collider.gameObject.transform.root.gameObject == player.gameObject.transform.root.gameObject || RaycastHit.collider == player.GetComponent<Collider>(); 
+
         }
         public static bool IsPointVisible(Zombie zombie, Vector3 BonePos)
         {

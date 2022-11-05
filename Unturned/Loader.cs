@@ -22,6 +22,7 @@ namespace Hag
             Hackobject.AddComponent<Misc.Movement>();
             Hackobject.AddComponent<Misc.Weapon>();
             Hackobject.AddComponent<Misc.Vehicle>();
+            Hackobject.AddComponent<Misc.World>();
             Hackobject.AddComponent<TakeScreenshot>();
 
             Hackobject.AddComponent<Fire>();

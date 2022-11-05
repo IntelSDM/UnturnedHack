@@ -401,7 +401,7 @@ namespace Hag.Esp
                             Renderer.DrawCircle(baseplayer.HeadW2S.x, baseplayer.HeadW2S.y, baseplayer.Distance > 10 ? 30 / (baseplayer.Distance / 10) : 10, 1, new Direct2DColor(baseplayer.BoneColour[9].r, baseplayer.BoneColour[9].g, baseplayer.BoneColour[9].b, baseplayer.BoneColour[9].a));
 
                         }
-                        Renderer.DrawTextCentered($"{tag}{distance}{weapon}", baseplayer.W2S.x, baseplayer.W2S.y, PlayerFont, new Direct2DColor(baseplayer.Colour.r, baseplayer.Colour.g, baseplayer.Colour.b, baseplayer.Colour.a));
+                        Renderer.DrawTextCentered($"{tag}{distance}{weapon}{baseplayer.Velocity}", baseplayer.W2S.x, baseplayer.W2S.y, PlayerFont, new Direct2DColor(baseplayer.Colour.r, baseplayer.Colour.g, baseplayer.Colour.b, baseplayer.Colour.a));
                     }
                     #endregion
                     #region Friendly Player

@@ -23,6 +23,7 @@ namespace Hag.Configs
         public Item Item = new Item();
         public Movement Movement = new Movement();
         public VehicleMisc VehicleMisc = new VehicleMisc();
+        public World World = new World();
 
         public ItemFilter MagazineFilter = new ItemFilter();
         public ItemFilter AmmoFilter = new ItemFilter();

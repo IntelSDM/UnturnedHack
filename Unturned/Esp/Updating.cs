@@ -115,6 +115,8 @@ namespace Hag.Esp
                         bp.W2S = WorldPointToScreenPoint(player.transform.position);
                         bp.HeadW2S = WorldPointToScreenPoint(skull);
                         bp.Alive = !player.life.isDead;
+             //           bp.Velocity = bp.Entity.movement.GetPrivateField<Vector3>("velocity");
+                        //      bp.Velocity = bp.Entity.GetComponent<Rigidbody>().velocity;
                         bp.Weapon = player.equipment.asset != null ? player.equipment?.asset?.itemName : "Empty";
                         if (bp.Distance > Globals.Config.Player.MaxDistance)
                             continue;
@@ -233,6 +235,7 @@ namespace Hag.Esp
                         bz.HeadW2S = WorldPointToScreenPoint(skull);
                       //  bz.FootW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(zombie.transform, "Left_Foot"));
                         bz.Alive = !zombie.isDead;
+                      // bz.Velocity = bz.Entity.GetPrivateField<Player>("player").movement.GetPrivateField<Vector3>("velocity");
                         bz.Visible = RaycastHelper.IsPointVisible(zombie, skull);
                         if (bz.Visible)
                         {
