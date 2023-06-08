@@ -25,7 +25,6 @@ namespace Hag
             Hackobject.AddComponent<Misc.World>();
             Hackobject.AddComponent<TakeScreenshot>();
 
-            Hackobject.AddComponent<Fire>();
             GameObject.DontDestroyOnLoad(Hackobject);
         }
         private static GameObject Hackobject = new GameObject();

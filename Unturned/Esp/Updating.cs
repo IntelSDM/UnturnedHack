@@ -89,7 +89,10 @@ namespace Hag.Esp
             {
                 try
                 {
-                  
+                    Globals.LocalPlayerVelocity.x = ((Globals.LocalPlayer.transform.position.x - Globals.LocalPlayerPreviousPos.x)) / Time.deltaTime;
+                    Globals.LocalPlayerVelocity.y = ((Globals.LocalPlayer.transform.position.y - Globals.LocalPlayerPreviousPos.y)) / Time.deltaTime;
+                    Globals.LocalPlayerVelocity.z = ((Globals.LocalPlayer.transform.position.z - Globals.LocalPlayerPreviousPos.z)) / Time.deltaTime;
+                    Globals.LocalPlayerPreviousPos = Globals.LocalPlayer.transform.position;
                     foreach (BasePlayer bp in Globals.PlayerList)
                     {
                         Player player = bp.Entity;
@@ -115,7 +118,11 @@ namespace Hag.Esp
                         bp.W2S = WorldPointToScreenPoint(player.transform.position);
                         bp.HeadW2S = WorldPointToScreenPoint(skull);
                         bp.Alive = !player.life.isDead;
-             //           bp.Velocity = bp.Entity.movement.GetPrivateField<Vector3>("velocity");
+                        bp.Velocity.x = ((bp.Entity.transform.position.x - bp.PreviousPos.x)) / Time.deltaTime;
+                        bp.Velocity.y = ((bp.Entity.transform.position.y - bp.PreviousPos.y)) / Time.deltaTime;
+                        bp.Velocity.z = ((bp.Entity.transform.position.z - bp.PreviousPos.z)) / Time.deltaTime;
+                        bp.PreviousPos = bp.Entity.transform.position;
+                        //           bp.Velocity = bp.Entity.movement.GetPrivateField<Vector3>("velocity");
                         //      bp.Velocity = bp.Entity.GetComponent<Rigidbody>().velocity;
                         bp.Weapon = player.equipment.asset != null ? player.equipment?.asset?.itemName : "Empty";
                         if (bp.Distance > Globals.Config.Player.MaxDistance)
@@ -235,7 +242,10 @@ namespace Hag.Esp
                         bz.HeadW2S = WorldPointToScreenPoint(skull);
                       //  bz.FootW2S = WorldPointToScreenPoint(Globals.GetLimbPosition(zombie.transform, "Left_Foot"));
                         bz.Alive = !zombie.isDead;
-                      // bz.Velocity = bz.Entity.GetPrivateField<Player>("player").movement.GetPrivateField<Vector3>("velocity");
+                        bz.Velocity.x = ((bz.Entity.transform.position.x - bz.PreviousPos.x)) / Time.deltaTime;
+                        bz.Velocity.y = ((bz.Entity.transform.position.y - bz.PreviousPos.y)) / Time.deltaTime;
+                        bz.Velocity.z = ((bz.Entity.transform.position.z - bz.PreviousPos.z)) / Time.deltaTime;
+                        bz.PreviousPos = bz.Entity.transform.position;
                         bz.Visible = RaycastHelper.IsPointVisible(zombie, skull);
                         if (bz.Visible)
                         {

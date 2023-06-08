@@ -432,60 +432,61 @@ namespace Hag.Aimbot
         public float DropCalc(Vector3 point)
         {
             // thanks bocheats
-            float treturn = 0f;
+           float treturn = 0f;
 
-            if (Vector3.Distance(point, Player.player.look.aim.position) < 35f)
-                return 0f;
+            /*      if (Vector3.Distance(point, Player.player.look.aim.position) < 35f)
+                     return 0f;
 
-            ItemGunAsset firearm = (ItemGunAsset)Player.player.equipment.asset;
+                 ItemGunAsset firearm = (ItemGunAsset)Player.player.equipment.asset;
 
-            Quaternion quaternion = Quaternion.LookRotation(point - Player.player.look.transform.position, Player.player.look.transform.up);
-            Vector3 targetForward = quaternion * Vector3.forward;
+                 Quaternion quaternion = Quaternion.LookRotation(point - Player.player.look.transform.position, Player.player.look.transform.up);
+                 Vector3 targetForward = quaternion * Vector3.forward;
 
-            BulletInfo bulletInfo = new BulletInfo();
-            bulletInfo.pos = Player.player.look.transform.position;
-            bulletInfo.dir = targetForward.normalized;
+                 BulletInfo bulletInfo = new BulletInfo();
+                 bulletInfo.pos = Player.player.look.transform.position;
+                 bulletInfo.dir = targetForward.normalized;
 
-            float num = firearm.ballisticDrop;
-            bulletInfo.barrelAsset = Player.player.equipment.thirdModel.gameObject.GetComponent<Attachments>().barrelAsset;
-            if (bulletInfo.barrelAsset != null)
-                num *= bulletInfo.barrelAsset.ballisticDrop;
+                 float num = firearm.ballisticDrop;
+                 bulletInfo.barrelAsset = Player.player.equipment.thirdModel.gameObject.GetComponent<Attachments>().barrelAsset;
+                 if (bulletInfo.barrelAsset != null)
+                     num *= bulletInfo.barrelAsset.ballisticDrop;
 
-            int ticker = 0;
-            // firearm.ballisticSteps = (int)0;
-            
-            while (++ticker < firearm.ballisticSteps)
-            {
-                bulletInfo.pos += bulletInfo.dir * firearm.ballisticTravel;
-                bulletInfo.dir.y -= num;
-                bulletInfo.dir.Normalize();
+                 int ticker = 0;
+                 // firearm.ballisticSteps = (int)0;
 
-                if (Vector3.Distance(
-                    new Vector3(point.x, 0f, point.z),
-                    new Vector3(bulletInfo.pos.x, 0f, bulletInfo.pos.z))
-                    < firearm.ballisticTravel
-                    )
-                {
-                    treturn = bulletInfo.pos.y - point.y;
-                    break;
-                }
-            }
+                 while (++ticker < firearm.ballisticSteps)
+                 {
+                     bulletInfo.pos += bulletInfo.dir * firearm.ballisticTravel;
+                     bulletInfo.dir.y -= num;
+                     bulletInfo.dir.Normalize();
 
-            if (treturn < 0)
-                treturn -= treturn * 2.1f;
-            else
-                treturn = 0f;
+                     if (Vector3.Distance(
+                         new Vector3(point.x, 0f, point.z),
+                         new Vector3(bulletInfo.pos.x, 0f, bulletInfo.pos.z))
+                         < firearm.ballisticTravel
+                         )
+                     {
+                         treturn = bulletInfo.pos.y - point.y;
+                         break;
+                     }
+                 }
 
+                 if (treturn < 0)
+                     treturn -= treturn * 2.1f;
+                 else
+                     treturn = 0f;
+          */
             return treturn;
         }
-        public Vector3 MovementPrediction(Vector3 velocity)
+        public Vector3 MovementPrediction(Vector3 velocity,int distance)
         {
             ItemGunAsset firearm = (ItemGunAsset)Player.player.equipment.asset;
-            float speedsquared = firearm.ballisticTravel * firearm.ballisticTravel;
-           velocity.x *= firearm.ballisticTravel;
-            velocity.y *= firearm.ballisticTravel;
-            velocity.z *= firearm.ballisticTravel;
-            return velocity;
+            Vector3 ret = Vector3.zero;
+            //    float speedsquared = firearm.ballisticTravel * firearm.ballisticTravel;
+            //   velocity *= firearm.ballisticTravel;
+            ret += velocity * (distance / Mathf.Abs(firearm.ballisticForce));
+            ret -= Globals.LocalPlayerVelocity * (distance / Mathf.Abs(firearm.ballisticForce));
+            return ret;
         }
         IEnumerator ZombieLegitbot()
         {
@@ -510,8 +511,11 @@ namespace Hag.Aimbot
                             
                             }
                             catch { }
+                        //    Vector3 pred = MovementPrediction(TargetLegitZombie.Velocity,TargetLegitZombie.Distance);
+                      //      TargetZombie.x += pred.x;
+                      //      TargetZombie.z += pred.z;
                             TargetZombie.y += drop;
-                            TargetZombie.x *= MovementPrediction(TargetLegitZombie.Velocity).x;
+                     //       TargetZombie.x += MovementPrediction(TargetLegitZombie.Velocity);
                             float ScreenCenterX = (Screen.width / 2);
                             float ScreenCenterY = (Screen.height / 2);
                             float TargetX = 0;
@@ -610,7 +614,10 @@ namespace Hag.Aimbot
                                     }
                                 }
                                 catch { }
-                                tartgetplayer.y += drop;
+                    //        Vector3 pred = MovementPrediction(TargetLegitPlayer.Velocity, TargetLegitPlayer.Distance);
+                     //       tartgetplayer.x += pred.x;
+                      //      tartgetplayer.z += pred.z;
+                            tartgetplayer.y += drop;
                                 float ScreenCenterX = (Screen.width / 2);
                                 float ScreenCenterY = (Screen.height / 2);
                                 float TargetX = 0;

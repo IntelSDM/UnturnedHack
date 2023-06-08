@@ -126,6 +126,10 @@
     <Reference Include="UnityEngine.TerrainPhysicsModule">
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEx, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEx.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aimbot\Aimbot.cs" />
@@ -141,7 +145,6 @@
     <Compile Include="Esp Objects\BaseVehicle.cs" />
     <Compile Include="Esp Objects\Container.cs" />
     <Compile Include="Hooks\AddPlayer.cs" />
-    <Compile Include="Hooks\Fire.cs" />
     <Compile Include="Hooks\UpdateCrosshair.cs" />
     <Compile Include="Misc\Movement.cs" />
     <Compile Include="Misc\Vehicle.cs" />
@@ -158,7 +161,6 @@
     <Compile Include="Esp\Drawing.cs" />
     <Compile Include="Esp\Updating.cs" />
     <Compile Include="Helpers\RaycastHelper.cs" />
-    <Compile Include="Hooks\Simulate.cs" />
     <Compile Include="Hooks\TakeScreenshot.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Configs\Colours.cs" />

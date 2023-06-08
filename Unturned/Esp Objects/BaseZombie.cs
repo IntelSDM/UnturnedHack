@@ -27,6 +27,7 @@ namespace Hag.Esp_Objects
         public Vector3 HeadW2S;
         public Vector3 FootW2S;
         public Vector3 Velocity;
+        public Vector3 PreviousPos;
 
         public Bounds Bounds;
         public UnityEngine.Vector3[] BoundPoints = new UnityEngine.Vector3[8];

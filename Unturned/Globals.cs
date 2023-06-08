@@ -12,6 +12,8 @@ namespace Hag
     {
         public static Camera MainCamera;
         public static SDG.Unturned.Player LocalPlayer;
+        public static Vector3 LocalPlayerVelocity;
+        public static Vector3 LocalPlayerPreviousPos;
 
         public static Hag.Configs.Config Config = new Configs.Config();
         public static bool EndedFrame = true;

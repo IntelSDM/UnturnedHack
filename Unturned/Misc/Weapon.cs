@@ -37,7 +37,7 @@ namespace Hag.Misc
 
                         float[] Backups = new float[]
                          {
-                                Weapon.recoilAim,
+                                0,// this was recoilaim, it is an old value and i didn't want to change all the calls for it
                                 Weapon.recoilMax_x,
                                 Weapon.recoilMax_y,
                                 Weapon.recoilMin_x,
@@ -73,12 +73,12 @@ namespace Hag.Misc
                             }
                             if (Globals.Config.Weapon.NoSpread)
                             {
-                       //         Weapon.spreadAim = Globals.Config.Weapon.NoSpreadAim;
-                       //         Weapon.spreadHip = Globals.Config.Weapon.NoSpreadHip;
-                       //         Weapon.spreadCrouch = Globals.Config.Weapon.NoSpreadCrouch;
-                       //        Weapon.spreadProne = Globals.Config.Weapon.NoSpreadProne;
-                        //        Weapon.spreadSprint = Globals.Config.Weapon.NoSpreadSprint;
-
+                                ItemGunAsset gun = Globals.LocalPlayer.equipment.asset as ItemGunAsset;
+                                gun.spreadAim = Globals.Config.Weapon.NoSpreadAim;
+                                gun.spreadCrouch = Globals.Config.Weapon.NoSpreadCrouch;
+                                gun.SetPrivateField("set_baseSpreadAngleRadians", Globals.Config.Weapon.NoSpreadHip); 
+                                gun.spreadProne = Globals.Config.Weapon.NoSpreadProne;
+                                gun.spreadSprint = Globals.Config.Weapon.NoSpreadSprint;
                             }
                         //    UpdateCrosshair.Invoke(Player.player.equipment.useable, null);
                         }
